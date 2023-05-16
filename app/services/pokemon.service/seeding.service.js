@@ -57,6 +57,7 @@ module.exports = {
     await Promise.all(promises);
 
     const typePromise = frenchType.map(async (typ, i) => {
+      logger.log(damageType[frenchType[i].name]);
       const noDamageFrom = damageType[frenchType[i].name].no_damage_from.map((typ) => typ.name);
       const halfDamageFrom = damageType[frenchType[i].name].half_damage_from.map((typ) => typ.name);
       const doubleDamageFrom = damageType[frenchType[i].name].double_damage_from.map((typ) => typ.name);
