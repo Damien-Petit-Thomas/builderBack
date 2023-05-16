@@ -1,0 +1,24 @@
+const Joi = require('joi');
+
+const loginSchema = Joi.object({
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .required()
+    .messages({
+      'string.base': 'L\'adresse email doit valide',
+      'string.empty': 'Le champ email est vide',
+      'string.email': 'L\'adresse email doit être au format email',
+      'any.required': 'L\'adresse email est requise',
+    }),
+  password: Joi.string()
+    .required()
+    .min(8)
+    .max(30)
+    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,30}$/)
+    .messages({
+      'string.base': 'Le mot de passe doit être valide',
+      'string.empty': 'Le mot de passe ne peut être vide',
+      'any.required': 'Le mot de passe est requis',
+    }),
+});
+
+module.exports = loginSchema;
