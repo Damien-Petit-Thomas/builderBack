@@ -9,10 +9,10 @@ const generationController = require('./generation');
 const apiController = {
 
   home(req, res) {
-    // const fullUrl = `${req.protocol}://${req.get('host')}`;
+    const fullUrl = `${req.protocol}://${req.get('host')}`;
     res.send({
       // documentation_url: `${fullUrl}${process.env.API_DOCS}` ?? '/api-docs',
-          "catch them all"
+      api_url: `${fullUrl}${process.env.API_BASE_URL}` ?? '/api',
     });
   },
 };
