@@ -31,33 +31,46 @@ module.exports = {
 
     const damageType = {};
 
-    for (let i = 0; i < frenchType.length; i += 1) {
-      try {
-        const isTypeInDb = await type.findOneByName(frenchType[i].name);
+    // for (let i = 0; i < frenchType.length; i += 1) {
+    //   try {
+    //     const isTypeInDb = await type.findOneByName(frenchType[i].name);
 
+    //     if (isTypeInDb) {
+    //       logger.log(`type ${frenchType[i].name} already in db`);
+    //     }
+    //     damageType[frenchType[i].name] = damages[i];
+    //   } catch (e) {
+    //     logger.log(e);
+    //   }
+    // }
+    const promises = frenchType.map(async (typ, i) => {
+      try {
+        const isTypeInDb = await type.findOneByName(typ.name);
         if (isTypeInDb) {
-          logger.log(`type ${frenchType[i].name} already in db`);
+          logger.log(`type ${typ.name} already in db`);
         }
-        damageType[frenchType[i].name] = damages[i];
+        damageType[typ.name] = damages[i];
       } catch (e) {
         logger.log(e);
       }
-    }
+    });
+    await Promise.all(promises);
 
-    for (let i = 0; i < frenchType.length; i += 1) {
+    const typePromise = frenchType.map(async (typ, i) => {
       const noDamageFrom = damageType[frenchType[i].name].no_damage_from.map((typ) => typ.name);
       const halfDamageFrom = damageType[frenchType[i].name].half_damage_from.map((typ) => typ.name);
       const doubleDamageFrom = damageType[frenchType[i].name].double_damage_from.map((typ) => typ.name);
       const id = i + 1;
-      const typ = {
+      const typo = {
         id,
         name: englishName[i],
         frenchName: frenchType[i].name,
         damageFrom: getDamage(noDamageFrom, halfDamageFrom, doubleDamageFrom),
       };
 
-      type.insertType(typ);
-    }
+      return type.insertType(typo);
+    });
+    await Promise.all(typePromise);
     return null;
   },
 
