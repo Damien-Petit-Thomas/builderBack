@@ -1,16 +1,21 @@
+/* eslint-disable max-len */
 module.exports = {
   getDamage(arr) {
     if (arr.length === 1) {
       return { ...arr[0] };
     }
-    // console.log(arr);
-    let totalDamage = {};
-    totalDamage = Object.keys(arr[0]).reduce((acc, key) => {
-      if (key in arr[1]) {
-        acc[key] = arr[0][key] * arr[1][key];
+
+    const [totalDamage, totalDamage2] = arr;
+
+    const result = Object.keys(totalDamage).reduce((acc, key) => {
+      if (key in totalDamage2) {
+        acc[key] = { ...totalDamage[key], damage: totalDamage[key].damage * totalDamage2[key].damage };
+      } else {
+        acc[key] = { ...totalDamage[key] };
       }
       return acc;
     }, {});
-    return totalDamage;
+
+    return result;
   },
 };
