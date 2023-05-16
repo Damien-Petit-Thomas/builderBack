@@ -52,19 +52,22 @@ module.exports = {
 
   async getPokemonByTypeId(req, res) {
     const { id } = req.params;
-    logger.log(id);
     if (!id) {
       return res.status(400).json({ error: 'id is required' });
     }
     const pokemons = await poke.findAllByTypeId(id);
-    return res.json(pokemons);
+    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+    const allPokemons = await Promise.all(promises);
+    return res.json(allPokemons);
   },
 
   async getPokemonByGenId(req, res) {
     const { id } = req.params;
     if (!id) return res.status(400).json({ error: 'id is required' });
     const pokemons = await poke.findAllByGenId(id);
-    return res.json(pokemons);
+    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+    const allPokemons = await Promise.all(promises);
+    return res.json(allPokemons);
   },
 
   async getNoDamageFrom(req, res) {
