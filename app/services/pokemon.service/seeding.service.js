@@ -43,11 +43,10 @@ module.exports = {
         logger.log(e);
       }
     }
-
     for (let i = 0; i < frenchType.length; i += 1) {
-      const noDamageFrom = damageType[frenchType[i].name].no_damage_from.map((typ) => typ.name);
-      const halfDamageFrom = damageType[frenchType[i].name].half_damage_from.map((typ) => typ.name);
-      const doubleDamageFrom = damageType[frenchType[i].name].double_damage_from.map((typ) => typ.name);
+      const noDamageFrom = damageType[frenchType[i].name].no_damage_from.map((typ) => typ.url.split('/')[6]);
+      const halfDamageFrom = damageType[frenchType[i].name].half_damage_from.map((typ) => typ.url.split('/')[6]);
+      const doubleDamageFrom = damageType[frenchType[i].name].double_damage_from.map((typ) => typ.url.split('/')[6]);
       const id = i + 1;
       const typ = {
         id,
@@ -66,9 +65,9 @@ module.exports = {
     const { damages, frenchType, englishName } = data;
     const damageType = {};
     damageType[frenchType.name] = damages;
-    const noDamageFrom = damageType[frenchType.name].no_damage_from.map((typ) => typ.name);
-    const halfDamageFrom = damageType[frenchType.name].half_damage_from.map((typ) => typ.name);
-    const doubleDamageFrom = damageType[frenchType.name].double_damage_from.map((typ) => typ.name);
+    const noDamageFrom = damageType[frenchType.name].no_damage_from.map((typ) => typ.url.split('/')[6]);
+    const halfDamageFrom = damageType[frenchType.name].half_damage_from.map((typ) => typ.url.split('/')[6]);
+    const doubleDamageFrom = damageType[frenchType.name].double_damage_from.map((typ) => typ.url.split('/')[6]);
     const typ = {
       id: typeId,
       name: englishName,

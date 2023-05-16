@@ -32,7 +32,6 @@ module.exports = {
     }
     const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
     const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
-    logger.info(`pokemon ${pokeSavedInDb.name} added to db`);
     cache.set(pokeSavedInDb.id, pokemon, this.TTL);
     return res.json(pokemon);
   },
