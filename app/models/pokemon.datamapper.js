@@ -22,33 +22,19 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
     return pokemons.rows;
   }
 
+  async findAllByTypesIds(id1, id2) {
+    const pokemons = await this.client.query(
+      'SELECT * FROM pokemon WHERE (type1 = $1 AND type2 = $2) OR (type1 = $2 AND type2 = $1) ORDER BY id ASC',
+
+      [id1, id2],
+    );
+    return pokemons.rows;
+  }
+
   async findAllByGenId(id) {
     const pokemons = await this.client.query(
       'SELECT * FROM pokemon WHERE gen_id = $1 ORDER BY id ASC',
       [id],
-    );
-    return pokemons.rows;
-  }
-
-  async findNoDamageFrom(id) {
-    const pokemons = await this.client.query(
-      `SELECT * FROM type WHERE damagefrom->>'${id}' = '0' `,
-
-    );
-    return pokemons.rows;
-  }
-
-  async findHalfDamageFrom(id) {
-    const pokemons = await this.client.query(
-      `SELECT * FROM type WHERE damagefrom->>'${id}' = '0.5'`,
-
-    );
-    return pokemons.rows;
-  }
-
-  async findDoubleDamageFrom(id) {
-    const pokemons = await this.client.query(
-      `SELECT * FROM type WHERE damagefrom->>'${id}' = '2'`,
     );
     return pokemons.rows;
   }
@@ -71,6 +57,12 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
   }
 
   async getRandomTeam() {
+    // const randomTeam = await this.client.query(
+    //   `
+    // SELECT * FROM random_team()
+    //     `,
+    // );
+    // return randomTeam.rows;
     const randomIds = await this.client.query(
 
       'SELECT id FROM random_team()',

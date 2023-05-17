@@ -15,6 +15,9 @@ router
   .route('/type/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByTypeId));
 router
+  .route('/type/:id1(\\d+)/type/:id2(\\d+)')
+  .get(controllerHandler(controller.getPokemonByTypesIds));
+router
   .route('/gen/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByGenId));
 router
@@ -23,19 +26,18 @@ router
 router
   .route('/resist/type/:id(\\d+)')
   .get(controllerHandler(controller.getHalfDamageFrom));
-router
-  .route('/weak/type/:id(\\d+)')
-  .get(controllerHandler(controller.getDoubleDamageFrom));
+// router
+//   .route('/weak/type/:id(\\d+)')
+//   .get(controllerHandler(controller.getDoubleDamageFrom));
 router
   .route('/resist/imune/type/:id(\\d+)')
-  .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFrom));
-router
-  .route('/:name([a-zA-Z]+)')
-  .get(controllerHandler(controller.getOneByName));
-
+  .get(controllerHandler(controller.getNoDamageFromOrHalfDamageFrom));
 router
   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')
   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFromToTypes));
+router
+  .route('/:name([a-zA-Z]+)')
+  .get(controllerHandler(controller.getOneByName));
 router
   .route('/full-random')
   .get(controllerHandler(controller.getFullRandomTeam));

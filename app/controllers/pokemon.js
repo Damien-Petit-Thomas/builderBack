@@ -9,6 +9,8 @@ const buildPokemonObjectFromPokeDb = require('../utils/pokemon.utils/buildFormat
 const CacheServer = require('../utils/cache');
 const preformatPokemon = require('../utils/pokemon.utils/preformatePokemon');
 const getPokemonFromCache = require('../utils/pokemon.utils/getPokemonFromCahe');
+const getWeakness = require('../utils/teamCompletion/getTeamWeakness');
+const getTeamSuggestion = require('../utils/teamCompletion/getTeamSuggestion');
 
 const cache = CacheServer.getInstance();
 module.exports = {
@@ -60,7 +62,16 @@ module.exports = {
     const allPokemons = await Promise.all(promises);
     return res.json(allPokemons);
   },
-
+  async getPokemonByTypesIds(req, res) {
+    const { id1, id2 } = req.params;
+    if (!id1 || !id2) {
+      return res.status(400).json({ error: 'id is required' });
+    }
+    const pokemons = await poke.findAllByTypesIds(id1, id2);
+    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+    const allPokemons = await Promise.all(promises);
+    return res.json(allPokemons);
+  },
   async getPokemonByGenId(req, res) {
     const { id } = req.params;
     if (!id) return res.status(400).json({ error: 'id is required' });
@@ -69,44 +80,58 @@ module.exports = {
     const allPokemons = await Promise.all(promises);
     return res.json(allPokemons);
   },
-
   async getNoDamageFrom(req, res) {
     const { id } = req.params;
-    const typeName = await type.findByPk(id);
-    const imune = await poke.findNoDamageFrom(typeName.name);
-    return res.json(imune);
+    const types = await type.findNoDamageFrom(id);
+    const promises = types.map(async (typ) => {
+      const pokemons = await poke.findAllByTypeId(typ.id);
+      const preformattedPokemons = await Promise.all(
+        pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
+      );
+      return preformattedPokemons;
+    });
+
+    const allPokemons = await Promise.all(promises);
+    return res.json(allPokemons);
   },
   async getHalfDamageFrom(req, res) {
     const { id } = req.params;
-    const typeName = await type.findByPk(id);
-    const resist = await poke.findHalfDamageFrom(typeName.name);
-    return res.json(resist);
+    const types = await type.findHalfDamageFrom(id);
+    const promises = types.map(async (typ) => {
+      const pokemons = await poke.findAllByTypeId(typ.id);
+      const preformatePokemons = await Promise.all(
+        pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
+      );
+      return preformatePokemons;
+    });
+    const allPokemons = await Promise.all(promises);
+    return res.json(allPokemons);
   },
-  async getNoDamageFromAndHalfDamageFrom(req, res) {
+
+  async getNoDamageFromOrHalfDamageFrom(req, res) {
     const { id } = req.params;
-    const typeName = await type.findByPk(id);
-    const imune = await poke.findNoDamageFrom(typeName.name);
-    const resist = await poke.findHalfDamageFrom(typeName.name);
-    const result = imune.concat(resist);
-    return res.json(result);
+    const types = await type.findNoDamageFromAndHalfDamageFrom(id);
+    const promises = await types.map(async (typ) => {
+      const pokemons = await poke.findAllByTypeId(typ.id);
+      const preformatePokemons = await Promise.all(
+        pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
+      );
+      return preformatePokemons;
+    });
+    const allPokemons = await Promise.all(promises);
+    return res.json(allPokemons);
   },
-  async getDoubleDamageFrom(req, res) {
-    const { id } = req.params;
-    const typeName = await type.findByPk(id);
-    const weak = await poke.findDoubleDamageFrom(typeName.name);
-    return res.json(weak);
-  },
-  async getNoDamageFromAndHalfDamageFromToTypes(req, res) {
-    const { typeId1, typeId2 } = req.params;
-    const typeName1 = await type.findByPk(typeId1);
-    const typeName2 = await type.findByPk(typeId2);
-    const imune1 = await poke.findNoDamageFrom(typeName1.name);
-    const imune2 = await poke.findNoDamageFrom(typeName2.name);
-    const resist1 = await poke.findHalfDamageFrom(typeName1.name);
-    const resist2 = await poke.findHalfDamageFrom(typeName2.name);
-    const result = imune1.concat(imune2, resist1, resist2);
-    return res.json(result);
-  },
+  // async getNoDamageFromAndHalfDamageFromToTypes(req, res) {
+  //   const { typeId1, typeId2 } = req.params;
+  //   const typeName1 = await type.findByPk(typeId1);
+  //   const typeName2 = await type.findByPk(typeId2);
+  //   const imune1 = await poke.findNoDamageFrom(typeName1.id);
+  //   const imune2 = await poke.findNoDamageFrom(typeName2.id);
+  //   const resist1 = await poke.findHalfDamageFrom(typeName1.id);
+  //   const resist2 = await poke.findHalfDamageFrom(typeName2.id);
+  //   const result = imune1.concat(imune2, resist1, resist2);
+  //   return res.json(result);
+  // },
   async getOneByName(req, res) {
     const { name } = req.params;
     const pokemon = await poke.findOneByName(name);
@@ -171,7 +196,7 @@ module.exports = {
       const inDb = await poke.findByPk(id);
       if (inDb) {
         const formatedPokemon = await preformatPokemon(inDb);
-        return res.json(formatedPokemon);
+        return formatedPokemon;
       }
       return res.status(400).json({
         error: 'Bad request',
@@ -179,8 +204,9 @@ module.exports = {
       });
     });
     const teamPokemons = await Promise.all(promises);
-    console.log(teamPokemons);
-    return res.json(teamPokemons);
+    const weakNess = getWeakness(teamPokemons);
+    const completions = getTeamSuggestion(weakNess, teamPokemons.length);
+    return res.json(completions);
     // const suggestedTeam = await team.getSuggestedTeam(...pokemons);
     // return res.json(suggestedTeam);
   },

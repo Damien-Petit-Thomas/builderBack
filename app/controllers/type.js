@@ -9,5 +9,26 @@ module.exports = {
     const types = await type.findAll();
     res.json(types);
   },
-
+  async getNoDamageFrom(req, res) {
+    const { id } = req.params;
+    // const typeName = await type.findByPk(id);
+    const imune = await type.findNoDamageFrom(id);
+    return res.json(imune);
+  },
+  async getHalfDamageFrom(req, res) {
+    const { id } = req.params;
+    const resist = await type.findHalfDamageFrom(id);
+    return res.json(resist);
+  },
+  async getNoDamageFromAndHalfDamageFrom(req, res) {
+    const { id } = req.params;
+    const result = await type.findNoDamageFromAndHalfDamageFrom(id);
+    return res.json(result);
+  },
+  async getDoubleDamageFrom(req, res) {
+    const { id } = req.params;
+    const typeName = await type.findByPk(id);
+    const weak = await type.findDoubleDamageFrom(typeName.id);
+    return res.json(weak);
+  },
 };

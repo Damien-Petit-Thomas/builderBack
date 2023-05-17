@@ -13,32 +13,36 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/104
+GET {{api}}/pokemon/25
+
+
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
 GET {{api}}/pokemon/pikachu
 
+### get all pokemon imunise
+GET {{api}}/pokemon/imune/type/1
 
+###get akk resistants pokemons 
+GET {{api}}/pokemon/resist/type/1
+
+###GET resistant and imune pokemon from a type
+GET  {{api}}/pokemon/resist/imune/type/2
 ### GET all pokemon
 GET {{api}}/pokemon
 
+###GET pokemon by 2 types
+GET {{api}}/pokemon/type/4/type/12
 
 ### GET all pokemon of one type
-GET {{api}}/pokemon/type/1
+GET {{api}}/pokemon/type/3
 
 
-### GET all pokemon with immunity from one type
-GET {{api}}/pokemon/imune/type/1
 
 ### GET all pokemon by generation 
 GET {{api}}/pokemon/gen/1
 
-### GET all pokemon with resistance from one type
-GET {{api}}/pokemon/resist/type/1
-
-### GET all pokemon with resistance or immunity from one type
-GET {{api}}/pokemon/resist/imune/type/1
 
 
 ################################### team router ############################
@@ -51,7 +55,7 @@ POST {{api}}/pokemon/suggested
 Content-Type: application/json
 
 [
-    1,3,5,7,9
+    1,3, 5, 15
     
 ]
 
@@ -61,7 +65,15 @@ Content-Type: application/json
 ### GET all types (with damage relations)
 GET {{api}}/type
 
+### GET all type with immunity from one type
+GET {{api}}/type/imune/type/1
 
+
+### GET all pokemon with resistance from one type
+GET {{api}}/type/resist/type/2
+
+### GET all pokemon with resistance or immunity from one type
+GET {{api}}/type/resist/imune/type/1
 ################################## seeding router #############################
 
 
