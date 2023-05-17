@@ -13,7 +13,8 @@ module.exports = {
       } else {
         acc[key] = { ...totalDamage[key] };
       }
-      return acc;
+
+      return Object.values(acc);
     }, {});
 
     return result;
