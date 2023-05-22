@@ -42,7 +42,7 @@ router
   .route('/full-random')
   .get(controllerHandler(controller.getFullRandomTeam));
 router
-  .route('/suggested')
+  .route('/complet-team')
   .post(controllerHandler(controller.getTeamCompletion));
 // router
 //   .route('/:type1/:type2')

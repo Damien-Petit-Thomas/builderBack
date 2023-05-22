@@ -177,7 +177,7 @@ module.exports = {
     // le req.body contient un tableau avec les ids des pokemons
     const poketeam = req.body;
     // on vérifie que le tableau contient entre 1 et 5 pokemons
-    if (poketeam.lenggth < 1 || poketeam.length > 5) {
+    if (poketeam.length < 1 || poketeam.length > 5) {
       return res.status(400).json({
         error: 'Bad request',
         message: 'The req body must contain between 1 and 5 pokemons',
