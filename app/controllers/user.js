@@ -22,7 +22,7 @@ module.exports = {
         username,
       });
       logger.log('info', `User ${newUser.id} created`);
-      res.redirect('/login');
+      res.status(201).json({ message: 'User created' });
     } else {
       res.status(400).json({ message: 'Email already exist' });
     }
