@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
   });
 } else if (process.env.NODE_ENV === 'production') {
   streams.push({
-    level: 'info',
+    level: 'debug',
     type: 'rotating-file',
     path: './log/error.log', // log ERROR and above to a file
     period: '1d', // daily rotation
