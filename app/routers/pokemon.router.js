@@ -39,7 +39,7 @@ router
   .route('/:name([a-zA-Z]+)')
   .get(controllerHandler(controller.getOneByName));
 router
-  .route('/random')
+  .route('/full-random')
   .get(controllerHandler(controller.getFullRandomTeam));
 router
   .route('/suggested')
