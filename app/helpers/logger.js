@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   streams.push({
     level: 'debug',
     type: 'rotating-file',
-    path: '../../log/error.log', // log ERROR and above to a file
+    path: './log/error.log', // log ERROR and above to a file
     period: '1d', // daily rotation
     count: 3, // keep 3 back copies
   });

@@ -1,4 +1,4 @@
-module.exports = (schema, dataSource) => async (req, res, next) => {
+module.exports = (dataSource, schema) => async (req, res, next) => {
   try {
     await schema.validateAsync(req[dataSource]);
     next();

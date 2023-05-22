@@ -97,3 +97,16 @@ GET {{api}}/seeding/types
 ### cache all pokemon
 GET {{api}}/cache/all
 
+
+
+####################################user router #############################
+
+### signup
+POST {{api}}/user/signup
+Content-Type: application/json
+
+{
+    "username": "rolandlayec",
+    "password": "Testtest14*",
+    "email": "roland.layec@gmail.com"
+}
