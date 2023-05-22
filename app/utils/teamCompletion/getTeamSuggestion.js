@@ -1,11 +1,22 @@
-const getNoDamageFromAndHalfDamageFromToTypes = require('./getImmunizedTypes');
+// const getNoDamageFromAndHalfDamageFromToTypes = require('./getImmunizedTypes');
 
-module.exports = async (damages, i) => {
-  damages.sort((a, b) => b.damage - a.damage);
+function getTeamSuggestion(damages, i) {
+  const arr = Object.entries(damages);
+  const arrSorted = arr.sort((a, b) => a[1] - b[1]);
 
-  const [type1, type2] = damages.slice(0, 2).map((type) => type.name);
+  const weakNess = arrSorted.slice(0, 4);
 
-  const immunizedTypes = await getNoDamageFromAndHalfDamageFromToTypes(type1, type2);
+  // case 4:
+  //   return getNoDamageFromAndHalfDamageFromToTypes(arrSorted);
+  // case 3:
+  //   return getNoDamageFromAndHalfDamageFromToTypes(arrSorted);
+  // case 2:
+  //   return getNoDamageFromAndHalfDamageFromToTypes(arrSorted);
+  // case 1:
+  //   return getNoDamageFromAndHalfDamageFromToTypes(arrSorted);
 
-  return damages;
-};
+  return weakNess;
+}
+//
+
+module.exports = getTeamSuggestion;

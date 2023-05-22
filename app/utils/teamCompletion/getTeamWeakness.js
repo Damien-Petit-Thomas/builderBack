@@ -1,20 +1,57 @@
-module.exports = (pokemons) => {
-  const totalDamages = pokemons.map((pokemon) => pokemon.damageFromRelations);
+function getTotalDamages(pokemons) {
+  return pokemons.flatMap((pokemon) => pokemon.damageFromRelations);
+}
 
-  const result = totalDamages.reduce(
-    (acc, damage) => {
-      damage.forEach((type) => {
-        if (type.id in acc) {
-          acc[type.id].damage *= type.damage;
-        } else {
-          acc[type.id] = { ...type };
-        }
-      });
+function getNumberOfResistanceByType(pokemons) {
+  const totalDamages = getTotalDamages(pokemons);
+  const idCounts = {}; // Pour stocker les ID et le nombre de fois où ils ont un damage > 1
 
-      return acc;
-    },
-    {},
-  );
+  totalDamages.forEach((elem) => {
+    if (elem.damage < 1) {
+      if (idCounts[elem.id]) {
+        idCounts[elem.id] += 1;
+      } else {
+        idCounts[elem.id] = 1;
+      }
+    } else if (idCounts[elem.id]) {
+      idCounts[elem.id] += 0;
+    } else {
+      idCounts[elem.id] = 0;
+    }
+  });
 
-  return Object.values(result);
+  return idCounts;
+}
+
+function getNumberOfWeaknessByType(pokemons) {
+  const totalDamages = getTotalDamages(pokemons);
+
+  return totalDamages.reduce((acc, damage) => {
+    if (damage.damage > 1) {
+      acc[damage.name] = (acc[damage.name] || 0) + 1;
+    } else {
+      acc[damage.name] = acc[damage.name] || 0;
+    }
+    return acc;
+  }, {});
+}
+
+function getNumberOfImmunityByType(pokemons) {
+  const totalDamages = getTotalDamages(pokemons);
+
+  return totalDamages.reduce((acc, damage) => {
+    if (damage.damage === 0) {
+      acc[damage.name] = (acc[damage.name] || 0) + 1;
+    } else {
+      acc[damage.name] = acc[damage.name] || 0;
+    }
+    return acc;
+  }, {});
+}
+
+module.exports = {
+  getTotalDamages,
+  getNumberOfResistanceByType,
+  getNumberOfWeaknessByType,
+  getNumberOfImmunityByType,
 };
