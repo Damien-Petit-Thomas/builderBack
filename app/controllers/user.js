@@ -9,6 +9,9 @@ module.exports = {
 
   register: async (req, res) => {
     const { email, password, username } = req.body;
+    logger.log('info', `User ${email} is trying to register`);
+    logger.log('info', `User ${password} is trying to register`);
+    logger.log('info', `User ${username} is trying to register`);
     let validForm = true;
     if (await user.findByMail(email)) {
       validForm = false;
