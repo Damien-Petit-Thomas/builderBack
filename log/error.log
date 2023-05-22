@@ -1,7 +1,1 @@
-{"name":"poke","hostname":"lgdamien","pid":115878,"level":30,"msg":"Houston listening on port :  http://localhost:3003","time":"2023-05-22T19:45:12.432Z","v":0}
-{"name":"poke","hostname":"lgdamien","pid":116564,"level":30,"msg":"Houston listening on port :  http://localhost:3003","time":"2023-05-22T19:48:54.256Z","v":0}
-{"name":"poke","hostname":"lgdamien","pid":116564,"level":30,"msg":"info User roland.layec@gmail.com is trying to register","time":"2023-05-22T19:49:06.402Z","v":0}
-{"name":"poke","hostname":"lgdamien","pid":116564,"level":30,"msg":"info User Testtest14* is trying to register","time":"2023-05-22T19:49:06.403Z","v":0}
-{"name":"poke","hostname":"lgdamien","pid":116564,"level":30,"msg":"info User rolandlayec is trying to register","time":"2023-05-22T19:49:06.403Z","v":0}
-{"name":"poke","hostname":"lgdamien","pid":116564,"level":30,"msg":"info User 1 created","time":"2023-05-22T19:49:07.368Z","v":0}
-{"name":"poke","hostname":"lgdamien","pid":116711,"level":30,"msg":"Houston listening on port :  http://localhost:3003","time":"2023-05-22T19:49:40.045Z","v":0}
+{"name":"poke","hostname":"lgdamien","pid":118399,"level":30,"msg":"Houston listening on port :  http://localhost:3003","time":"2023-05-22T19:57:45.159Z","v":0}
