@@ -1,47 +1,39 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 module.exports = {
 
-  authentify(user, ip) {
+  async authentify(user, password) {
+    const passwordValid = await bcrypt.compare(password, user.password);
+    if (!passwordValid) {
+      throw new Error('Invalid password');
+    }
     const token = jwt.sign({
       id: user.id,
       username: user.username,
       email: user.email,
-      ip,
+      ip: user.ip,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
     return token;
   },
 
-  getUser(token, ip) {
-    if (!token) return null;
+  async getUser(req, res, next) {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    if (!token) {
+      res.status(401).json({ message: 'Authentification failed' });
+      return; // Arrête l'exécution de la fonction
+    }
     try {
       const user = jwt.verify(token, process.env.JWT_SECRET);
-      if (!user || user.ip !== ip) return null;
-      return user;
+      if (!user || user.ip !== req.ip) {
+        res.status(401).json({ message: 'Authentification failed' });
+        return; // Arrête l'exécution de la fonction
+      }
+      req.user = user; // Stocke les informations de l'utilisateur dans la requête
+      next(); // Appel de next pour passer au middleware suivant
     } catch (err) {
-      return null;
+      res.status(401).json({ message: 'Authentification failed' });
     }
   },
 
 };
-// const jwt = require('jsonwebtoken');
-
-// function verifyToken(req, res, next) {
-//   const authHeader = req.headers.authorization;
-
-//   if (!authHeader) {
-//     return res.status(401).json({ error: 'Token not provided' });
-//   }
-
-//   const token = authHeader.split(' ')[1];
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     req.user = decoded; // stocke les informations utilisateur dans l'objet request pour les utiliser dans le middleware ou le contrôleur suivant
-//     next();
-//   } catch (err) {
-//     return res.status(401).json({ error: 'Invalid token' });
-//   }
-// }
-
-// module.exports = verifyToken;

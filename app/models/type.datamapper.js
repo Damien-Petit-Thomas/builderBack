@@ -93,4 +93,13 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
 
     return pokemons.rows;
   }
+
+  async findResistanceToTypeList(types, index) {
+    const pokemons = await this.client.query(
+      'SELECT * FROM filterTypes($1, $2) ;',
+      [types, index],
+    );
+
+    return pokemons.rows;
+  }
 };

@@ -11,12 +11,11 @@ module.exports = class CoreDatamapper {
   }
 
   async findOneByName(inputData) {
-    console.log(inputData);
     const result = await this.client.query(`SELECT * FROM "${this.tablename}" WHERE LOWER(UNACCENT(name)) = LOWER(UNACCENT($1)) ORDER BY id ASC`, [inputData]);
     if (!result.rows[0]) {
       return null;
     }
-    console.log(result.rows[0]);
+
     return result.rows[0];
   }
 

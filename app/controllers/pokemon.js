@@ -9,8 +9,10 @@ const buildPokemonObjectFromPokeDb = require('../utils/pokemon.utils/buildFormat
 const CacheServer = require('../utils/cache');
 const preformatPokemon = require('../utils/pokemon.utils/preformatePokemon');
 const getPokemonFromCache = require('../utils/pokemon.utils/getPokemonFromCahe');
-const getWeakness = require('../utils/teamCompletion/getTeamWeakness');
+const { getNumberOfResistanceByType } = require('../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../utils/teamCompletion/getTeamSuggestion');
+const bestTwoTypes = require('../utils/teamCompletion/bestTwoTypes');
+const getBestPokemons = require('../utils/teamCompletion/getBestPokemons');
 
 const cache = CacheServer.getInstance();
 module.exports = {
@@ -175,7 +177,7 @@ module.exports = {
     // le req.body contient un tableau avec les ids des pokemons
     const poketeam = req.body;
     // on vérifie que le tableau contient entre 1 et 5 pokemons
-    if (poketeam.length < 1 || poketeam.length > 5) {
+    if (poketeam.lenggth < 1 || poketeam.length > 5) {
       return res.status(400).json({
         error: 'Bad request',
         message: 'The req body must contain between 1 and 5 pokemons',
@@ -190,10 +192,12 @@ module.exports = {
       });
     }
     // on recupere les pokemons depuis la base de données
+
     const promises = poketeam.map(async (id) => {
       const inCache = cache.get(id);
       if (inCache) return inCache;
       const inDb = await poke.findByPk(id);
+
       if (inDb) {
         const formatedPokemon = await preformatPokemon(inDb);
         return formatedPokemon;
@@ -203,10 +207,34 @@ module.exports = {
         message: 'unknow pokemon',
       });
     });
-    const teamPokemons = await Promise.all(promises);
-    const weakNess = getWeakness(teamPokemons);
-    const completions = getTeamSuggestion(weakNess, teamPokemons.length);
-    return res.json(completions);
+    const teamPokemons = (await Promise.all(promises)).flat();
+
+    while (teamPokemons.length < 6) {
+      const weakNess = getNumberOfResistanceByType(teamPokemons);
+      const weak = getTeamSuggestion(weakNess, teamPokemons.length);
+
+      const typeList = [];
+      for (let i = 0; i < weak.length; i += 1) {
+        typeList.push(weak[i][0]);
+      }
+      const index = [];
+      for (let i = 0; i < weak.length; i += 1) {
+        index.push(i);
+      }
+      const resistantTypes = await type.findResistanceToTypeList(typeList, index);
+
+      const bestTypes = bestTwoTypes(resistantTypes);
+
+      const bestPokemons = await getBestPokemons(bestTypes);
+
+      if (bestPokemons) {
+        const formatedPokemon = await preformatPokemon(bestPokemons[0]);
+        teamPokemons.push(formatedPokemon);
+      }
+      // const formatedPokemon = await preformatPokemon(bestPokemons);
+    }
+
+    return res.json(teamPokemons);
     // const suggestedTeam = await team.getSuggestedTeam(...pokemons);
     // return res.json(suggestedTeam);
   },

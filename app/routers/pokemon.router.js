@@ -32,9 +32,9 @@ router
 router
   .route('/resist/imune/type/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFromOrHalfDamageFrom));
-router
-  .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')
-  .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFromToTypes));
+// router
+//   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')
+//   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFromToTypes));
 router
   .route('/:name([a-zA-Z]+)')
   .get(controllerHandler(controller.getOneByName));

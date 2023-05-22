@@ -31,4 +31,14 @@ module.exports = {
     const weak = await type.findDoubleDamageFrom(typeName.id);
     return res.json(weak);
   },
+  async getResistanceToTypeList(req, res) {
+    const types = req.body;
+    const index = [];
+    for (let i = 1; i <= types.length; i += 1) {
+      index.push(i);
+    }
+
+    const result = await type.findResistanceToTypeList(types, index);
+    return res.json(result);
+  },
 };

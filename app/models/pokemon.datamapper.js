@@ -14,6 +14,13 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
     return pokemon.rows[0];
   }
 
+  async findRandomOne() {
+    const pokemon = await this.client.query(
+      'SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 1',
+    );
+    return pokemon.rows[0];
+  }
+
   async findAllByTypeId(id) {
     const pokemons = await this.client.query(
       'SELECT * FROM pokemon WHERE type1 = $1 OR type2 = $1 ORDER BY id ASC',
@@ -25,6 +32,15 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
   async findAllByTypesIds(id1, id2) {
     const pokemons = await this.client.query(
       'SELECT * FROM pokemon WHERE (type1 = $1 AND type2 = $2) OR (type1 = $2 AND type2 = $1) ORDER BY id ASC',
+
+      [id1, id2],
+    );
+    return pokemons.rows;
+  }
+
+  async findBestPokemonByTypesIds(id1, id2) {
+    const pokemons = await this.client.query(
+      'SELECT * FROM pokemon WHERE (type1 = $1 AND type2 = $2) OR (type1 = $2 AND type2 = $1) ORDER BY RANDOM() limit 1',
 
       [id1, id2],
     );

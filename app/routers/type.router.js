@@ -20,4 +20,7 @@ router
 router
   .route('/resist/imune/type/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFrom));
+router
+  .route('/resist/types')
+  .post(controllerHandler(controller.getResistanceToTypeList));
 module.exports = router;

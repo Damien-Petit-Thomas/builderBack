@@ -28,7 +28,7 @@ GET {{api}}/pokemon/imune/type/1
 GET {{api}}/pokemon/resist/type/1
 
 ###GET resistant and imune pokemon from a type
-GET  {{api}}/pokemon/resist/imune/type/2
+GET  {{api}}/pokemon/resist/imune/type/5
 ### GET all pokemon
 GET {{api}}/pokemon
 
