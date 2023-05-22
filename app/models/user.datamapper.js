@@ -5,7 +5,7 @@ module.exports = class UserDatamapper extends CoreDatamapper {
 
   getOneByEmail = async (email) => {
     const user = await this.client.query(
-      'SELECT * FROM user WHERE email = $1',
+      'SELECT * FROM "user" WHERE email = $1',
       [email],
     );
     return user.rows[0];
