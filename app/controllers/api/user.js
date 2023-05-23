@@ -10,6 +10,7 @@ module.exports = {
 
   register: async (req, res) => {
     const { email, password, username } = req.body;
+    console.log(req.body);
     let validForm = true;
     if (await user.getOneByEmail(email)) {
       validForm = false;

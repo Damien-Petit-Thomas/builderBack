@@ -1,7 +1,7 @@
 const websiteController = {
 
   home(_, res) {
-    res.render('home');
+    res.render('home', { title: 'Team Builder' });
   },
 };
 

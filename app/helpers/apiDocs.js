@@ -6,8 +6,13 @@ const options = {
     title: 'O\'Builder',
     description: 'O\'Builder API l\'API pour les dresseurs de pokémon',
   },
+  security: {
+    BasicAuth: {
+      type: 'http',
+      scheme: 'basic',
+    },
   baseDir: __dirname,
-  filesPattern: ['./../../documentation.js'],
+  filesPattern: ['./**/**/*.js'],
   swaggerUIPath: process.env.API_PATH,
   exposeApiDocs: true,
   apiDocsPath: '/api-docs',
