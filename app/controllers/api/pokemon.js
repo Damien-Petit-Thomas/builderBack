@@ -190,7 +190,7 @@ module.exports = {
     // le req.body contient un tableau avec les ids des pokemons
     // return res.json(req.body);
     const poketeam = req.body;
-    console.log(poketeam);
+
     // on vérifie que le tableau contient entre 1 et 5 pokemons
     if (poketeam.length < 1 || poketeam.length > 5) {
       return res.status(400).json({
