@@ -7,7 +7,7 @@ const options = {
     description: 'O\'Builder API l\'API pour les dresseurs de pokémon',
   },
   baseDir: __dirname,
-  filesPattern: ['../app/routers/**/*.js', '../app/models/**/*.js', '../../documentation.js'],
+  filesPattern: ['../../documentation.js'],
   swaggerUIPath: process.env.API_PATH,
   exposeApiDocs: true,
   apiDocsPath: '/api-docs',
