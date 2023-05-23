@@ -3,7 +3,7 @@
 # Nécessite l'extension REST Client pour VSCode
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 ################################################################################
-@api = http://localhost:{{$dotenv PORT}}/api
+@api = https://boiling-forest-96071.herokuapp.com/api
 
 
 ################################################################################
@@ -57,7 +57,7 @@ Content-Type: application/json
 
 
 [
-    1
+    100
 ]
 
 ################################## type router #############################
