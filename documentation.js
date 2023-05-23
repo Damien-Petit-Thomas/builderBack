@@ -2,7 +2,7 @@
 // POKEMON ROUTER
 
 /**
- * GET /pokemon
+ * GET /api/pokemon
  * @summary GET all pokemons
  * @tags POKEMON
  * @return {[Pokemon]} 200 - success response - appllication/json
@@ -10,7 +10,7 @@
  */
 
 /**
- * GET /pokemon/{id}
+ * GET /api/pokemon/{id}
  * @summary GET a pokemon by id
  * @tags POKEMON
  * @param {number} id.path - id of the pokemon
@@ -18,7 +18,7 @@
  */
 
 /**
- * GET /pokemon/type/{id}
+ * GET /api/pokemon/type/{id}
  * @summary GET all pokemons by type id
  * @tags POKEMON
  * @param {number} id.path - id of the type
@@ -28,7 +28,7 @@
 */
 
 /**
- * GET /pokemon/type/{id1}/{id2}
+ * GET /api/pokemon/type/{id1}/{id2}
  * @summary GET all pokemons by two types id
  * @tags POKEMON
  * @param {number} id1.path - id of the first type
@@ -39,7 +39,7 @@
  */
 
 /**
- * GET /pokemon/gen/{id}
+ * GET /api/pokemon/gen/{id}
  * @summary GET all pokemons by generation id
  * @tags POKEMON
  * @param {number} id.path - id of the generation
@@ -49,7 +49,7 @@
  */
 
 /**
- * GET /pokemon/imune/{id}
+ * GET /api/pokemon/imune/{id}
  * @summary GET all pokemons with no damage from a type
  * @tags POKEMON
  * @param {number} id.path - id of the type
@@ -59,7 +59,7 @@
  */
 
 /**
- * GET /pokemon/resist/{id}
+ * GET /api/pokemon/resist/{id}
  * @summary GET all pokemons with half damage from a type
  * @tags POKEMON
  * @param {number} id.path - id of the type
@@ -69,7 +69,7 @@
  */
 
 /**
- * GET /pokemon/resistOrImune/{id}
+ * GET /api/pokemon/resistOrImune/{id}
  * @summary GET all pokemons with half or no damage from a type
  * @tags POKEMON
  * @param {number} id.path - id of the type
@@ -79,7 +79,7 @@
  */
 
 /**
- * GET /pokemon/{name}
+ * GET /api/pokemon/{name}
  * @summary GET a pokemon by name (case and accent insensitive)
  * @tags POKEMON
  * @param {string} name.path - name of the pokemon
@@ -89,7 +89,7 @@
  */
 
 /**
- * GET /pokemon/full-random
+ * GET /api/pokemon/full-random
  * @summary GET a random team of 6 pokemons
  * @tags POKEMON
  * @return {[Pokemon]} 200 - success response - appllication/json
@@ -98,7 +98,7 @@
  */
 
 /**
- * POST /pokemon/completion/suggestion
+ * POST /api/pokemon/completion/suggestion
  * @summary GET completion suggestions for a pokemon team (6 pokemons)
  * @tags POKEMON
  * @return {[Pokemon]} 200 - success response - appllication/json
@@ -108,7 +108,7 @@
 
 // ------------------generation router-------------------------//
 /**
- * GET /gen
+ * GET /api/gen
  * @summary GET all generations
  * @tags GENERATION
  * @return {[Generation]} 200 - success response - appllication/json
@@ -119,7 +119,7 @@
 // -------------typedef------------------------------//
 
 /**
- * @typedef {object} Pokemon
+*@typedef {object} Pokemon
 *@property {number} id - The id of the pokemon
 *@property {string} name - The name of the pokemon
 *@property {number} gen - The generation of the pokemon
@@ -143,6 +143,14 @@
  */
 
 /**
+ * @typedef {object} ApiError
+ * @property {string} message - Error message
+ * @property {string} name - Error name
+ * @property {object} infos - Additionnal informations
+ */
+
+/**
+ *
  * @typedef {object} ApiError
  * @property {string} message - Error message
  * @property {string} name - Error name
