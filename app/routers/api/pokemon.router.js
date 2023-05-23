@@ -1,12 +1,13 @@
 const express = require('express');
-const { pokemonController: controller } = require('../controllers');
+const { pokemonController: controller } = require('../../controllers/api');
 
-const controllerHandler = require('../helpers/controllerHandler');
+const controllerHandler = require('../../helpers/controllerHandler');
 
 const router = express.Router();
 
 router
   .route('/')
+
   .get(controllerHandler(controller.getAll));
 router
   .route('/:id(\\d+)')
@@ -30,7 +31,7 @@ router
 //   .route('/weak/type/:id(\\d+)')
 //   .get(controllerHandler(controller.getDoubleDamageFrom));
 router
-  .route('/resist/imune/type/:id(\\d+)')
+  .route('/resistOrImune/type/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFromOrHalfDamageFrom));
 // router
 //   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')

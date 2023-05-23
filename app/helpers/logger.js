@@ -3,25 +3,24 @@ const bunyan = require('bunyan');
 
 const streams = [];
 
-if (process.env.NODE_ENV === 'development') {
+if (['production'].includes(process.env.NODE_ENV)) {
   streams.push({
-    level: 'debug',
-    stream: process.stdout, // log INFO and above to stdout
-  });
-} else if (process.env.NODE_ENV === 'production') {
-  streams.push({
-    level: 'debug',
+    level: 'error',
+    path: './log/error.log',
     type: 'rotating-file',
-    path: './log/error.log', // log ERROR and above to a file
-    period: '2h', // daily rotation
-    count: 72, // keep 3 back copies
+    period: '1d', // daily rotation
+    count: 3, // keep 3 back copies
+  });
+} else if (!['test'].includes(process.env.NODE_ENV)) {
+  streams.push({
+    level: 'debug',
+    stream: process.stdout,
   });
 }
 
 const logger = bunyan.createLogger({
-  name: 'poke',
+  name: 'poke-api',
   streams,
-  level: 'debug', // Ajout du niveau de log "debug"
 });
 
 logger.log = logger.info;

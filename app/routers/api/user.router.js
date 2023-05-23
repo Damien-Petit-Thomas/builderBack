@@ -1,12 +1,12 @@
 const express = require('express');
 
-const { userController: controller } = require('../controllers/index');
+const { userController: controller } = require('../../controllers/api');
 
-const controllerHandler = require('../helpers/controllerHandler');
-const validate = require('../validation/validator');
-const createShema = require('../validation/schemas/userCreate.schema');
-const loginShema = require('../validation/schemas/userLogin.schema');
-const login = require('../services/auth.sevice/login.service');
+const controllerHandler = require('../../helpers/controllerHandler');
+const validate = require('../../validation/validator');
+const createShema = require('../../validation/schemas/userCreate.schema');
+const loginShema = require('../../validation/schemas/userLogin.schema');
+const login = require('../../services/auth.sevice/login.service');
 
 const router = express.Router();
 
@@ -41,4 +41,9 @@ router
 // router
 //   .route('/user/teams/:id/pokemons')
 //   .get(controllerHandler(controller.getMyTeamPokemons));
+
+router.use(() => {
+  throw new Error('Route not found');
+});
+
 module.exports = router;

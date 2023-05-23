@@ -1,17 +1,15 @@
 const bcrypt = require('bcrypt');
-const { user } = require('../models/index.datamapper');
-const login = require('../services/auth.sevice/login.service');
-const logger = require('../helpers/logger');
-const team = require('../models/index.datamapper');
-const teamHasPokemon = require('../models/index.datamapper');
+const { user } = require('../../models/index.datamapper');
+const login = require('../../services/auth.sevice/login.service');
+const logger = require('../../helpers/logger');
+const team = require('../../models/index.datamapper');
+const teamHasPokemon = require('../../models/index.datamapper');
+const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
 
   register: async (req, res) => {
     const { email, password, username } = req.body;
-    logger.log('info', `User ${email} is trying to register`);
-    logger.log('info', `User ${password} is trying to register`);
-    logger.log('info', `User ${username} is trying to register`);
     let validForm = true;
     if (await user.getOneByEmail(email)) {
       validForm = false;
@@ -25,9 +23,9 @@ module.exports = {
         username,
       });
       logger.log('info', `User ${newUser.id} created`);
-      res.status(201).json({ message: 'User created' });
+      res.status(200).json({ message: 'User created' });
     } else {
-      res.status(400).json({ message: 'Email already exist' });
+      throw new ApiError('Invalid form', 400);
     }
   },
 
@@ -54,10 +52,10 @@ module.exports = {
 
   createMyTeam: async (req, res) => {
     try {
-      const { name, userId } = req.body;
+      const { teamName, usere } = req.body;
       const inputData = {
-        name,
-        user_id: userId,
+        name: teamName,
+        user_id: usere.id,
       };
       const newTeam = await team.create(inputData);
 
@@ -68,13 +66,13 @@ module.exports = {
         pokeInTeam = await teamHasPokemon.insertTeam(pokemonIds, newTeam.id);
       } else {
         // Gérer le cas où la création de l'équipe a échoué
-        throw new Error('Failed to create team');
+        throw new ApiError('Failed to create team', { statusCode: 500 });
       }
 
       res.status(200).json({ newTeam, pokeInTeam });
     } catch (error) {
       // Gérer les erreurs et renvoyer une réponse d'erreur appropriée
-      res.status(500).json({ message: error.message });
+      throw new ApiError('Failed to create team', { statusCode: 500 });
     }
   },
 

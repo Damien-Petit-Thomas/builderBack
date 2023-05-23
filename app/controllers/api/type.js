@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-const logger = require('../helpers/logger');
-const { type } = require('../models/index.datamapper');
+const logger = require('../../helpers/logger');
+const { type } = require('../../models/index.datamapper');
 
 module.exports = {
 

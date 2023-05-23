@@ -7,6 +7,7 @@ const cache = CacheServer.getInstance();
 
 module.exports = async (pokemon) => {
   const pokemonType = [];
+
   pokemonType.push(pokemon.type1);
   if (pokemon.type2) {
     pokemonType.push(pokemon.type2);

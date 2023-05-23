@@ -1,4 +1,4 @@
-const { cacheAllPokemon } = require('../services/pokemon.service/cache.service');
+const { cacheAllPokemon } = require('../../services/pokemon.service/cache.service');
 
 module.exports = {
 

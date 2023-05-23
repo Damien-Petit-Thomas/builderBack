@@ -9,7 +9,11 @@ const generationController = require('./generation');
 const apiController = {
 
   home(req, res) {
-    res.send('Welcome to the PokeAPI');
+    // const fullUrl = `${req.protocol}://${req.get('host')}`;
+    res.send(
+      // documentation_url: `${fullUrl}${process.env.API_DOCS}` ?? '/api-docs',
+      'catch them all',
+    );
   },
 };
 

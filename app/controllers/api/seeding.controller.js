@@ -2,12 +2,14 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-await-in-loop */
 
-const buildPokemonFromPokeApi = require('../utils/pokemon.utils/buildPokemonFromPokeApi');
-const { poke, type } = require('../models/index.datamapper');
-const logger = require('../helpers/logger');
-const CacheServer = require('../utils/cache');
-const { gen } = require('../models/index.datamapper');
-const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../services/pokemon.service/seeding.service');
+const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
+const { poke, type } = require('../../models/index.datamapper');
+const logger = require('../../helpers/logger');
+const CacheServer = require('../../utils/cache');
+const { gen } = require('../../models/index.datamapper');
+const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../../services/pokemon.service/seeding.service');
+const { ApiError } = require('../../helpers/errorHandler');
+const { pokeApi } = require('../../services/pokemon.service');
 
 const cache = CacheServer.getInstance();
 
@@ -18,7 +20,7 @@ module.exports = {
   async seedOnePokemon(req, res) {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json({ error: 'id is required' });
+      throw new ApiError('id is required', { statuscode: 400 });
     }
     const pokemonInCache = cache.get(id);
     if (pokemonInCache) {
@@ -61,10 +63,10 @@ module.exports = {
     const types = await seedAllType();
     return res.json(types);
   },
-  async getGenerations(_, res) {
+  async seedGenerations(_, res) {
     let numberOfGenerations;
     try {
-      numberOfGenerations = await getAllGenerations();
+      numberOfGenerations = await pokeApi.getAllGenerationsCount();
       const start = await gen.count();
       const generations = await gen.insertGen(start + 1, numberOfGenerations);
       logger.log(generations);
@@ -83,7 +85,7 @@ module.exports = {
     const pokemons = [];
     const records = [];
     for (let i = 0; i < generations.length; i += 1) {
-      pokemons[i] = await pokeApi.getAllPokeByGeneration(generations[i].id);
+      pokemons[i] = await pokeApi.getAllGenerationsCount(generations[i].id);
       for (let j = 0; j < pokemons[i].length; j += 1) {
         records.push({
           poke_id: pokemons[i][j].url.split('/')[6], gen_id: i + 1,

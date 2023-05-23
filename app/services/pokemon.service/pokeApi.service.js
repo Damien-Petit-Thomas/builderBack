@@ -19,7 +19,7 @@ module.exports = class PokemonService extends CoreService {
   //* method to get the number of existing generation  *//
   // endpoint : https://pokeapi.co/api/v2/generation/
 
-  async getAllGenerations() {
+  async getAllGenerationsCount() {
     try {
       const response = await this.get('/generation');
       return response.count;
@@ -50,7 +50,7 @@ module.exports = class PokemonService extends CoreService {
       const response = await this.get(`/pokemon-species/${id}`);
       const frenchName = response.names.find((name) => name.language.name === 'fr').name;
       const gen = response.generation.url.split('/')[6];
-      console.log(gen);
+
       return { frenchName, gen };
     } catch (err) {
       logger.error(err);
