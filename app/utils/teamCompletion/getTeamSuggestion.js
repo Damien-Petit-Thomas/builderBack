@@ -1,4 +1,4 @@
-// const getNoDamageFromAndHalfDamageFromToTypes = require('./getImmunizedTypes');
+const getNoDamageFromAndHalfDamageFromToTypes = require('./getImmunizedTypes');
 
 function getTeamSuggestion(damages, i) {
   const arr = Object.entries(damages);

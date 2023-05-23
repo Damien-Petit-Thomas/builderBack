@@ -43,6 +43,7 @@ module.exports = {
         logger.log(e);
       }
     }
+
     for (let i = 0; i < frenchType.length; i += 1) {
       const noDamageFrom = damageType[frenchType[i].name].no_damage_from.map((typ) => typ.url.split('/')[6]);
       const halfDamageFrom = damageType[frenchType[i].name].half_damage_from.map((typ) => typ.url.split('/')[6]);

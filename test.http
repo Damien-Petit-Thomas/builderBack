@@ -13,7 +13,8 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/2
+GET {{api}}/pokemon/15
+
 
 
 
@@ -28,12 +29,12 @@ GET {{api}}/pokemon/imune/type/1
 GET {{api}}/pokemon/resist/type/1
 
 ###GET resistant and imune pokemon from a type
-GET  {{api}}/pokemon/resist/imune/type/5
+GET  {{api}}/pokemon/resist/imune/type/2
 ### GET all pokemon
-GET {{api}}/pokemon
+GET {{api}}/pokemon/full-random
 
 ###GET pokemon by 2 types
-GET {{api}}/pokemon/type/4/type/12
+GET {{api}}/pokemon/type//type/17
 
 ### GET all pokemon of one type
 GET {{api}}/pokemon/type/3
@@ -69,11 +70,22 @@ GET {{api}}/type
 GET {{api}}/type/imune/type/1
 
 
-### GET all pokemon with resistance from one type
-GET {{api}}/type/resist/type/2
+### GET all types with resistance from one type
+GET {{api}}/type/resist/type/1
 
-### GET all pokemon with resistance or immunity from one type
-GET {{api}}/type/resist/imune/type/1
+### GET all types with resistance or immunity from one type
+GET {{api}}/type/resist/imune/type/2
+
+####POSt get a list of types with resistance or immunity from a list of types
+POST {{api}}/type/resist/types
+Content-Type: application/json
+
+    [6,5,7,12,15]
+    
+
+
+
+
 ################################## seeding router #############################
 
 
@@ -90,6 +102,8 @@ GET {{api}}/seeding/gen/1
 ### seed all types
 GET {{api}}/seeding/types
 
+### seed all generations
+GET {{api}}/seeding/generations
 
 
 ####################################cache router #############################
@@ -97,11 +111,13 @@ GET {{api}}/seeding/types
 ### cache all pokemon
 GET {{api}}/cache/all
 
+###########################generation router #################################
 
+### get all generations
+GET {{api}}/gen
 
-####################################user router #############################
+### create user
 
-### signup
 POST {{api}}/user/signup
 Content-Type: application/json
 
@@ -110,3 +126,12 @@ Content-Type: application/json
     "password": "Testtest14*",
     "email": "roland.layec@gmail.com"
 }
+
+
+
+
+@web = http://localhost:{{$dotenv PORT}}/
+
+### home page
+
+GET {{web}}

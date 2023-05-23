@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const loginSchema = Joi.object({
-  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'fr'] } })
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     .required()
     .messages({
       'string.base': 'L\'adresse email doit valide',

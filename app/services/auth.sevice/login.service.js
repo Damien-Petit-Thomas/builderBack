@@ -29,7 +29,7 @@ module.exports = {
         res.status(401).json({ message: 'Authentification failed' });
         return; // Arrête l'exécution de la fonction
       }
-      req.user = user; // Stocke les informations de l'utilisateur dans la requête
+      req.usere = user; // Stocke les informations de l'utilisateur dans la requête
       next(); // Appel de next pour passer au middleware suivant
     } catch (err) {
       res.status(401).json({ message: 'Authentification failed' });

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "repository": {
@@ -26,10 +27,12 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-jsdoc-swagger": "^1.8.0",
+    "i": "^0.3.7",
     "joi": "^17.9.2",
-    "jsdoc": "^4.0.2",
     "jsonwebtoken": "^9.0.0",
     "node-cache": "^5.1.2",
+    "npm": "^9.6.7",
+    "path": "^0.12.7",
     "pg": "^8.10.0"
   },
   "devDependencies": {

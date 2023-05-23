@@ -1,0 +1,18 @@
+%syntax-version=1.0.0
+%project=obuilder
+
+init_db 2023-05-05T14:45:18Z Damien <damien.petit.thomas@gmail.com> # ddl
+insert_function 2023-05-05T14:56:46Z Damien <damien.petit.thomas@gmail.com> # insert a pokemon
+index 2023-05-09T19:30:26Z Damien <damien.petit.thomas@gmail.com> # feature index
+random-function 2023-05-09T23:38:01Z Damien <damien.petit.thomas@gmail.com> # get a full random team
+genTable 2023-05-10T08:33:45Z Damien <damien.petit.thomas@gmail.com> # add tble generation
+unaccent 2023-05-10T10:30:26Z Damien <damien.petit.thomas@gmail.com> # add unaccent extention
+team_pokemon 2023-05-10T11:14:22Z Damien <damien.petit.thomas@gmail.com> # add table
+table-team 2023-05-10T13:35:37Z Damien <damien.petit.thomas@gmail.com> # add table team
+insert-gen-function 2023-05-10T14:10:17Z Damien <damien.petit.thomas@gmail.com> # function for the dynamic insertion in the gen table
+add-genId 2023-05-11T07:15:11Z Damien <damien.petit.thomas@gmail.com> # add gen-id column in pokemon table
+alter-insert 2023-05-12T09:37:37Z Damien <damien.petit.thomas@gmail.com> # add gen_id in insert function
+function_filtertypes 2023-05-12T10:01:00Z Damien <damien.petit.thomas@gmail.com> # add function filtertypes
+user_table 2023-05-20T12:29:50Z Damien <damien.petit.thomas@gmail.com> # add user table
+user_id 2023-05-20T12:40:53Z Damien <damien.petit.thomas@gmail.com> # add user_id in team table
+

@@ -21,8 +21,8 @@ const userschema = Joi.object({
       'any.required': 'Le mot de passe est requis',
       'string.complexity': 'Le mot de passe doit faire au moins 8 caractères, contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial',
     }),
-  // passwordConfirm: Joi.ref('password'),
-  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'fr'] } })
+  passwordConfirm: Joi.ref('password'),
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
     .required()
     .messages({
       'string.base': 'L\'adresse email doit être une chaîne de caractères',
