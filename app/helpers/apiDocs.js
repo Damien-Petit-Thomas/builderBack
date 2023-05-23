@@ -11,11 +11,12 @@ const options = {
       type: 'http',
       scheme: 'basic',
     },
-  baseDir: __dirname,
-  filesPattern: ['./**/**/*.js'],
-  swaggerUIPath: process.env.API_PATH,
-  exposeApiDocs: true,
-  apiDocsPath: '/api-docs',
+    baseDir: __dirname,
+    filesPattern: ['./**/**/*.js'],
+    swaggerUIPath: process.env.API_PATH,
+    exposeApiDocs: true,
+    apiDocsPath: '/api-docs',
+  },
 };
 
 module.exports = (app) => expressJSDocSwagger(app)(options);
