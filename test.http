@@ -14,7 +14,7 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/15
+GET {{api}}/pokemon/14
 
 
 
@@ -58,8 +58,17 @@ Content-Type: application/json
 
 
 [
-    100, 255, 156, 456, 102,200
+    100
 ]
+
+###POST a team to get a complete team with 6 pokemon
+POST {{local}}/pokemon/complet-team
+Content-Type: application/json
+
+[
+    100, 200, 300, 400, 500
+]
+
 
 ################################## type router #############################
 

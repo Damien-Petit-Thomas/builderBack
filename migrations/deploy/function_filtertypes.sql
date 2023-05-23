@@ -10,6 +10,7 @@ RETURNS TABLE (
   matching_ids int[]
 )
 AS $$
+
 BEGIN
   RETURN QUERY
   SELECT id::int, name::text,
@@ -34,7 +35,7 @@ BEGIN
     WHERE (elem->>'damage')::float <= 0.5
       AND (elem->>'id')::int = ANY(ids)
     
-  ) IN (SELECT unnest(matches)) AND matching_count > 0 ORDER BY matching_count DESC;
+  ) IN (SELECT unnest(matches))  ORDER BY matching_count DESC;
 
 END;
 $$ LANGUAGE plpgsql;

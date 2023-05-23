@@ -190,6 +190,7 @@ module.exports = {
     // le req.body contient un tableau avec les ids des pokemons
     // return res.json(req.body);
     const poketeam = req.body;
+    console.log(poketeam);
     // on vérifie que le tableau contient entre 1 et 5 pokemons
     if (poketeam.length < 1 || poketeam.length > 5) {
       return res.status(400).json({
@@ -236,16 +237,23 @@ module.exports = {
       for (let i = 0; i < weak.length; i += 1) {
         index.push(i);
       }
+
       try {
         const resistantTypes = await type.findResistanceToTypeList(typeList, index);
+
         const bestTypes = bestTwoTypes(resistantTypes);
+
         const bestPokemons = await getBestPokemons(bestTypes);
+
         if (bestPokemons) {
           const formatedPokemon = await preformatPokemon(bestPokemons[0]);
           teamPokemons.push(formatedPokemon);
         }
       } catch (err) {
-        console.log(err);
+        res.status(400).json({
+          error: 'Bad request',
+          message: 'unknow pokemon',
+        });
       }
     }
 
