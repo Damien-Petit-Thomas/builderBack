@@ -3,7 +3,6 @@ module.exports = function bestTwoTypes(data) {
 
   for (let i = 0; i < data.length; i += 1) {
     for (let j = i; j < data.length; j += 1) {
-      // console.log(data[i].matching_ids);
       if (i === j) {
         const pair = {
           type_ids: [data[i].type_id],

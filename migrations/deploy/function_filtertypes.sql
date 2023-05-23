@@ -1,7 +1,7 @@
 BEGIN;
 CREATE OR REPLACE FUNCTION filterTypes(
-  ids int[],
-  matches int[]
+  ids int[]
+  
 )
 RETURNS TABLE (
   type_id int,
@@ -35,7 +35,8 @@ BEGIN
     WHERE (elem->>'damage')::float <= 0.5
       AND (elem->>'id')::int = ANY(ids)
     
-  ) IN (SELECT unnest(matches))  ORDER BY matching_count DESC;
+  ) > 0
+  order by matching_count DESC;
 
 END;
 $$ LANGUAGE plpgsql;

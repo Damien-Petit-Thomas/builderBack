@@ -58,7 +58,7 @@ Content-Type: application/json
 
 
 [
-    104
+    25
 ]
 
 ###POST a team to get a complete team with 6 pokemon
@@ -66,7 +66,7 @@ POST {{local}}/pokemon/complet-team
 Content-Type: application/json
 
 [
-    100, 200, 300, 400, 500
+    10,11,12,13,15
 ]
 
 

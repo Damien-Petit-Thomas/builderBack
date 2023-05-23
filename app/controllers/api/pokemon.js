@@ -233,13 +233,13 @@ module.exports = {
       for (let i = 0; i < weak.length; i += 1) {
         typeList.push(weak[i][0]);
       }
-      const index = [];
-      for (let i = 0; i < weak.length; i += 1) {
-        index.push(i);
-      }
+      // const index = [];
+      // for (let i = 0; i < weak.length; i += 1) {
+      //   index.push(i);
+      // }
 
       try {
-        const resistantTypes = await type.findResistanceToTypeList(typeList, index);
+        const resistantTypes = await type.findResistanceToTypeList(typeList);
 
         const bestTypes = bestTwoTypes(resistantTypes);
 
@@ -252,7 +252,7 @@ module.exports = {
       } catch (err) {
         res.status(400).json({
           error: 'Bad request',
-          message: 'unknow pokemon',
+          message: 'something went wrong',
         });
       }
     }
