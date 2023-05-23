@@ -5,6 +5,14 @@ function getTeamSuggestion(damages, i) {
   const arrSorted = arr.sort((a, b) => a[1] - b[1]);
   console.log(arrSorted);
 
+  const toWeak = arr.filter((type) => type[1] === 0);
+  console.log(toWeak);
+  if (toWeak.length > 0) {
+    const weakNess = toWeak.slice(0, 6);
+    console.log(weakNess);
+    return weakNess;
+  }
+
   if (i < 2) {
     const weakNess = arrSorted.slice(0, 5);
     console.log(weakNess);
@@ -15,6 +23,11 @@ function getTeamSuggestion(damages, i) {
     const weakNess = arrSorted.slice(0, 4);
     console.log(weakNess);
 
+    return weakNess;
+  }
+  if (i < 4) {
+    const weakNess = arrSorted.slice(0, 3);
+    console.log(weakNess);
     return weakNess;
   }
 
@@ -31,6 +44,7 @@ function getTeamSuggestion(damages, i) {
 
     return weakNess;
   }
+  return [];
 }
 
 module.exports = getTeamSuggestion;
