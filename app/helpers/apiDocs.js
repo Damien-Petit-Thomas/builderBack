@@ -12,6 +12,7 @@ const options = {
   swaggerUIPath: process.env.API_PATH,
   exposeApiDocs: true,
   apiDocsPath: '/api-docs',
+
 };
 
 module.exports = (app) => expressJSDocSwagger(app)(options);
