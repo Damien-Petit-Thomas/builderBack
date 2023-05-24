@@ -8,7 +8,7 @@ if (['production'].includes(process.env.NODE_ENV)) {
     level: 'error',
     path: './log/error.log',
     type: 'rotating-file',
-    period: '10000ms', // daily rotation
+    period: '1d', // daily rotation
     count: 5, // keep 3 back copies
   });
 } else if (!['test'].includes(process.env.NODE_ENV)) {

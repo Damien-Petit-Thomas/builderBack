@@ -9,16 +9,19 @@ router
   .route('/')
   .get(controllerHandler(controller.getAllTypes));
 router
-  .route('/imune/type/:id(\\d+)')
+  .route('/:id(\\d+)')
+  .post(controllerHandler(controller.getTypeById));
+router
+  .route('/imune/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFrom));
 router
-  .route('/resist/type/:id(\\d+)')
+  .route('/resist/:id(\\d+)')
   .get(controllerHandler(controller.getHalfDamageFrom));
 router
-  .route('/weak/type/:id(\\d+)')
+  .route('/weak/:id(\\d+)')
   .get(controllerHandler(controller.getDoubleDamageFrom));
 router
-  .route('/resist/imune/type/:id(\\d+)')
+  .route('/resist-imune/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFrom));
 router
   .route('/resist/types')

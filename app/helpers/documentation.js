@@ -98,7 +98,7 @@
  */
 
 /**
- * POST /api/pokemon/completion/suggestion
+ * POST /api/pokemon/complet-team
  * @summary GET completion suggestions for a pokemon team (6 pokemons)
  * @tags POKEMON
  * @return {[Pokemon]} 200 - success response - appllication/json
@@ -114,6 +114,76 @@
  * @return {[Generation]} 200 - success response - appllication/json
  * @return {ApiError} 400 - Bad request
  * @return {ApiError} 404 - Not found
+ */
+
+// ------------------type router-------------------------//
+/**
+ * GET /api/type
+ * @summary GET all types
+ * @tags TYPE
+ * @return {[Type]} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+ * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * GET /api/type/{id}
+ * @summary GET a type by id
+ * @tags TYPE
+ * @param {number} id.path - id of the type
+ * @return {Type} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+ * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * GET /api/type/imune/{id}
+ * @summary GET all types with no damage from a type
+ * @tags TYPE
+ * @param {number} id.path - id of the type
+ * @return {[Type]} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+ * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * GET /api/type/resist/{id}
+ * @summary GET all types with half damage from a type
+ * @tags TYPE
+ * @param {number} id.path - id of the type
+ * @return {[Type]} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+ * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * GET /api/type/weaks/{id}
+ * @summary GET all types with double damage from a type
+ * @tags TYPE
+ * @param {number} id.path - id of the type
+ * @return {[Type]} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+ * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * GET /api/type/resist-imune/{id}
+ * @summary GET all types with imunity or resistance from a type
+ * @tags TYPE
+ * @param {number} id.path -id of the type
+ * @return {[Type]} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+ * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * POST /api/type/resist/types
+ * @summary GET all types with resistance or imunity from a list of type
+ * @tags TYPE
+ * @param {[number]} types.body.required - list of type id
+ * @return {[Type]} 200 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+  * @return {ApiError} 404 - Not found
  */
 
 // -------------typedef------------------------------//
@@ -150,9 +220,9 @@
  */
 
 /**
- *
- * @typedef {object} ApiError
- * @property {string} message - Error message
- * @property {string} name - Error name
- * @property {object} infos - Additionnal informations
+ * @typedef {object} Type
+ * @property {number} id - The id of the type
+ * @property {string} name - The name of the type
+ * @property {string} frenchname - The french name of the type
+ * @property {Array.{object}} damagefrom - The damage from relations of the type
  */
