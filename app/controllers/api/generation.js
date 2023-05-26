@@ -5,7 +5,7 @@ module.exports = {
   async getAllGenerations(req, res) {
     try {
       const generations = await gen.findAll();
-      res.json(generations);
+      res.status(200).json(generations);
     } catch (err) {
       logger.error(err);
       res.status(500).json(err);
