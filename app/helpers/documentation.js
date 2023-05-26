@@ -180,7 +180,7 @@
  * POST /api/type/resist/types
  * @summary GET all types with resistance or imunity from a list of type
  * @tags TYPE
- * @param {[number]} types.body.required - list of type id
+ * @param {[number]} request.body - list of type id
  * @return {[Type]} 200 - success response - appllication/json
  * @return {ApiError} 400 - Bad request
   * @return {ApiError} 404 - Not found
