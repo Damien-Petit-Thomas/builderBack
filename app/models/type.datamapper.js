@@ -99,7 +99,7 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
       'SELECT * FROM filterTypes($1) ;',
       [types],
     );
-    console.log(pokemons.rows);
+
     return pokemons.rows;
   }
 };

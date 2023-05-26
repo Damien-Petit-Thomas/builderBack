@@ -1,11 +1,11 @@
 const { ApiError } = require('../helpers/errorHandler');
 
 module.exports = (dataSource, schema) => async (req, res, next) => {
-  try {
-    await schema.validateAsync(req[dataSource]);
+  const { error } = await schema.validate(req[dataSource], { abortEarly: false });
 
-    next();
-  } catch (error) {
-    next(new ApiError(error.details[0], { statusCode: 400 }));
+  if (error) {
+    const err = new ApiError(error.details[0].message, { statusCode: 400 });
+    return res.status(400).json({ error: err.message });
   }
+  return next();
 };
