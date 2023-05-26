@@ -226,3 +226,8 @@
  * @property {string} frenchname - The french name of the type
  * @property {Array.{object}} damagefrom - The damage from relations of the type
  */
+
+/**
+ * @typedef {object} Generation
+ * @property {number} id - The id of the generation
+*/
