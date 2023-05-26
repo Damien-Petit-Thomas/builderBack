@@ -188,9 +188,7 @@ module.exports = {
 
   async getTeamCompletion(req, res) {
     // le req.body contient un tableau avec les ids des pokemons
-    // return res.json(req.body);
     const poketeam = req.body;
-
     // on vérifie que le tableau contient entre 1 et 5 pokemons
     if (poketeam.length < 1 || poketeam.length > 5) {
       return res.status(400).json({
@@ -222,10 +220,10 @@ module.exports = {
         message: 'unknow pokemon',
       });
     });
-
     const teamPokemons = (await Promise.all(promises)).flat();
 
     while (teamPokemons.length < 6) {
+      const temPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
       const weakNess = getNumberOfResistanceByType(teamPokemons);
       const weak = getTeamSuggestion(weakNess, teamPokemons.length);
 
@@ -233,30 +231,25 @@ module.exports = {
       for (let i = 0; i < weak.length; i += 1) {
         typeList.push(weak[i][0]);
       }
-      // const index = [];
-      // for (let i = 0; i < weak.length; i += 1) {
-      //   index.push(i);
-      // }
-
-      try {
-        const resistantTypes = await type.findResistanceToTypeList(typeList);
-
-        const bestTypes = bestTwoTypes(resistantTypes);
-
-        const bestPokemons = await getBestPokemons(bestTypes);
-
-        if (bestPokemons) {
-          const formatedPokemon = await preformatPokemon(bestPokemons[0]);
-          teamPokemons.push(formatedPokemon);
-        }
-      } catch (err) {
-        res.status(400).json({
-          error: 'Bad request',
-          message: 'something went wrong',
-        });
+      const index = [];
+      for (let i = 0; i < weak.length; i += 1) {
+        index.push(i);
       }
+      const resistantTypes = await type.findResistanceToTypeList(typeList, index);
+
+      const bestTypes = bestTwoTypes(resistantTypes);
+
+      const bestPokemons = await getBestPokemons(bestTypes, temPokemonsIds);
+
+      if (bestPokemons) {
+        const formatedPokemon = await preformatPokemon(bestPokemons[0]);
+        teamPokemons.push(formatedPokemon);
+      }
+      // const formatedPokemon = await preformatPokemon(bestPokemons);
     }
 
     return res.json(teamPokemons);
+    // const suggestedTeam = await team.getSuggestedTeam(...pokemons);
+    // return res.json(suggestedTeam);
   },
 };
