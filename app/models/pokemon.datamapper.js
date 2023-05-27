@@ -44,7 +44,7 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
 
       [id1, id2],
     );
-    return pokemons.rows;
+    return pokemons.rows[0];
   }
 
   async findAllByGenId(id) {

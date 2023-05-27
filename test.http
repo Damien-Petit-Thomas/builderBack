@@ -35,7 +35,7 @@ GET  {{api}}/pokemon/resist/imune/type/2
 GET {{api}}/pokemon/full-random
 
 ###GET pokemon by 2 types
-GET {{api}}/pokemon/type//type/17
+GET {{api}}/pokemon/type/14/type/17
 
 ### GET all pokemon of one type
 GET {{api}}/pokemon/type/3
@@ -58,7 +58,7 @@ Content-Type: application/json
 
 
 [
-    5
+    14
 ]
 
 ###POST a team to get a complete team with 6 pokemon
@@ -66,7 +66,8 @@ POST {{local}}/pokemon/complet-team
 Content-Type: application/json
 
 [
-    10,11
+    15,177
+
 
 ]
 

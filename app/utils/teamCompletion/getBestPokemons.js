@@ -7,7 +7,7 @@ module.exports = async function bestPokemon(arr, teamPokemonsIds) {
     const id2 = arr[i].type_ids[1];
     const bestPokemons = await poke.findBestPokemonByTypesIds(id1, id2);
 
-    if (bestPokemons.length > 0 && !teamPokemonsIds.includes(bestPokemons[0].id)) {
+    if (bestPokemons && !teamPokemonsIds.includes(bestPokemons.id)) {
       return bestPokemons;
     }
   } return [];

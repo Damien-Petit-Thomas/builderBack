@@ -222,17 +222,17 @@ module.exports = {
         const weakNess = getNumberOfResistanceByType(teamPokemons);
         // get en array of the most weak type the length depend of the number of pokemon in the team
         const weak = getTeamSuggestion(weakNess, teamPokemons.length);
-        // retrieve the type of the most weak type
+        //
         const typeList = weak.map((w) => w[0]);
-        // get the type that are resistant to the most weak type
+
         const resistantTypes = await type.findResistanceToTypeList(typeList);
-        // get the two best types
+
         const bestTypes = bestTwoTypes(resistantTypes);
-        // get the best pokemon for the two best types
+
         const bestPokemons = await getBestPokemons(bestTypes, teamPokemonsIds);
 
         if (bestPokemons) {
-          const formatedPokemon = await preformatPokemon(bestPokemons[0]);
+          const formatedPokemon = await preformatPokemon(bestPokemons);
           teamPokemons.push(formatedPokemon);
         }
       }
