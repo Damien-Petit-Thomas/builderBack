@@ -53,16 +53,16 @@ GET {{api}}/pokemon/gen/1
 GET {{api}}/pokemon/full-random
 
 ###POST a team to get a complete team with 6 pokemon
-POST {{local}}/pokemon/complet-team
+POST {{api}}/pokemon/complet-team
 Content-Type: application/json
 
 
 [
-    25
+    5
 ]
 
 ###POST a team to get a complete team with 6 pokemon
-POST {{api}}/pokemon/complet-team
+POST {{local}}/pokemon/complet-team
 Content-Type: application/json
 
 [
@@ -138,11 +138,11 @@ Content-Type: application/json
 }
 
 ### create user
-POST {{local}}/user/login
+POST {{local}}/user/signup
 Content-Type: application/json
 
 {
-    "username": "damien",   
+    "username": "damienpoiy",   
     "password": "P0kemoon!",
     "email": "damien2@gmail.com"
 }

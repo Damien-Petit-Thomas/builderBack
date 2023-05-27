@@ -137,17 +137,7 @@ module.exports = {
     const allPokemons = await Promise.all(promises);
     return res.json(allPokemons);
   },
-  // async getNoDamageFromAndHalfDamageFromToTypes(req, res) {
-  //   const { typeId1, typeId2 } = req.params;
-  //   const typeName1 = await type.findByPk(typeId1);
-  //   const typeName2 = await type.findByPk(typeId2);
-  //   const imune1 = await poke.findNoDamageFrom(typeName1.id);
-  //   const imune2 = await poke.findNoDamageFrom(typeName2.id);
-  //   const resist1 = await poke.findHalfDamageFrom(typeName1.id);
-  //   const resist2 = await poke.findHalfDamageFrom(typeName2.id);
-  //   const result = imune1.concat(imune2, resist1, resist2);
-  //   return res.json(result);
-  // },
+
   async getOneByName(req, res) {
     const { name } = req.params;
     if (!name) throw new ApiError('name is required', { statusCode: 400 });
@@ -187,69 +177,74 @@ module.exports = {
   },
 
   async getTeamCompletion(req, res) {
-    // le req.body contient un tableau avec les ids des pokemons
-    const poketeam = req.body;
-    // on vérifie que le tableau contient entre 1 et 5 pokemons
-    if (poketeam.length < 1 || poketeam.length > 5) {
-      return res.status(400).json({
-        error: 'Bad request',
-        message: 'The req body must contain between 1 and 5 pokemons',
+    try {
+      // The req.body contains an array with Pokemon IDs
+      const poketeam = req.body;
+
+      // Check if the array contains between 1 and 5 Pokemons
+      if (poketeam.length < 1 || poketeam.length > 5) {
+        return res.status(400).json({
+          error: 'Bad request',
+          message: 'The req body must contain between 1 and 5 pokemons',
+        });
+      }
+
+      // Check if all the Pokemons in the team are different
+      if (new Set(poketeam).size !== poketeam.length) {
+        return res.status(400).json({
+          error: 'Bad request',
+          message: 'The req body must contain different pokemons',
+        });
+      }
+
+      // Retrieve Pokemons from the database or cache and format them
+      const promises = poketeam.map(async (id) => {
+        const inCache = cache.get(id);
+        if (inCache) return inCache;
+
+        const inDb = await poke.findByPk(id);
+        if (inDb) {
+          const formatedPokemon = await preformatPokemon(inDb);
+          return formatedPokemon;
+        }
+
+        return res.status(400).json({
+          error: 'Bad request',
+          message: 'Unknown pokemon',
+        });
+      });
+
+      const teamPokemons = (await Promise.all(promises)).flat();
+
+      while (teamPokemons.length < 6) {
+        const teamPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
+        // retrieve the number resistance of the team to each type
+        const weakNess = getNumberOfResistanceByType(teamPokemons);
+        // get en array of the most weak type the length depend of the number of pokemon in the team
+        const weak = getTeamSuggestion(weakNess, teamPokemons.length);
+        // retrieve the type of the most weak type
+        const typeList = weak.map((w) => w[0]);
+        // get the type that are resistant to the most weak type
+        const resistantTypes = await type.findResistanceToTypeList(typeList);
+        // get the two best types
+        const bestTypes = bestTwoTypes(resistantTypes);
+        // get the best pokemon for the two best types
+        const bestPokemons = await getBestPokemons(bestTypes, teamPokemonsIds);
+
+        if (bestPokemons) {
+          const formatedPokemon = await preformatPokemon(bestPokemons[0]);
+          teamPokemons.push(formatedPokemon);
+        }
+      }
+
+      return res.json(teamPokemons);
+    } catch (error) {
+      // Handle any errors that occur during the execution of the code
+      return res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'An error occurred while processing the request.',
       });
     }
-
-    // on verifie que les pokemons sont tous différents
-    if (new Set(poketeam).size !== poketeam.length) {
-      return res.status(400).json({
-        error: 'Bad request',
-        message: 'The req body must contain different pokemons',
-      });
-    }
-    // on recupere les pokemons depuis la base de données
-
-    const promises = poketeam.map(async (id) => {
-      const inCache = cache.get(id);
-      if (inCache) return inCache;
-      const inDb = await poke.findByPk(id);
-
-      if (inDb) {
-        const formatedPokemon = await preformatPokemon(inDb);
-        return formatedPokemon;
-      }
-      return res.status(400).json({
-        error: 'Bad request',
-        message: 'unknow pokemon',
-      });
-    });
-    const teamPokemons = (await Promise.all(promises)).flat();
-
-    while (teamPokemons.length < 6) {
-      const temPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
-      const weakNess = getNumberOfResistanceByType(teamPokemons);
-      const weak = getTeamSuggestion(weakNess, teamPokemons.length);
-
-      const typeList = [];
-      for (let i = 0; i < weak.length; i += 1) {
-        typeList.push(weak[i][0]);
-      }
-      const index = [];
-      for (let i = 0; i < weak.length; i += 1) {
-        index.push(i);
-      }
-      const resistantTypes = await type.findResistanceToTypeList(typeList, index);
-
-      const bestTypes = bestTwoTypes(resistantTypes);
-
-      const bestPokemons = await getBestPokemons(bestTypes, temPokemonsIds);
-
-      if (bestPokemons) {
-        const formatedPokemon = await preformatPokemon(bestPokemons[0]);
-        teamPokemons.push(formatedPokemon);
-      }
-      // const formatedPokemon = await preformatPokemon(bestPokemons);
-    }
-
-    return res.json(teamPokemons);
-    // const suggestedTeam = await team.getSuggestedTeam(...pokemons);
-    // return res.json(suggestedTeam);
   },
+
 };

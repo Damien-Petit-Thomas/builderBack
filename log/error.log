@@ -78,3 +78,25 @@
 {"name":"poke-api","hostname":"lgdamien","pid":49065,"level":30,"msg":"info User 14 created","time":"2023-05-27T20:35:34.621Z","v":0}
 {"name":"poke-api","hostname":"lgdamien","pid":49207,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T20:35:59.135Z","v":0}
 {"name":"poke-api","hostname":"lgdamien","pid":49334,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T20:36:08.845Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:05:40.944Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"pokemon 10 added to cache","time":"2023-05-27T21:05:48.093Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"pokemon 11 added to cache","time":"2023-05-27T21:05:48.114Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"pokemon 306 added to cache","time":"2023-05-27T21:05:48.496Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"pokemon 400 added to cache","time":"2023-05-27T21:05:48.758Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"pokemon 908 added to cache","time":"2023-05-27T21:05:49.019Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":52710,"level":30,"msg":"pokemon 805 added to cache","time":"2023-05-27T21:05:49.453Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":53209,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:10:20.883Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":53390,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:11:09.832Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":53620,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:12:47.227Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":53834,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:14:01.918Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:18:12.998Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"pokemon 10 added to cache","time":"2023-05-27T21:18:26.277Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"pokemon 11 added to cache","time":"2023-05-27T21:18:26.306Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"pokemon 476 added to cache","time":"2023-05-27T21:18:26.658Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"pokemon 400 added to cache","time":"2023-05-27T21:18:26.917Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"pokemon 908 added to cache","time":"2023-05-27T21:18:27.176Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54225,"level":30,"msg":"pokemon 410 added to cache","time":"2023-05-27T21:18:27.607Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54533,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:19:34.262Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54802,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:21:34.485Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":54907,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:21:49.226Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":55015,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-05-27T21:22:28.990Z","v":0}
