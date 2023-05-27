@@ -24,14 +24,12 @@ module.exports = {
     }
     const pokemonInCache = cache.get(id);
     if (pokemonInCache) {
-      logger.info(`pokemon ${req.params.id} already exist in cache`);
       return res.json(pokemonInCache);
     }
 
     try {
       const pokemoon = await poke.findByPk(id);
       if (pokemoon) {
-        logger.info(`pokemon ${req.params.id} already exist in db`);
         return res.json(pokemoon);
       }
       const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
@@ -63,7 +61,6 @@ module.exports = {
     try {
       const typ = await type.findByPk(id);
       if (typ) {
-        logger.info(`type ${req.params.id} already exist in db`);
         return res.json(typ);
       }
       const typeData = await seedOneTypeById(id);
@@ -90,12 +87,10 @@ module.exports = {
       numberOfGenerations = await pokeApi.getAllGenerationsCount();
       const start = await gen.count();
       const generations = await gen.insertGen(start + 1, numberOfGenerations);
-      logger.log(generations);
+      return res.json(generations);
     } catch (err) {
-      logger.error(err);
-      return res.status(500).json({ error: 'Something went wrong' });
+      throw new ApiError('something went wrong', { statusCode: 500 });
     }
-    return res.json(numberOfGenerations);
   },
 
   //! Method only here because of change in the db schema now all pokemon have a gen_id column

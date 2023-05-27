@@ -10,7 +10,6 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
       [typeData.id],
     );
     if (isExist.rows[0]) {
-      logger.info(`type ${typeData.id} already exist`);
       return isExist.rows[0];
     }
     const type = await this.client.query(

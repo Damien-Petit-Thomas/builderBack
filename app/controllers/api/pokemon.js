@@ -21,38 +21,42 @@ module.exports = {
   async getOne(req, res) {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json({ error: 'id is required' });
+      throw new ApiError('id is required', { statusCode: 400 });
     }
-    // on verifie si le pokemon est en cache
+
     if (getPokemonFromCache(id)) {
       return res.json(getPokemonFromCache(id));
     }
-    // on verifie si le pokemon est en base de donnees
-    const pokemon = await poke.findByPk(id);
-    if (pokemon) {
-      const formatedPokemon = await preformatPokemon(pokemon);
-      return res.json(formatedPokemon);
-    }
+    try {
+      const pokemon = await poke.findByPk(id);
+      if (pokemon) {
+        const formatedPokemon = await preformatPokemon(pokemon);
+        return res.json(formatedPokemon);
+      }
 
-    return res.redirect(`/seeding/${id}`);
+      return res.redirect(`/seeding/${id}`);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
 
   async getAll(req, res) {
-    // on verifie si les pokemons sont en cache
     const pokemonsInCache = cache.get('all');
     if (pokemonsInCache) {
-      logger.log('all pokemons already in cache');
       return res.json(pokemonsInCache);
     }
-    const pokemons = await poke.findAll();
-    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+    try {
+      const pokemons = await poke.findAll();
+      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
 
-    const allPokemons = await Promise.all(promises);
+      const allPokemons = await Promise.all(promises);
 
-    // on stocke les pokemons en cache
-    cache.set('all', allPokemons, this.TTL);
-    logger.log('all pokemons added to cache');
-    return res.json(allPokemons);
+      cache.set('all', allPokemons, this.TTL);
+      logger.log('all pokemons added to cache');
+      return res.json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
 
   async getPokemonByTypeId(req, res) {
@@ -60,120 +64,152 @@ module.exports = {
     if (!id) {
       throw new ApiError('id is required', { statusCode: 400 });
     }
-    const pokemons = await poke.findAllByTypeId(id);
-    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-    const allPokemons = await Promise.all(promises);
-    if (allPokemons.length === 0) {
-      throw new ApiError('no pokemon found', { statusCode: 404 });
+    try {
+      const pokemons = await poke.findAllByTypeId(id);
+      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+      const allPokemons = await Promise.all(promises);
+      if (allPokemons.length === 0) {
+        throw new ApiError('no pokemon found', { statusCode: 404 });
+      }
+      return res.json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
     }
-    return res.json(allPokemons);
   },
+
   async getPokemonByTypesIds(req, res) {
     const { id1, id2 } = req.params;
     if (!id1 || !id2) {
       throw new ApiError('id1 and id2 are required', { statusCode: 400 });
     }
-    const pokemons = await poke.findAllByTypesIds(id1, id2);
-    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-    const allPokemons = await Promise.all(promises);
-    if (allPokemons.length === 0) {
-      throw new ApiError('no pokemon found', { statusCode: 404 });
+    try {
+      const pokemons = await poke.findAllByTypesIds(id1, id2);
+      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+      const allPokemons = await Promise.all(promises);
+      if (allPokemons.length === 0) {
+        throw new ApiError('no pokemon found', { statusCode: 404 });
+      }
+      return res.status(200).json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
     }
-    return res.status(200).json(allPokemons);
   },
   async getPokemonByGenId(req, res) {
     const { id } = req.params;
     if (!id) throw new ApiError('id is required', { statusCode: 400 });
-    const pokemons = await poke.findAllByGenId(id);
-    if (pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
-    const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-    const allPokemons = await Promise.all(promises);
-    return res.json(allPokemons);
+    try {
+      const pokemons = await poke.findAllByGenId(id);
+      if (pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
+      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+      const allPokemons = await Promise.all(promises);
+      return res.json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
   async getNoDamageFrom(req, res) {
     const { id } = req.params;
     if (!id) throw new ApiError('id is required', { statusCode: 400 });
-    const types = await type.findNoDamageFrom(id);
-    if (types.length === 0) throw new ApiError('no type found', { statusCode: 404 });
-    const promises = types.map(async (typ) => {
-      const pokemons = await poke.findAllByTypeId(typ.id);
-      const preformattedPokemons = await Promise.all(
-        pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
-      );
-      return preformattedPokemons;
-    });
+    try {
+      const types = await type.findNoDamageFrom(id);
+      if (types.length === 0) throw new ApiError('no type found', { statusCode: 404 });
+      const promises = types.map(async (typ) => {
+        const pokemons = await poke.findAllByTypeId(typ.id);
+        const preformattedPokemons = await Promise.all(
+          pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
+        );
+        return preformattedPokemons;
+      });
 
-    const allPokemons = await Promise.all(promises);
-    return res.json(allPokemons);
+      const allPokemons = await Promise.all(promises);
+      return res.json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
+
   async getHalfDamageFrom(req, res) {
     const { id } = req.params;
     if (!id) throw new ApiError('id is required', { statusCode: 400 });
-    const types = await type.findHalfDamageFrom(id);
-    if (types.length === 0) throw new ApiError('no type found', { statusCode: 404 });
-    const promises = types.map(async (typ) => {
-      const pokemons = await poke.findAllByTypeId(typ.id);
-      const preformatePokemons = await Promise.all(
-        pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
-      );
-      return preformatePokemons;
-    });
-    const allPokemons = await Promise.all(promises);
-    return res.json(allPokemons);
+    try {
+      const types = await type.findHalfDamageFrom(id);
+      if (types.length === 0) throw new ApiError('no type found', { statusCode: 404 });
+      const promises = types.map(async (typ) => {
+        const pokemons = await poke.findAllByTypeId(typ.id);
+        const preformatePokemons = await Promise.all(
+          pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
+        );
+        return preformatePokemons;
+      });
+      const allPokemons = await Promise.all(promises);
+      return res.json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
 
   async getNoDamageFromOrHalfDamageFrom(req, res) {
     const { id } = req.params;
     if (!id) throw new ApiError('id is required', { statusCode: 400 });
-    const types = await type.findNoDamageFromAndHalfDamageFrom(id);
-    if (types.length === 0) throw new ApiError('no type found', { statusCode: 404 });
-    const promises = await types.map(async (typ) => {
-      const pokemons = await poke.findAllByTypeId(typ.id);
-      const preformatePokemons = await Promise.all(
-        pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
-      );
-      return preformatePokemons;
-    });
-    const allPokemons = await Promise.all(promises);
-    return res.json(allPokemons);
+    try {
+      const types = await type.findNoDamageFromAndHalfDamageFrom(id);
+      if (types.length === 0) throw new ApiError('no type found', { statusCode: 404 });
+      const promises = await types.map(async (typ) => {
+        const pokemons = await poke.findAllByTypeId(typ.id);
+        const preformatePokemons = await Promise.all(
+          pokemons.map(async (pokemon) => preformatPokemon(pokemon)),
+        );
+        return preformatePokemons;
+      });
+      const allPokemons = await Promise.all(promises);
+      return res.json(allPokemons);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
 
   async getOneByName(req, res) {
     const { name } = req.params;
     if (!name) throw new ApiError('name is required', { statusCode: 400 });
-    const pokemon = await poke.findOneByName(name);
-    if (!pokemon) throw new ApiError('no pokemon found', { statusCode: 404 });
+    try {
+      const pokemon = await poke.findOneByName(name);
+      if (!pokemon) throw new ApiError('no pokemon found', { statusCode: 404 });
 
-    // on cree un tableau vide pour stocker les types
-    logger.log(`pokemon ${name} already exist in db`);
-    const pokemonType = [];
-    pokemonType.push(pokemon.type1);
-    if (pokemon.type2) {
-      pokemonType.push(pokemon.type2);
+      const pokemonType = [];
+      pokemonType.push(pokemon.type1);
+      if (pokemon.type2) {
+        pokemonType.push(pokemon.type2);
+      }
+
+      const promises = pokemonType.map(async (typeId) => {
+        const damage = await type.findByPk(typeId);
+        return damage.damagefrom;
+      });
+      const totalDamage = await Promise.all(promises);
+      const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, totalDamage);
+
+      cache.set(pokemon.id, formatedPokemon, this.TTL);
+      logger.log(`pokemon ${req.params.id} added to cache`);
+      return res.json(formatedPokemon);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
     }
-
-    // on recupere les données de degats pour chaque type
-    const promises = pokemonType.map(async (typeId) => {
-      const damage = await type.findByPk(typeId);
-      return damage.damagefrom;
-    });
-    const totalDamage = await Promise.all(promises);
-    const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, totalDamage);
-    // on stocke le pokemon en cache
-    cache.set(pokemon.id, formatedPokemon, this.TTL);
-    logger.log(`pokemon ${req.params.id} added to cache`);
-    return res.json(formatedPokemon);
   },
+
   async getFullRandomTeam(_, res) {
-    const randomIds = await poke.getRandomTeam();
-    const promises = randomIds.map(async (id) => {
-      if (cache.get(id.id)) return cache.get(id.id);
-      const pokemon = await poke.findByPk(id.id);
-      const formatedPokemon = await preformatPokemon(pokemon);
-      return formatedPokemon;
-    });
-    const randomTeam = await Promise.all(promises);
-    return res.json(randomTeam);
+    try {
+      const randomIds = await poke.getRandomTeam();
+      const promises = randomIds.map(async (id) => {
+        if (cache.get(id.id)) return cache.get(id.id);
+        const pokemon = await poke.findByPk(id.id);
+        const formatedPokemon = await preformatPokemon(pokemon);
+        return formatedPokemon;
+      });
+      const randomTeam = await Promise.all(promises);
+      return res.json(randomTeam);
+    } catch (err) {
+      throw new ApiError('something went wrong', { statusCode: 500 });
+    }
   },
 
   async getTeamCompletion(req, res) {
