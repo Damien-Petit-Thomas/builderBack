@@ -5,7 +5,7 @@ const streams = [];
 
 if (['production'].includes(process.env.NODE_ENV)) {
   streams.push({
-    level: 'info',
+    level: 'debug',
     path: './log/error.log',
     type: 'rotating-file',
     period: '1d',

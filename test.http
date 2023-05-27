@@ -53,7 +53,7 @@ GET {{api}}/pokemon/gen/1
 GET {{api}}/pokemon/full-random
 
 ###POST a team to get a complete team with 6 pokemon
-POST {{api}}/pokemon/complet-team
+POST {{local}}/pokemon/complet-team
 Content-Type: application/json
 
 
@@ -62,7 +62,7 @@ Content-Type: application/json
 ]
 
 ###POST a team to get a complete team with 6 pokemon
-POST {{local}}/pokemon/complet-team
+POST {{api}}/pokemon/complet-team
 Content-Type: application/json
 
 [
@@ -132,9 +132,9 @@ POST {{api}}/user/signup
 Content-Type: application/json
 
 {
-    "username": "dadadada",   
-    "password": "dam",
-    "email": "alexisss@gmail.com"
+    "username": "damien10",   
+    "password": "P0kemon@",
+    "email": "damien10@gmail.com"
 }
 
 ### create user
@@ -143,7 +143,7 @@ Content-Type: application/json
 
 {
     "username": "damien",   
-    "password": "P0kemooon@",
+    "password": "P0kemoon!",
     "email": "damien2@gmail.com"
 }
 
