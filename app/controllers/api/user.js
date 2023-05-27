@@ -23,32 +23,42 @@ module.exports = {
         username,
       });
       logger.log('info', `User ${newUser.id} created`);
-      res.status(200).json({ message: 'User created' });
+      return res.status(200).json({ message: 'User created' });
     } catch (err) {
       logger.log('error', err);
-      res.status(400).json({ message: 'Invalid form' });
+      return res.status(400).json({ message: 'Invalid form' });
     }
   },
 
   login: async (req, res) => {
-    const { email, password } = req.body;
-    const userFound = await user.findByMail(email);
-    if (!userFound) {
-      res.status(400).json({ message: 'Invalid email' });
+    try {
+      const { email, password } = req.body;
+      const userFound = await user.findByMail(email);
+      if (!userFound) {
+        return res.status(400).json({ message: 'Invalid email' });
+      }
+      userFound.ip = req.ip;
+      const token = login.authentify(userFound, password);
+      return res.status(200).json({ token });
+    } catch (err) {
+      logger.log('error', err);
+      return res.status(400).json({ message: 'Invalid form' });
     }
-    userFound.ip = req.ip;
-    const token = login.authentify(userFound, password);
-    res.status(200).json({ token });
   },
 
   userPage: async (req, res) => {
-    const userFound = await user.findById(req.user.id);
-    if (!userFound) {
-      res.status(400).json({ message: 'Invalid user' });
+    try {
+      const userFound = await user.findById(req.user.id);
+      if (!userFound) {
+        res.status(400).json({ message: 'Invalid user' });
+      }
+
+      const teams = await team.getTeamsByUserId(req.user.id);
+      res.status(200).json({ userFound, teams });
+    } catch (err) {
+      logger.log('error', err);
+      return res.status(400).json({ message: 'Invalid form' });
     }
-    // on recupere les teams du user
-    const teams = await team.getTeamsByUserId(req.user.id);
-    res.status(200).json({ userFound, teams });
   },
 
   createMyTeam: async (req, res) => {
@@ -66,13 +76,11 @@ module.exports = {
       if (newTeam) {
         pokeInTeam = await teamHasPokemon.insertTeam(pokemonIds, newTeam.id);
       } else {
-        // Gérer le cas où la création de l'équipe a échoué
         throw new ApiError('Failed to create team', { statusCode: 500 });
       }
 
       res.status(200).json({ newTeam, pokeInTeam });
     } catch (error) {
-      // Gérer les erreurs et renvoyer une réponse d'erreur appropriée
       throw new ApiError('Failed to create team', { statusCode: 500 });
     }
   },

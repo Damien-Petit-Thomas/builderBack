@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm i && node index.js"
+    "start": "npm i && node index.js",
+    "dev": "DEBUG=*,-express:*,-nodemon*,-send npx nodemon"
   },
   "repository": {
     "type": "git",
