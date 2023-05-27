@@ -5,7 +5,6 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
   tablename = 'type';
 
   async insertType(typeData) {
-    // on verifie si le type existe deja dans la base de donnée
     const isExist = await this.client.query(
       'SELECT * FROM type WHERE id = $1',
       [typeData.id],
@@ -99,7 +98,7 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
       'SELECT * FROM filterTypes($1) ;',
       [types],
     );
-    console.log(pokemons.rows);
+
     return pokemons.rows;
   }
 };

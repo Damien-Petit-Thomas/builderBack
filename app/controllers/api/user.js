@@ -7,7 +7,6 @@ const teamHasPokemon = require('../../models/index.datamapper');
 const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
-
   register: async (req, res) => {
     const { email, password, username } = req.body;
     try {
@@ -23,7 +22,11 @@ module.exports = {
         username,
       });
       logger.log('info', `User ${newUser.id} created`);
+<<<<<<< HEAD
       return res.status(200).json({ message: 'User created' });
+=======
+      return res.status(201).json({ message: 'User created' });
+>>>>>>> main
     } catch (err) {
       logger.log('error', err);
       return res.status(400).json({ message: 'Invalid form' });
