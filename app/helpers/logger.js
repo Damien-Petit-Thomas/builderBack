@@ -5,11 +5,11 @@ const streams = [];
 
 if (['production'].includes(process.env.NODE_ENV)) {
   streams.push({
-    level: 'error',
+    level: 'info',
     path: './log/error.log',
     type: 'rotating-file',
-    period: '1d', // daily rotation
-    count: 5, // keep 3 back copies
+    period: '1d',
+    count: 5,
   });
 } else if (!['test'].includes(process.env.NODE_ENV)) {
   streams.push({

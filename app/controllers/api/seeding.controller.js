@@ -16,7 +16,7 @@ const cache = CacheServer.getInstance();
 require('dotenv').config();
 
 module.exports = {
-//* method to seed one pokemon *//
+
   async seedOnePokemon(req, res) {
     const { id } = req.params;
     if (!id) {
@@ -27,22 +27,31 @@ module.exports = {
       logger.info(`pokemon ${req.params.id} already exist in cache`);
       return res.json(pokemonInCache);
     }
-    const pokemoon = await poke.findByPk(id);
-    if (pokemoon) {
-      logger.info(`pokemon ${req.params.id} already exist in db`);
-      return res.json(pokemoon);
+
+    try {
+      const pokemoon = await poke.findByPk(id);
+      if (pokemoon) {
+        logger.info(`pokemon ${req.params.id} already exist in db`);
+        return res.json(pokemoon);
+      }
+      const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
+      const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
+      cache.set(pokeSavedInDb.id, pokemon, this.TTL);
+      return res.json(pokemon);
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).json({ error: 'Something went wrong' });
     }
-    const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
-    const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
-    cache.set(pokeSavedInDb.id, pokemon, this.TTL);
-    return res.json(pokemon);
   },
 
-  //* method to seed all pokemon *//
-
   async seedAllPokemon(req, res) {
-    const allPokemonData = await seedAllPokemon();
-    return res.json(allPokemonData);
+    try {
+      const allPokemonData = await seedAllPokemon();
+      return res.json(allPokemonData);
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).json({ error: 'Something went wrong' });
+    }
   },
 
   async seedOneType(req, res) {
@@ -50,19 +59,31 @@ module.exports = {
     if (!id) {
       return res.status(400).json({ error: 'id is required' });
     }
-    const typ = await type.findByPk(id);
-    if (typ) {
-      logger.info(`type ${req.params.id} already exist in db`);
-      return res.json(typ);
+
+    try {
+      const typ = await type.findByPk(id);
+      if (typ) {
+        logger.info(`type ${req.params.id} already exist in db`);
+        return res.json(typ);
+      }
+      const typeData = await seedOneTypeById(id);
+      return res.json(typeData);
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).json({ error: 'Something went wrong' });
     }
-    const typeData = await seedOneTypeById(id);
-    return res.json(typeData);
   },
 
   async  seedTypes(_, res) {
-    const types = await seedAllType();
-    return res.json(types);
+    try {
+      const types = await seedAllType();
+      return res.json(types);
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).json({ error: 'Something went wrong' });
+    }
   },
+
   async seedGenerations(_, res) {
     let numberOfGenerations;
     try {
@@ -77,21 +98,25 @@ module.exports = {
     return res.json(numberOfGenerations);
   },
 
-  //* method to get all association between pokemon and generation
-  //* and insert them in the database (only for seeding purpose)
+  //! Method only here because of change in the db schema now all pokemon have a gen_id column
 
   async seedGen_idColumn() {
     const generations = await gen.findAll();
+    // we get the generations from the db
     const pokemons = [];
     const records = [];
+    // at each iteration we get all the pokemons from one generation
+    // and we push them in the pokemons array
+    // we take the poke_id from the url and the gen_id from the iteration
     for (let i = 0; i < generations.length; i += 1) {
-      pokemons[i] = await pokeApi.getAllGenerationsCount(generations[i].id);
+      pokemons[i] = await pokeApi.getAllPokeByGeneration(generations[i].id);
       for (let j = 0; j < pokemons[i].length; j += 1) {
         records.push({
           poke_id: pokemons[i][j].url.split('/')[6], gen_id: i + 1,
         });
       }
     }
+    // we update the gen_id column in the db
     const response = poke.updatePokemonGen(records);
     return response;
   },

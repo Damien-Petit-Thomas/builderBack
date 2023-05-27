@@ -132,9 +132,9 @@ POST {{api}}/user/signup
 Content-Type: application/json
 
 {
-    "username": "damien",   
-    "password": "P0kemon@",
-    "email": "damien@gmail.com"
+    "username": "dadadada",   
+    "password": "dam",
+    "email": "alexisss@gmail.com"
 }
 
 ### create user
@@ -143,7 +143,7 @@ Content-Type: application/json
 
 {
     "username": "damien",   
-    "password": "P0kemoon!",
+    "password": "P0kemooon@",
     "email": "damien2@gmail.com"
 }
 
