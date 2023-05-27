@@ -1,3 +1,4 @@
+const debug = require('debug')('app:controllers:api:user');
 const bcrypt = require('bcrypt');
 const { user } = require('../../models/index.datamapper');
 const login = require('../../services/auth.sevice/login.service');
@@ -9,6 +10,7 @@ const { ApiError } = require('../../helpers/errorHandler');
 module.exports = {
   register: async (req, res) => {
     const { email, password, username } = req.body;
+
     try {
       if (await user.getOneByEmail(email)) {
         return res.status(400).json({ message: 'Email already exist' });
