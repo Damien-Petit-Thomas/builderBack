@@ -12,7 +12,7 @@ const options = {
   },
 
   baseDir: __dirname,
-  filesPattern: ['./*.js'],
+  filesPattern: ['./*.js', '../models/*.js'],
   swaggerUIPath: process.env.API_PATH,
   exposeApiDocs: true,
   apiDocsPath: '/api-docs',

@@ -1,12 +1,19 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const e = require('express');
+const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
-
+/**
+ *
+ * @param {Object} user
+ * @param {string} password
+ * @returns {string} - The token
+ */
   async authentify(user, password) {
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) {
-      throw new Error('Invalid password');
+      throw new ApiError('Authentification failed', { statuscode: 401 });
     }
     const token = jwt.sign({
       id: user.id,
@@ -16,23 +23,26 @@ module.exports = {
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
     return token;
   },
+  /**
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next function
+ */
 
   async getUser(req, res, next) {
     const token = req.headers.authorization?.replace('Bearer ', '');
     if (!token) {
-      res.status(401).json({ message: 'Authentification failed' });
-      return; // Arrête l'exécution de la fonction
+      throw new ApiError('Authentification failed : no token provided', { statuscode: 401 });
     }
     try {
       const user = jwt.verify(token, process.env.JWT_SECRET);
       if (!user || user.ip !== req.ip) {
-        res.status(401).json({ message: 'Authentification failed' });
-        return; // Arrête l'exécution de la fonction
+        throw new ApiError('Authentification failed', { statuscode: 401 });
       }
-      req.usere = user; // Stocke les informations de l'utilisateur dans la requête
-      next(); // Appel de next pour passer au middleware suivant
+      req.usere = user;
+      next();
     } catch (err) {
-      res.status(401).json({ message: 'Authentification failed' });
+      throw new ApiError(err.message, err.infos);
     }
   },
 

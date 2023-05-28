@@ -57,7 +57,7 @@ module.exports = {
     }
   },
 
-  async getAll(req, res) {
+  async getAll(_, res) {
     const pokemonsInCache = cache.get('all');
     if (pokemonsInCache) {
       return res.json(pokemonsInCache);
