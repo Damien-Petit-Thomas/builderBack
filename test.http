@@ -14,17 +14,17 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/14
+GET {{local}}/pokemon
 
 
 
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{api}}/pokemon/pikachu
+GET {{local}}/pokemon/pikachuz
 
 ### get all pokemon imunise
-GET {{api}}/pokemon/imune/type/1
+GET {{local}}/pokemon/imune/type/3
 
 ###get akk resistants pokemons 
 GET {{api}}/pokemon/resist/type/1
@@ -38,7 +38,7 @@ GET {{api}}/pokemon/full-random
 GET {{api}}/pokemon/type/14/type/17
 
 ### GET all pokemon of one type
-GET {{api}}/pokemon/type/3
+GET {{local}}/pokemon/type/30
 
 
 
@@ -67,7 +67,7 @@ Content-Type: application/json
 
 [
 
-
+1500
 
 ]
 
@@ -120,7 +120,7 @@ GET {{api}}/seeding/generations
 ####################################cache router #############################
 
 ### cache all pokemon
-GET {{api}}/cache/all
+GET {{local}}/cache/all
 
 ###########################generation router #################################
 
@@ -143,7 +143,7 @@ POST {{local}}/user/signup
 Content-Type: application/json
 
 {
-    "username": "damienpoiy",   
+    "username": "d",   
     "password": "P0kemoon!",
     "email": "damien2@gmail.com"
 }

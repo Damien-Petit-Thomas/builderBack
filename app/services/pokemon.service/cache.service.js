@@ -1,24 +1,32 @@
+/* eslint-disable max-len */
 const CacheServer = require('../../utils/cache');
 
 const cache = CacheServer.getInstance();
 const { poke } = require('../../models/index.datamapper');
 const logger = require('../../helpers/logger');
 const preformatPokemon = require('../../utils/pokemon.utils/preformatePokemon');
+const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
 
-  async cacheAllPokemon() { // set in cache by id all pokemon from 1 to 1010
-    for (let i = 1; i <= 1010; i += 1) {
-      if (!cache.get(i)) {
-        const pokemon = await poke.findByPk(i);
-        if (pokemon) {
-          const formatedPokemon = await preformatPokemon(pokemon);
-          cache.set(i, formatedPokemon);
-          logger.log(`pokemon ${i} saved in cache`);
-        } else {
-          logger.log(`pokemon ${i} not found in db`);
-        }
+  async cacheAllPokemon() {
+    const count = await poke.count();
+    const promises = [];
+    try {
+      for (let i = 1; i <= count; i += 1) {
+        promises.push(poke.findByPk(i));
       }
+      const pokemons = await Promise.all(promises);
+      if (pokemons.length !== count) throw new ApiError('pokemon count is not correct', { statusCode: 500 });
+      const formatedPokemons = await Promise.all(pokemons.map((pokemon) => preformatPokemon(pokemon)));
+      formatedPokemons.forEach((pokemon) => {
+        cache.set(pokemon.id, pokemon);
+        logger.info(`pokemon ${pokemon.name} cached`);
+      });
+      if (!formatedPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
+      return formatedPokemons;
+    } catch (err) {
+      throw new ApiError(err.message, err.infos);
     }
   },
 };

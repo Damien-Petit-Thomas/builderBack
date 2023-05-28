@@ -5,6 +5,13 @@ module.exports = class CoreDatamapper {
     this.client = client;
   }
 
+  async count() {
+    const count = await this.client.query(
+      `SELECT COUNT(id) FROM ${this.tablename}`,
+    );
+    return Number(count.rows[0].count);
+  }
+
   async findAll() {
     const result = await this.client.query(`SELECT * FROM "${this.tablename}" ORDER BY id ASC`);
     return result.rows;

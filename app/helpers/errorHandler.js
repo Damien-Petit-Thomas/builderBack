@@ -20,7 +20,6 @@ const errorHandler = (err, req, res, next) => {
     logger.error(err);
   }
 
-  // Si l'application n'est pas en développement on reste vague sur l'erreur serveur
   if (statusCode === 500 && res.app.get('env') !== 'development') {
     message = 'Internal Server Error';
   }
