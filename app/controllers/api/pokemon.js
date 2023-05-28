@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 require('dotenv').config();
 
 const { poke } = require('../../models/index.datamapper');

@@ -6,7 +6,8 @@
  * @summary GET all pokemons
  * @tags POKEMON
  * @return {[Pokemon]} 200 - success response - appllication/json
- *
+ * @return {ApiError} 400 - Bad request - appllication/json
+ * @return {ApiError} 404 - Not found - appllication/json
  */
 
 /**
@@ -23,8 +24,8 @@
  * @tags POKEMON
  * @param {number} id.path - id of the type
  * @return {[Pokemon]} 200 - success response - appllication/json
-*  @return {ApiError} 400 - Bad request
-*  @return {ApiError} 404 - Not found
+*  @return {ApiError} 400 - Bad request - appllication/json
+*  @return {ApiError} 404 - Not found - appllication/json
 */
 
 /**
@@ -34,8 +35,8 @@
  * @param {number} id1.path - id of the first type
  * @param {number} id2.path - id of the second type
  * @return {[Pokemon]} 200 - success response - appllication/json
- * @return {ApiError} 400 - Bad request
- * @return {ApiError} 404 - Not found
+ * @return {ApiError} 400 - Bad request - appllication/json
+ * @return {ApiError} 404 - Not found - appllication/json
  */
 
 /**
@@ -213,13 +214,6 @@
  */
 
 /**
- * @typedef {object} ApiError
- * @property {string} message - Error message
- * @property {string} name - Error name
- * @property {object} infos - Additionnal informations
- */
-
-/**
  * @typedef {object} Type
  * @property {number} id - The id of the type
  * @property {string} name - The name of the type
@@ -231,3 +225,18 @@
  * @typedef {object} Generation
  * @property {number} id - The id of the generation
 */
+
+// ------------------error handler-------------------------//
+
+/**
+ * @typedef {object} ApiError
+ * @property {string} message - Error message
+ * @property {string} name - Error name
+ * @property {object} infos - Additionnal informations
+ */
+
+/**
+ * @typedef {object} ValidationError
+ * @property {string} message - Error message
+ */
+// ------module.exports------------------//

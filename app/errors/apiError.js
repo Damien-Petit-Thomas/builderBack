@@ -1,3 +1,6 @@
+/**
+ * implements a custom error class
+ */
 module.exports = class ApiError extends Error {
   constructor(message, infos) {
     super(message);
