@@ -1,4 +1,4 @@
-const ApiError = require('../../errors/apiError');
+const { ApiError } = require('../../helpers/errorHandler');
 const { cacheAllPokemon } = require('../../services/pokemon.service/cache.service');
 
 module.exports = {
@@ -6,6 +6,7 @@ module.exports = {
   async getAll(_, res) {
     try {
       const response = await cacheAllPokemon();
+      if (!response) throw new ApiError('No pokemon found', { statuscode: 404 });
       return res.json(response);
     } catch (error) {
       throw new ApiError(error.message, { statuscode: 500 });
