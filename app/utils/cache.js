@@ -1,3 +1,6 @@
+//* This tool serves the purpose of offering a unified cache throughout the API,
+//* adhering to the singleton design pattern.
+
 const NodeCache = require('node-cache');
 
 class CacheServer {
@@ -5,7 +8,7 @@ class CacheServer {
 
   constructor() {
     this.cache = new NodeCache();
-    this.TTL = 180; // 3 minutes
+    this.TTL = 60 * 60 * 24 * 7; // 1 week
   }
 
   static getInstance() {

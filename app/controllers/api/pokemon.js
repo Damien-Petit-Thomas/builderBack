@@ -70,7 +70,7 @@ module.exports = {
       const allPokemons = await Promise.all(promises);
       if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
       // Let's take this opportunity to cache  them all with the key 'all'
-      cache.set('all', allPokemons, this.TTL);
+      cache.set('all', allPokemons, cache.TTL);
 
       return res.json(allPokemons);
     } catch (err) {

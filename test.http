@@ -14,7 +14,7 @@
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon
+GET {{local}}/pokemon/1
 
 
 
@@ -101,6 +101,7 @@ Content-Type: application/json
 
 
 ### seed one pokemon
+GET {{local}}/seeding/106
 
 ### seed all pokemon
 GET {{local}}/seeding/all
