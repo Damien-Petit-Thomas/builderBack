@@ -1,3 +1,6 @@
+//* this utils function create all possible pairs of types
+//* and sort them by the number of matching ids
+
 module.exports = function bestTwoTypes(data) {
   const pairs = [];
 

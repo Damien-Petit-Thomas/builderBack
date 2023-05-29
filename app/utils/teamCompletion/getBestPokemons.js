@@ -1,4 +1,6 @@
-/* eslint-disable no-await-in-loop */
+// eslint-disable-next-line max-len
+/* eslint-disable no-await-in-loop */ //! here we need a for loop : we don't to run concurrently the requests
+//* this function retrieve the pokemon woth a maximum resistance where it's needed
 const { poke } = require('../../models/index.datamapper');
 
 module.exports = async function bestPokemon(arr, teamPokemonsIds) {

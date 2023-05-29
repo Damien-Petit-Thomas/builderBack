@@ -1,5 +1,5 @@
 const pokemonController = require('./pokemon');
-const pokemonSeedingController = require('./seeding.controller');
+const seedingController = require('./seeding.controller');
 const typeController = require('./type');
 const teamController = require('./team');
 const cacheController = require('./cache');
@@ -21,7 +21,7 @@ module.exports = {
   generationController,
   apiController,
   pokemonController,
-  pokemonSeedingController,
+  seedingController,
   typeController,
   teamController,
   cacheController,

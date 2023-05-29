@@ -67,7 +67,7 @@ Content-Type: application/json
 
 [
 
-1500
+15
 
 ]
 
@@ -106,9 +106,6 @@ GET {{local}}/seeding/106
 ### seed all pokemon
 GET {{local}}/seeding/all
 
-
-### seed all pokemon of one generation   ###TODO
-GET {{api}}/seeding/gen/1
 
 ### seed all types
 GET {{local}}/seeding/types

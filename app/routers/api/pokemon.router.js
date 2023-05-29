@@ -16,13 +16,13 @@ router
   .route('/type/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByTypeId));
 router
-  .route('/type/:id1(\\d+)/type/:id2(\\d+)')
+  .route('/type/:id1(\\d+)/:id2(\\d+)')
   .get(controllerHandler(controller.getPokemonByTypesIds));
 router
   .route('/gen/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByGenId));
 router
-  .route('/imune/type/:id(\\d+)')
+  .route('/immune/type/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFrom));
 router
   .route('/resist/type/:id(\\d+)')
@@ -31,7 +31,7 @@ router
 //   .route('/weak/type/:id(\\d+)')
 //   .get(controllerHandler(controller.getDoubleDamageFrom));
 router
-  .route('/resistOrImune/type/:id(\\d+)')
+  .route('/resist-Immune/type/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFromOrHalfDamageFrom));
 // router
 //   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')

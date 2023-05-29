@@ -1,10 +1,15 @@
+//* This file is used to calculate the number of resistances, weaknesses, and immunities of a team.
+// In the first version of the completion algorithm, we only use getNumberOfResistanceByType.
+// getNumberOfWeaknessByType provides the number of resistances for each type of the team.
+// completion algorithm is based on finding a Pokémon that brings a resistance where it is lacking.
+
 function getTotalDamages(pokemons) {
   return pokemons.flatMap((pokemon) => pokemon.damageFromRelations);
 }
 
 function getNumberOfResistanceByType(pokemons) {
   const totalDamages = getTotalDamages(pokemons);
-  const idCounts = {}; // Pour stocker les ID et le nombre de fois où ils ont un damage > 1
+  const idCounts = {};
 
   totalDamages.forEach((elem) => {
     if (elem.damage < 1) {

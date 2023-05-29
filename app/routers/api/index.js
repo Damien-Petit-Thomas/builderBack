@@ -1,7 +1,7 @@
 const express = require('express');
 
 const pokeRouter = require('./pokemon.router');
-const pokeSeedRouter = require('./pokemon.seeding.router');
+const pokeSeedRouter = require('./seeding.router');
 const typeRouter = require('./type.router');
 const teamRouter = require('./team.router');
 const cacheRouter = require('./cache.router');
