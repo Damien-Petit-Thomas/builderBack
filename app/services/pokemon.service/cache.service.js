@@ -18,6 +18,7 @@ module.exports = {
       }
       const pokemons = await Promise.all(promises);
       if (pokemons.length !== count) throw new ApiError('pokemon count is not correct', { statusCode: 500 });
+
       const formatedPokemons = await Promise.all(pokemons.map((pokemon) => preformatPokemon(pokemon)));
       formatedPokemons.forEach((pokemon) => {
         cache.set(pokemon.id, pokemon);

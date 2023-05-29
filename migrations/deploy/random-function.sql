@@ -1,8 +1,8 @@
 -- Deploy obuilder:random-function to pg
 
 BEGIN;
-CREATE OR REPLACE FUNCTION random_team() RETURNS SETOF int AS $$
-  SELECT DISTINCT id
+CREATE OR REPLACE FUNCTION random_team() RETURNS SETOF pokemon AS $$
+  SELECT *
   FROM pokemon 
   ORDER BY random() 
   LIMIT 6;

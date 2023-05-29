@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+//* this service is used to get data from the pokeApi  *//
 const CoreService = require('./core.service');
 const logger = require('../../helpers/logger');
 
@@ -7,87 +8,58 @@ module.exports = class PokemonService extends CoreService {
 // endpoint : https://pokeapi.co/api/v2/pokemon/{id || name}/
 
   async getPokemonData(nameOrId) {
-    try {
-      const response = await this.get(`/pokemon/${nameOrId}`);
-      return response;
-    } catch (err) {
-      logger.error(err);
-      throw err;
-    }
+    const response = await this.get(`/pokemon/${nameOrId}`);
+    return response;
   }
 
   //* method to get the number of existing generation  *//
   // endpoint : https://pokeapi.co/api/v2/generation/
 
   async getAllGenerationsCount() {
-    try {
-      const response = await this.get('/generation');
-      return response.count;
-    } catch (err) {
-      logger.error(err);
-      throw err;
-    }
+    const response = await this.get('/generation');
+    return response.count;
   }
 
   //* method to get all pokemon of a generation by generation id  *//
   // endpoint : https://pokeapi.co/api/v2/generation/{id}/
 
   async getAllPokeByGeneration(id) {
-    try {
-      const response = await this.get(`/generation/${id}`);
-      return response.pokemon_species;
-    } catch (err) {
-      logger.error(err);
-      throw err;
-    }
+    const response = await this.get(`/generation/${id}`);
+    return response.pokemon_species;
   }
 
   //* method to get the french name and generation of a pokemon by pokemon id  *//
+  // the gen is retrieved from the generation url in the response
   // endpoint : https://pokeapi.co/api/v2/pokemon-species/{id}/
 
   async getFrenchName(id) {
-    try {
-      const response = await this.get(`/pokemon-species/${id}`);
-      const frenchName = response.names.find((name) => name.language.name === 'fr').name;
-      const gen = response.generation.url.split('/')[6];
+    const response = await this.get(`/pokemon-species/${id}`);
+    const frenchName = response.names.find((name) => name.language.name === 'fr').name;
+    const gen = response.generation.url.split('/')[6];
 
-      return { frenchName, gen };
-    } catch (err) {
-      logger.error(err);
-      throw err;
-    }
+    return { frenchName, gen };
   }
 
   //* method to get the type data by type name  *//
   // endpoint : https://pokeapi.co/api/v2/type/{name}/
 
   async getTypeData(typeNameORId) {
-    try {
-      const response = await this.get(`/type/${typeNameORId}`);
+    const response = await this.get(`/type/${typeNameORId}`);
 
-      return response;
-    } catch (err) {
-      logger.error(err);
-      throw err;
-    }
+    return response;
   }
 
   //* method to get all existing types   *//
   // endpoint : https://pokeapi.co/api/v2/type/
 
   async getAllTypes() {
-    try {
-      const response = await this.get('/type/');
+    const response = await this.get('/type/');
 
-      return response.results;
-    } catch (err) {
-      logger.error(err);
-      throw err;
-    }
+    return response.results;
   }
 
-  //* methode to get  data for all types and stock them in 3
-  //* differents arrays   to use them in the controller  for the seed
+  //* methode to get  damages, french name and english name of all types  *//
+  // indeed, all this data is in the same endpoint
 
   async getAllTypesData() {
     try {

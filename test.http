@@ -111,7 +111,7 @@ GET {{api}}/seeding/all
 GET {{api}}/seeding/gen/1
 
 ### seed all types
-GET {{api}}/seeding/types
+GET {{local}}/seeding/types
 
 ### seed all generations
 GET {{api}}/seeding/generations

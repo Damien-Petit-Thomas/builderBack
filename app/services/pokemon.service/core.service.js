@@ -1,3 +1,6 @@
+//* to simplify the code and avoid repeating we create a core service  *//
+// we create a GET method that will be used by all other methods
+
 module.exports = class CoreService {
   constructor(axios, logger) {
     this.axios = axios;
