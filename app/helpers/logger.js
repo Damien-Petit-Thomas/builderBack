@@ -2,8 +2,14 @@ require('dotenv').config();
 const bunyan = require('bunyan');
 
 const streams = [];
+if (process.env.NODE_ENV === 'development') {
+  streams.push({
+    level: 'info',
+    stream: process.stdout,
+  });
+}
 
-if (['production'].includes(process.env.NODE_ENV)) {
+if (process.env.NODE_ENV === 'production') {
   streams.push({
     level: 'debug',
     path: './log/error.log',

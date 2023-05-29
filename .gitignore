@@ -1,4 +1,5 @@
 .env
 node_modules/
-l
+log/error.log
+log
 ```
