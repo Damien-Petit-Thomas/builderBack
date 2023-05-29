@@ -15,7 +15,7 @@ module.exports = async function buildPokemonFromPokeApi(id) {
 
   const sprite = pokemonData.sprites.other['official-artwork'].front_default;
   const { damage, frenchTypes, ids } = await getFrenchTypesAndDamageFromOnePoke(pokemonData.types.map((typ) => typ.type.name));
-
+  // we retrieve for each type the damage the type id using thr url and put it in an array depending on the damage
   const noDamage = damage[0].no_damage_from.map((typ) => typ.url.split('/')[6]);
   const halfDamage = damage[0].half_damage_from.map((typ) => typ.url.split('/')[6]);
   const doubleDamage = damage[0].double_damage_from.map((typ) => typ.url.split('/')[6]);

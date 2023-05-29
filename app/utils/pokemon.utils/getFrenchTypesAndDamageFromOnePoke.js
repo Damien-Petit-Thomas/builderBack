@@ -1,31 +1,25 @@
-/* eslint-disable no-await-in-loop */
+//* this utils is used to get the french types and damage relations from one pokemon
+
 const logger = require('../../helpers/logger');
 const { pokeApi } = require('../../services/pokemon.service/index');
 
 module.exports = async function getFrenchTypesAndDamageFromOnePoke(data) {
-  const damage = [];
-  const frenchTypes = [];
-  const ids = [];
-  for (let i = 0; i < data.length; i += 1) {
-    try {
-      const typeData = await pokeApi.getTypeData(data[i]);
-      damage.push(typeData.damage_relations);
-      frenchTypes.push(typeData.names.find((name) => name.language.name === 'fr').name);
-      ids.push(typeData.id);
-    } catch (e) {
-      logger.error(e);
-    }
+  try {
+    const initialData = { damage: [], frenchTypes: [], ids: [] };
+    // reduce is used to make a single request to the pokeApi
+    const result = await data.reduce(async (accPromise, item) => {
+      const acc = await accPromise;
+
+      const typeData = await pokeApi.getTypeData(item);
+      acc.damage.push(typeData.damage_relations);
+      acc.frenchTypes.push(typeData.names.find((name) => name.language.name === 'fr').name);
+      acc.ids.push(typeData.id);
+
+      return acc;
+    }, Promise.resolve(initialData));
+    return result;
+  } catch (err) {
+    logger.error(err);
+    throw err;
   }
-
-  return { damage, frenchTypes, ids };
 };
-// module.exports = async function getFrenchTypesAndDamageFromOnePoke(englishTypesNames) {
-//   const dataType = await Promise.all(englishTypesNames.map(async (names) => {
-//     const typeData = await pokeApi.getTypeData(names);
-//     const frenchTypes = typeData.names.find((name) => name.language.name === 'fr').name;
-//     const ids = typeData.id;
-
-//     return { damage: typeData.damage_relations, frenchTypes, ids };
-//   }));
-//   return dataType;
-// };
