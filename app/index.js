@@ -6,7 +6,7 @@ const router = require('./routers');
 
 const app = express();
 
-require('./helpers/apiDocs')(app);
+// require('./helpers/apiDocs')(app);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
