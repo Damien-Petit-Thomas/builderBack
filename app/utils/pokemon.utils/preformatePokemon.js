@@ -1,3 +1,5 @@
+//* this utils function is to retrieve the pokemon data from the db and and pass it to the
+//* buildFormatedPokemonFromDb function then add the pokemon to the cache
 const logger = require('../../helpers/logger');
 const { type } = require('../../models/index.datamapper');
 const buildPokemonObjectFromPokeDb = require('./buildFormatedPokemonFromDb');
@@ -6,22 +8,15 @@ const CacheServer = require('../cache');
 const cache = CacheServer.getInstance();
 
 module.exports = async (pokemon) => {
-  const pokemonType = [];
+  const { type1, type2 } = pokemon;
+  const pokemonTypes = [type1, type2].filter(Boolean);
 
-  pokemonType.push(pokemon.type1);
-  if (pokemon.type2) {
-    pokemonType.push(pokemon.type2);
-  }
+  const typesData = await Promise.all(pokemonTypes.map((typeId) => type.findByPk(typeId)));
 
-  // on recupere les données de degats pour chaque type
-  const promises = pokemonType.map(async (typeId) => {
-    const typeData = await type.findByPk(typeId);
-    return typeData;
-  });
-  const typesData = await Promise.all(promises);
   const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, typesData);
-  // on stocke le pokemon en cache
-  cache.set(pokemon.id, formatedPokemon, this.TTL);
+
+  cache.set(pokemon.id, formatedPokemon, cache.TTL);
   logger.log(`pokemon ${pokemon.id} added to cache`);
-  return (formatedPokemon);
+
+  return formatedPokemon;
 };
