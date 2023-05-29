@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+//* this is a little util to get the formated stats for a pokemon *//
 module.exports = {
 
   getFormatedStat(arr) {

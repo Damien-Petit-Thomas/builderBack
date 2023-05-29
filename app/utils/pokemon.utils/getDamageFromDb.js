@@ -1,11 +1,13 @@
 /* eslint-disable max-len */
+//* this util is used to get the damage multiplier for a pokemon type from all the other types *//
 module.exports = {
   getDamage(arr) {
     if (arr.length === 1) {
       return arr[0];
     }
-
+    // we split the array in two to get the damage from the first type and the second type
     const [totalDamage, totalDamage2] = arr;
+    // we use reduce to get the damage multiplier for each type  the key is the type id and the value is the damage multiplier
 
     const result = Object.keys(totalDamage).reduce((acc, key) => {
       if (key in totalDamage2) {

@@ -1,9 +1,8 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable max-len */
-
+//* this utils aims to get the damage multiplier from a pokemon type to another  *//
 module.exports = {
   getDamage(arr1, arr2, arr3) {
-    // const types = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
     const types = [
       { id: 1, name: 'Normal' },
       { id: 2, name: 'Combat' },
@@ -24,9 +23,10 @@ module.exports = {
       { id: 17, name: 'Ténèbre' },
       { id: 18, name: 'Fée' },
     ];
-
+    console.log(arr1, arr2, arr3);
     const totalDamageFrom = [];
     types.forEach((type) => {
+      // we count the number of time the type is in the array
       const noDamage = arr1.filter((word) => Number(word) === type.id).length;
       const halfDamage = arr2.filter((word) => Number(word) === type.id).length;
       const doubleDamage = arr3.filter((word) => Number(word) === type.id).length;

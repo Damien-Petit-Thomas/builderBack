@@ -1,3 +1,5 @@
+//* this function is used to build a pokemon object from the data fetched from the database
+// it give the pokemon object structure that will be used in the front end
 const { getDamage } = require('./getDamageFromDb');
 
 module.exports = function buildPokemonObjectFromPokeDb(pokemonData, typesData) {

@@ -1,7 +1,7 @@
-/* eslint-disable no-await-in-loop */
 //* this service is used to get data from the pokeApi  *//
 const CoreService = require('./core.service');
 const logger = require('../../helpers/logger');
+const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = class PokemonService extends CoreService {
   //* method to get the pokemon stats types id ...   *//
@@ -61,22 +61,27 @@ module.exports = class PokemonService extends CoreService {
   //* methode to get  damages, french name and english name of all types  *//
   // indeed, all this data is in the same endpoint
 
-  async getAllTypesData() {
+  async getAllTypesDatas() {
     try {
       const types = await this.getAllTypes();
-      const damages = [];
-      const frenchType = [];
-      const englishName = [];
-      for (let i = 1; i < types.length - 1; i += 1) {
-        const typeData = await this.getTypeData(i);
-        damages.push(typeData.damage_relations);
-        frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));
-        englishName.push(types[i - 1].name);
-      }
-      return { damages, frenchType, englishName };
+
+      const initialData = { damages: [], frenchType: [], englishName: [] };
+
+      const result = await types.reduce(async (accPromise, type, index) => {
+        const acc = await accPromise;
+        const typeData = await this.getTypeData(index + 1);
+
+        acc.damages.push(typeData.damage_relations);
+        acc.frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));
+        acc.englishName.push(type.name);
+
+        return acc;
+      }, Promise.resolve(initialData));
+
+      return result;
     } catch (err) {
       logger.error(err);
-      throw err;
+      throw new ApiError('Error while getting all types datas', 500);
     }
   }
 };
