@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const e = require('express');
+
 const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
@@ -21,6 +21,7 @@ module.exports = {
       email: user.email,
       ip: user.ip,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // console.log(token);
     return token;
   },
   /**

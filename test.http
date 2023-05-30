@@ -21,7 +21,7 @@ GET {{api}}/pokemon/2
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/pikachuz
+GET {{local}}/pokemon/pikachu
 
 ### get all pokemon imunise
 GET {{local}}/pokemon/imune/type/3
@@ -145,6 +145,26 @@ Content-Type: application/json
     "email": "damien2@gmail.com"
 }
 
+### login user
+POST {{api}}/user/login
+Content-Type: application/json
+
+{
+    "email" : "damien10@gmail.com",
+    "password" : "P0kemons!", 
+    "passwordConfirm" : "P0kemons!"
+}
+
+
+### login user
+POST {{local}}/user/login
+Content-Type: application/json
+
+{
+    "email" : "damien10@gmail.com",
+    "password" : "P0kemons!", 
+    "passwordConfirm" : "P0kemons!"
+}
 
 
 ### home page
