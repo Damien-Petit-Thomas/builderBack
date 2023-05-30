@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
+const debug = require('debug')('app:controllers:api:user');
 const { user } = require('../../models/index.datamapper');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
 const team = require('../../models/index.datamapper');
 const teamHasPokemon = require('../../models/index.datamapper');
 const { ApiError } = require('../../helpers/errorHandler');
-const debug = require('debug')('app:controllers:api:user');
 
 module.exports = {
   register: async (req, res) => {
@@ -40,13 +40,12 @@ module.exports = {
       debug(userFound);
       if (!userFound) {
         throw new ApiError(`User with email ${email} not found`, { statusCode: 404 });
-      } else {
-        userFound.ip = req.ip;
-        debug(req.ip);
-        const token = await login.authentify(userFound, password);
-
-        return res.status(200).json({ token });
       }
+      userFound.ip = req.ip;
+      debug(req.ip);
+      const token = await login.authentify(userFound, password);
+
+      return res.status(200).json({ token });
     } catch (err) {
       debug('error', err);
       throw new ApiError(err.message, err.infos);

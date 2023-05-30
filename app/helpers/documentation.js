@@ -181,11 +181,29 @@
  * POST /api/type/resist/types
  * @summary GET all types with resistance or imunity from a list of type
  * @tags TYPE
- * @param {[number]} request.body - list of type id
+ * @param {[number]} request.body.required - list of type id
  * @return {[Type]} 200 - success response - appllication/json
  * @return {ApiError} 400 - Bad request
   * @return {ApiError} 404 - Not found
  */
+
+// ---------------user router-------------------------//
+/**
+ * POST /api/user/signup
+ * @summary create a new user
+ * @tags User
+ * @param {User} request.body.required - user info
+ * @return {string} 201 - success response - appllication/json
+ * @return {ApiError} 400 - Bad request
+  * @return {ApiError} 404 - Not found
+ */
+
+/**
+ * POST /api/user/login
+ * @summary login a user
+ * @tags User
+ * @param {User} request.body.required - user info
+ * @return {Token} 200 - success response - appllication/json
 
 // -------------typedef------------------------------//
 
@@ -224,6 +242,18 @@
 /**
  * @typedef {object} Generation
  * @property {number} id - The id of the generation
+*/
+
+/**
+ * @typedef {object} User
+ * @property {string} username - The username of the user
+ * @property {string} password - The password of the user
+ * @property {string} email - The email of the user
+ */
+
+/**
+ * @typedef {object} Token
+ * @property {string} token - The token of the user
 */
 
 // ------------------error handler-------------------------//

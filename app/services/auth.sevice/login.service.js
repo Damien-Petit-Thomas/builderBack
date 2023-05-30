@@ -13,7 +13,7 @@ module.exports = {
   async authentify(user, password) {
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) {
-      throw new ApiError('Authentification failed', { statusCode: 401 });
+      throw new ApiError('Authentification failed', { statusCode: 404 });
     }
     const token = jwt.sign({
       id: user.id,
@@ -21,7 +21,7 @@ module.exports = {
       email: user.email,
       ip: user.ip,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    // console.log(token);
+
     return token;
   },
   /**
