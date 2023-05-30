@@ -6,7 +6,7 @@ module.exports = {
   async getAllGenerations(req, res) {
     try {
       const generations = await gen.findAll();
-      if (!generations) throw new ApiError('No generations found', { statuscode: 404 });
+      if (!generations) throw new ApiError('No generations found', { statusCode: 404 });
       res.status(200).json(generations);
     } catch (err) {
       logger.error(err);

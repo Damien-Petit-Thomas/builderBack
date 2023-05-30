@@ -20,7 +20,7 @@ module.exports = {
   async seedOnePokemon(req, res) {
     const { id } = req.params;
     if (!id) {
-      throw new ApiError('id is required', { statuscode: 400 });
+      throw new ApiError('id is required', { statusCode: 400 });
     }
     const pokemonInCache = cache.get(id);
     if (pokemonInCache) {
@@ -33,7 +33,7 @@ module.exports = {
         return res.json(pokemoon);
       }
       const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
-      if (!formatedPokemon) throw new ApiError('No pokemon found to seed', { statuscode: 404 });
+      if (!formatedPokemon) throw new ApiError('No pokemon found to seed', { statusCode: 404 });
       const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
       cache.set(pokeSavedInDb.id, pokemon, cache.TTL);
       return res.json(pokemon);
@@ -46,7 +46,7 @@ module.exports = {
   async seedAllPokemon(req, res) {
     try {
       const allPokemonData = await seedAllPokemon();
-      if (!allPokemonData) throw new ApiError('No pokemon found to seed', { statuscode: 404 });
+      if (!allPokemonData) throw new ApiError('No pokemon found to seed', { statusCode: 404 });
       return res.json(allPokemonData);
     } catch (err) {
       logger.error(err);
@@ -57,7 +57,7 @@ module.exports = {
   async seedOneType(req, res) {
     const { id } = req.params;
     if (!id) {
-      throw new ApiError('id is required', { statuscode: 400 });
+      throw new ApiError('id is required', { statusCode: 400 });
     }
 
     try {
@@ -66,7 +66,7 @@ module.exports = {
         return res.json(typ);
       }
       const typeData = await seedOneTypeById(id);
-      if (!typeData) throw new ApiError(`No type found with id ${id}`, { statuscode: 404 });
+      if (!typeData) throw new ApiError(`No type found with id ${id}`, { statusCode: 404 });
       return res.json(typeData);
     } catch (err) {
       logger.error(err);
@@ -77,7 +77,7 @@ module.exports = {
   async  seedTypes(_, res) {
     try {
       const types = await seedAllType();
-      if (!types) throw new ApiError('No types found to seed', { statuscode: 404 });
+      if (!types) throw new ApiError('No types found to seed', { statusCode: 404 });
       return res.json(types);
     } catch (err) {
       logger.error(err);
@@ -91,7 +91,7 @@ module.exports = {
       numberOfGenerations = await pokeApi.getAllGenerationsCount();
       const start = await gen.count();
       const generations = await gen.insertGen(start + 1, numberOfGenerations);
-      if (!generations) throw new ApiError('No generations found to seed', { statuscode: 404 });
+      if (!generations) throw new ApiError('No generations found to seed', { statusCode: 404 });
       return res.json(generations);
     } catch (err) {
       logger.error(err);
@@ -104,7 +104,7 @@ module.exports = {
   async seedGen_idColumn() {
     try {
       const generations = await gen.findAll();
-      if (!generations) throw new ApiError('No generations found to seed', { statuscode: 404 });
+      if (!generations) throw new ApiError('No generations found to seed', { statusCode: 404 });
       // we get the generations from the db
       const pokemons = [];
       const records = [];
@@ -121,7 +121,7 @@ module.exports = {
       }
       // we update the gen_id column in the db
       const response = poke.updatePokemonGen(records);
-      if (!response) throw new ApiError(' an error occured while seeding the gen_id column', { statuscode: 404 });
+      if (!response) throw new ApiError(' an error occured while seeding the gen_id column', { statusCode: 404 });
       return response;
     } catch (err) {
       logger.error(err);

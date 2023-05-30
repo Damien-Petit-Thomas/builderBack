@@ -46,7 +46,7 @@ module.exports = {
         } // if not we associate the damageFrom array to the type name
         damageType[typeData.name] = damages[index];
       } catch (err) {
-        throw new ApiError('une erreur est survenue lors de la récupération des types', { statuscode: 500 });
+        throw new ApiError('une erreur est survenue lors de la récupération des types', { statusCode: 500 });
       }
     });
 

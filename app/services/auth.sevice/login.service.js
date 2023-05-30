@@ -13,7 +13,7 @@ module.exports = {
   async authentify(user, password) {
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) {
-      throw new ApiError('Authentification failed', { statuscode: 401 });
+      throw new ApiError('Authentification failed', { statusCode: 401 });
     }
     const token = jwt.sign({
       id: user.id,
@@ -32,12 +32,12 @@ module.exports = {
   async getUser(req, res, next) {
     const token = req.headers.authorization?.replace('Bearer ', '');
     if (!token) {
-      throw new ApiError('Authentification failed : no token provided', { statuscode: 401 });
+      throw new ApiError('Authentification failed : no token provided', { statusCode: 401 });
     }
     try {
       const user = jwt.verify(token, process.env.JWT_SECRET);
       if (!user || user.ip !== req.ip) {
-        throw new ApiError('Authentification failed', { statuscode: 401 });
+        throw new ApiError('Authentification failed', { statusCode: 401 });
       }
       req.usere = user;
       next();

@@ -37,7 +37,7 @@ module.exports = {
       const { email, password } = req.body;
       const userFound = await user.findByMail(email);
       if (!userFound) {
-        throw new ApiError(`User with email ${email} not found`, { statuscode: 404 });
+        throw new ApiError(`User with email ${email} not found`, { statusCode: 404 });
       }
       userFound.ip = req.ip;
       const token = login.authentify(userFound, password);
@@ -52,12 +52,12 @@ module.exports = {
     try {
       const userFound = await user.findById(req.user.id);
       if (!userFound) {
-        throw new ApiError(`User with id ${req.user.id} not found`, { statuscode: 404 });
+        throw new ApiError(`User with id ${req.user.id} not found`, { statusCode: 404 });
       }
 
       const teams = await team.getTeamsByUserId(req.user.id);
       if (!teams) {
-        throw new ApiError(`error while getting teams for user with id ${req.user.id}`, { statuscode: 404 });
+        throw new ApiError(`error while getting teams for user with id ${req.user.id}`, { statusCode: 404 });
       }
       res.status(200).json({ userFound, teams });
     } catch (err) {
