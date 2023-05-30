@@ -13,7 +13,7 @@ module.exports = {
 
     try {
       if (await user.getOneByEmail(email)) {
-        throw new ApiError('Email already used', { statuscode: 400 });
+        throw new ApiError('Email already used', { statusCode: 400 });
       }
 
       const salt = await bcrypt.genSalt(12);
@@ -27,6 +27,7 @@ module.exports = {
       return res.status(201).json({ message: 'User created' });
     } catch (err) {
       logger.log('error', err);
+      console.log(err.infos.statusCode);
       throw new ApiError(err.message, err.infos);
     }
   },
