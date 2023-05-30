@@ -19,6 +19,7 @@ module.exports = {
 
   async getOne(req, res) {
     const { id } = req.params;
+
     if (!id) {
       throw new ApiError('id is required', { statusCode: 400 });
     }
