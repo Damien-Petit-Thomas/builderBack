@@ -61,27 +61,41 @@ module.exports = class PokemonService extends CoreService {
   //* methode to get  damages, french name and english name of all types  *//
   // indeed, all this data is in the same endpoint
 
-  async getAllTypesDatas() {
+  async getAllTypesData() {
     try {
       const types = await this.getAllTypes();
+      console.log('types', types);
 
       const initialData = { damages: [], frenchType: [], englishName: [] };
+      const result = await types.reduce(
+        async (accPromise, type, index) => {
+          //! Important: This condition is used to skip types with an ID > 10000,
+          // which helps to prevent bugs: as of the time of writing, there are 18 types
+          // with IDs < 10000. Calling getTypeData(19) would result in a 404 error.
+          if (Number(type.url.split('/')[6]) > 10000) {
+            return accPromise;
+          }
 
-      const result = await types.reduce(async (accPromise, type, index) => {
-        const acc = await accPromise;
-        const typeData = await this.getTypeData(index + 1);
+          try {
+            const acc = await accPromise;
+            const typeData = await this.getTypeData(index + 1);
 
-        acc.damages.push(typeData.damage_relations);
-        acc.frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));
-        acc.englishName.push(type.name);
+            acc.damages.push(typeData.damage_relations);
+            acc.frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));
+            acc.englishName.push(type.name);
 
-        return acc;
-      }, Promise.resolve(initialData));
+            return acc;
+          } catch (error) {
+            throw new Error('Error in type iteration', { statusCode: 500 });
+          }
+        },
+        Promise.resolve(initialData),
+      );
 
       return result;
     } catch (err) {
       logger.error(err);
-      throw new ApiError('Error while getting all types datas', 500);
+      throw new ApiError(err.message, err.info);
     }
   }
 };
