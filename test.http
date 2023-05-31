@@ -14,7 +14,7 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/2
+GET {{local}}/pokemon/2
 
 
 
@@ -161,7 +161,7 @@ POST {{local}}/user/login
 Content-Type: application/json
 
 {
-    "email" : "damien10@gmail.com",
+    "email" : "damien105@gmail.com",
     "password" : "P0kemons!", 
     "passwordConfirm" : "P0kemons!"
 }
