@@ -1,28 +1,21 @@
 //* this utils function is to retrieve the pokemon data from the db and and pass it to the
 //* buildFormatedPokemonFromDb function then add the pokemon to the cache
 
-const { type } = require('../../models');
+const { type } = require('../../models/index');
 const buildPokemonObjectFromPokeDb = require('./buildFormatedPokemonFromDb');
+const CacheServer = require('../cache/pokemon.cache');
 
-const CacheType = require('../cache/type.cache');
-
-const cacheType = CacheType.getInstance();
+const cache = CacheServer.getInstance();
 
 module.exports = async (pokemon) => {
   const { type1, type2 } = pokemon;
   const pokemonTypes = [type1, type2].filter(Boolean);
-  const buildPokemons = await Promise.all(
-    pokemonTypes.map(async (typeId) => {
-      const cachedType = cacheType.get(typeId);
-      if (cachedType) {
-        return buildPokemonObjectFromPokeDb(pokemon, cachedType);
-      }
-      const typesData = await Promise.all(pokemonTypes.map((id) => type.findByPk(id)));
-      cacheType.set(typeId, typesData, cacheType.TTL);
-      const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, typesData);
 
-      return formatedPokemon;
-    }),
-  );
-  return { buildPokemons };
+  const typesData = await Promise.all(pokemonTypes.map((typeId) => type.findByPk(typeId)));
+
+  const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, typesData);
+
+  cache.set(pokemon.id, formatedPokemon, cache.TTL);
+
+  return formatedPokemon;
 };
