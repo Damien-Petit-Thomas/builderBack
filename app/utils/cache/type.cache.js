@@ -3,7 +3,7 @@
 
 const NodeCache = require('node-cache');
 
-class CacheServer {
+class CacheType {
   static instance = null;
 
   constructor() {
@@ -12,10 +12,10 @@ class CacheServer {
   }
 
   static getInstance() {
-    if (!CacheServer.instance) {
-      CacheServer.instance = new CacheServer();
+    if (!CacheType.instance) {
+      CacheType.instance = new CacheType();
     }
-    return CacheServer.instance;
+    return CacheType.instance;
   }
 
   get(key) {
@@ -35,4 +35,4 @@ class CacheServer {
   }
 }
 
-module.exports = CacheServer;
+module.exports = CacheType;

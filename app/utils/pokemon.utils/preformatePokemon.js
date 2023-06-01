@@ -3,19 +3,28 @@
 
 const { type } = require('../../models');
 const buildPokemonObjectFromPokeDb = require('./buildFormatedPokemonFromDb');
-const CacheServer = require('../cache');
+const CachePokemon = require('../cache/pokemon.cache');
+const CacheType = require('../cache/type.cache');
 
-const cache = CacheServer.getInstance();
+const cacheType = CacheType.getInstance();
+const cache = CachePokemon.getInstance();
 
 module.exports = async (pokemon) => {
   const { type1, type2 } = pokemon;
   const pokemonTypes = [type1, type2].filter(Boolean);
+  const buildPokemons = await Promise.all(
+    pokemonTypes.map(async (typeId) => {
+      const cachedType = cacheType.get(typeId);
+      if (cachedType) {
+        console.log('cachedType', cachedType);
+        return buildPokemonObjectFromPokeDb(pokemon, cachedType);
+      }
+      const typesData = await Promise.all(pokemonTypes.map((id) => type.findByPk(id)));
+      cacheType.set(typeId, typesData, cacheType.TTL);
+      const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, typesData);
 
-  const typesData = await Promise.all(pokemonTypes.map((typeId) => type.findByPk(typeId)));
-
-  const formatedPokemon = buildPokemonObjectFromPokeDb(pokemon, typesData);
-
-  cache.set(pokemon.id, formatedPokemon, cache.TTL);
-
-  return formatedPokemon;
+      return formatedPokemon;
+    }),
+  );
+  return buildPokemons;
 };

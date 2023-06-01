@@ -5,12 +5,12 @@
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const { poke, type, gen } = require('../../models');
 const logger = require('../../helpers/logger');
-const CacheServer = require('../../utils/cache');
+const CachePokemon = require('../../utils/cache/pokemon.cache');
 const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../../services/pokemon.service/seeding.service');
 const { ApiError } = require('../../helpers/errorHandler');
 const { pokeApi } = require('../../services/pokemon.service');
 
-const cache = CacheServer.getInstance();
+const cache = CachePokemon.getInstance();
 
 require('dotenv').config();
 

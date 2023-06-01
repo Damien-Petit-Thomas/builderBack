@@ -1,5 +1,5 @@
 const { type, poke } = require('../../models');
-const cacheServer = require('../cache');
+const cacheServer = require('../cache/pokemon.cache');
 const { ApiError } = require('../../helpers/errorHandler');
 const getPokemonFromCache = require('./getPokemonFromCahe');
 const preformatPokemon = require('./preformatePokemon');
@@ -23,7 +23,6 @@ module.exports = {
             if (cachedPokemon) {
               return cachedPokemon;
             }
-
             const preformattedPokemon = await preformatPokemon(pokemon);
             cache.set(pokemon.id, preformattedPokemon, cache.TTL);
             return preformattedPokemon;

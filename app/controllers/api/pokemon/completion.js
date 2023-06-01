@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 const { poke, type } = require('../../../models');
 
-const CacheServer = require('../../../utils/cache');
+const CachePokemon = require('../../../utils/cache/pokemon.cache');
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const { getNumberOfResistanceByType } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
@@ -9,7 +9,7 @@ const bestTwoTypes = require('../../../utils/teamCompletion/bestTwoTypes');
 const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons');
 const { ApiError } = require('../../../helpers/errorHandler');
 
-const cache = CacheServer.getInstance();
+const cache = CachePokemon.getInstance();
 module.exports = {
 
   async getTeamCompletion(req, res) {

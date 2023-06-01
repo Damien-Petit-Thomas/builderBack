@@ -1,5 +1,5 @@
-const CacheServer = require('../cache');
+const CachePokemon = require('../cache/pokemon.cache');
 
-const cache = CacheServer.getInstance();
+const cache = CachePokemon.getInstance();
 
 module.exports = (id) => cache.get(id) || null;

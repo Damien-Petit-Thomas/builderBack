@@ -22,17 +22,9 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
 
   async findNoDamageFrom(id) {
     const pokemons = await this.client.query(
-      `SELECT *
-      FROM type
-      WHERE (
-        SELECT COUNT(*)
-        FROM json_array_elements(damagefrom::json) AS elem
-        WHERE (elem->>'damage')::float = 0
-          AND (elem->>'id')::int = $1
-      ) > 0;
-      ;
-      `,
-      [id],
+      'SELECT * from findDamage($1, $2)',
+      [id, 0],
+
     );
 
     return pokemons.rows;

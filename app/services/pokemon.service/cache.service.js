@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 //* this service is used to cache data from the database  *//
-const CacheServer = require('../../utils/cache');
+const CacheServer = require('../../utils/cache/pokemon.cache');
 
 const cache = CacheServer.getInstance();
 const { poke } = require('../../models');
