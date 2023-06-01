@@ -33,7 +33,7 @@ module.exports = class CoreDatamapper {
  */
 
   async findOneByName(inputData) {
-    const result = await this.client.query(`SELECT * FROM "${this.tablename}" WHERE LOWER(UNACCENT(name)) = LOWER(UNACCENT($1))`, [inputData]);
+    const result = await this.client.query(`SELECT * FROM "${this.tablename}" WHERE UNACCENT(name) IlIKE UNACCENT($1)`, [`%${inputData}%`]);
     if (!result.rows[0]) {
       return null;
     }

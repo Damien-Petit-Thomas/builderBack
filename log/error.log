@@ -172,3 +172,4 @@
 {"name":"poke-api","hostname":"lgdamien","pid":96577,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:23:32.094Z","v":0}
 {"name":"poke-api","hostname":"lgdamien","pid":96760,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:24:14.610Z","v":0}
 {"name":"poke-api","hostname":"lgdamien","pid":96823,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:24:21.802Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":99460,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:36:39.048Z","v":0}
