@@ -96,6 +96,7 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByGenId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
+
       const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
       const allPokemons = await Promise.all(promises);
       if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });

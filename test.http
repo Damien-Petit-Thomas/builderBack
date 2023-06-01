@@ -14,10 +14,10 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/
+GET {{api}}/pokemon
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/
+GET {{local}}/pokemon
 
 
 
