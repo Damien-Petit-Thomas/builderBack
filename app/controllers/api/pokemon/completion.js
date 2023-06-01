@@ -1,15 +1,14 @@
 /* eslint-disable no-await-in-loop */
 const { poke, type } = require('../../../models');
 
-const CachePokemon = require('../../../utils/cache/pokemon.cache');
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const { getNumberOfResistanceByType } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
 const bestTwoTypes = require('../../../utils/teamCompletion/bestTwoTypes');
 const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons');
 const { ApiError } = require('../../../helpers/errorHandler');
+const inCache = require('../../../utils/pokemon.utils/getPokemonFromCahe');
 
-const cache = CachePokemon.getInstance();
 module.exports = {
 
   async getTeamCompletion(req, res) {
@@ -29,8 +28,7 @@ module.exports = {
 
       // Retrieve Pokemons from the database or cache and format them
       const promises = poketeam.map(async (id) => {
-        const inCache = cache.get(id);
-        if (inCache) return inCache;
+        if (inCache(id)) return inCache(id);
 
         const inDb = await poke.findByPk(id);
         if (inDb) {

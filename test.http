@@ -28,7 +28,7 @@ GET {{local}}/pokemon/ca
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
 ###get akk resistants pokemons 
-GET {{local}}/pokemon/resist/type/5
+GET {{local}}/pokemon/resist/type/8
 
 ###GET resistant and imune pokemon from a type
 GET  {{local}}/pokemon/resist-immune/type/2

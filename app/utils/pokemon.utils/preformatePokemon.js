@@ -10,19 +10,17 @@ const cacheType = CacheType.getInstance();
 
 module.exports = async (pokemon) => {
   const { type1, type2 } = pokemon;
-  const typesData = [];
   const pokemonTypes = [type1, type2].filter(Boolean);
 
-  await Promise.all(pokemonTypes.map(async (typeId) => {
+  const typesData = await Promise.all(pokemonTypes.map(async (typeId) => {
     const cachedType = cacheType.get(typeId);
     if (cachedType) {
-      console.log('cached type');
-      typesData.push(cachedType);
-    } else {
-      const typeData = await type.findByPk(typeId);
-      typesData.push(typeData);
-      cacheType.set(typeId, typeData, cacheType.TTL);
+      return cachedType;
     }
+
+    const typeData = await type.findByPk(typeId);
+    cacheType.set(typeId, typeData, cacheType.TTL);
+    return typeData;
   }));
 
   return buildPokemonObjectFromPokeDb(pokemon, typesData);
