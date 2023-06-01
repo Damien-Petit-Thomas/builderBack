@@ -29,8 +29,6 @@ module.exports = {
 
   async getOneByName(req, res) {
     const { name } = req.params;
-
-    if (!name) throw new ApiError('name is required', { statusCode: 400 });
     try {
       const pokemon = await poke.findOneByName(name);
       if (!pokemon) throw new ApiError(` pokemon ${name} not found `, { statusCode: 404 });
@@ -68,7 +66,8 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByTypeId(id);
 
-      if (pokemons) throw new ApiError('no pokemon found', { statusCode: 404 });
+      if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
+
       const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
       const allPokemons = await Promise.all(promises);
       if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
@@ -82,7 +81,7 @@ module.exports = {
     const { id1, id2 } = req.params;
     try {
       const pokemons = await poke.findAllByTypesIds(id1, id2);
-      if (!pokemons) throw new ApiError('no pokemon found', { statusCode: 404 });
+      if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
       const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
       const allPokemons = await Promise.all(promises);
       if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
@@ -96,7 +95,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const pokemons = await poke.findAllByGenId(id);
-      if (!pokemons) throw new ApiError('no pokemon found', { statusCode: 404 });
+      if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
       const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
       const allPokemons = await Promise.all(promises);
       if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });

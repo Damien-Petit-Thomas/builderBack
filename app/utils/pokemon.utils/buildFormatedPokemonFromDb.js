@@ -22,6 +22,6 @@ module.exports = function buildPokemonObjectFromPokeDb(pokemonData, typesData) {
     damageFromRelations: getDamage(damage),
 
   };
-  // cache.set(pokemon.id, pokemon, cache.TTL);
+  cache.set(pokemon.id, pokemon, cache.TTL);
   return pokemon;
 };

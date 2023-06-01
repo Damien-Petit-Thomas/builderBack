@@ -24,7 +24,7 @@ module.exports = {
               return cachedPokemon;
             }
             const preformattedPokemon = await preformatPokemon(pokemon);
-            cache.set(pokemon.id, preformattedPokemon, cache.TTL);
+
             return preformattedPokemon;
           }),
         );

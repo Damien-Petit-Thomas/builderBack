@@ -14,19 +14,21 @@
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/2
+GET {{api}}/pokemon/56
 
+### GET one pokemon by id
+GET {{local}}/pokemon/56
 
 
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/pikachu
+GET {{local}}/pokemon/pika
 
 ### get all pokemon imunise to a type
-GET {{local}}/pokemon/immune/type/5
+GET {{local}}/pokemon/immune/type/3
 ###get akk resistants pokemons 
-GET {{local}}/pokemon/resist/type/1
+GET {{local}}/pokemon/resist/type/5
 
 ###GET resistant and imune pokemon from a type
 GET  {{local}}/pokemon/resist-immune/type/2
@@ -42,7 +44,7 @@ GET {{local}}/pokemon/type/30
 
 
 ### GET all pokemon by generation 
-GET {{api}}/pokemon/gen/1
+GET {{local}}/pokemon/gen/
 
 
 
