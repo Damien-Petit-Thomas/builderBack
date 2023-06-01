@@ -23,14 +23,13 @@ GET {{local}}/pokemon/2
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
 GET {{local}}/pokemon/pikachu
 
-### get all pokemon imunise
+### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
-
 ###get akk resistants pokemons 
-GET {{api}}/pokemon/resist/type/1
+GET {{local}}/pokemon/resist/type/1
 
 ###GET resistant and imune pokemon from a type
-GET  {{api}}/pokemon/resist/immune/type/2
+GET  {{local}}/pokemon/resist-immune/type/2
 ### GET all pokemon
 GET {{api}}/pokemon/full-random
 

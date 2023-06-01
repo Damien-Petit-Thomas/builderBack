@@ -34,7 +34,7 @@ router
 //   .route('/weak/type/:id(\\d+)')
 //   .get(controllerHandler(controller.getDoubleDamageFrom));
 router
-  .route('/resist-Immune/type/:id(\\d+)')
+  .route('/resist-immune/type/:id(\\d+)')
   .get(controllerHandler(controllerDamage.getNoDamageFromOrHalfDamageFrom));
 // router
 //   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')

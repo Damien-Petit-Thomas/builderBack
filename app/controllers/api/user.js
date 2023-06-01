@@ -42,7 +42,7 @@ module.exports = {
         throw new ApiError(`User with email ${email} not found`, { statusCode: 404 });
       }
       userFound.ip = req.ip;
-      console.log(userFound.username);
+
       debug(req.ip);
       const token = await login.authentify(userFound, password);
       const userName = userFound.username;
