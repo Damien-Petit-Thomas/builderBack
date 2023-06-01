@@ -179,3 +179,20 @@
 {"name":"poke-api","hostname":"lgdamien","pid":100197,"level":50,"err":{"message":"Cannot convert undefined or null to object","name":"ApiError","stack":"ApiError: Cannot convert undefined or null to object\n    at getOneByName (/home/damien/Documents/oclock/apotheose/production/app/controllers/api/pokemon/pokemon.js:39:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async /home/damien/Documents/oclock/apotheose/production/app/helpers/controllerHandler.js:11:5"},"msg":"Cannot convert undefined or null to object","time":"2023-06-01T13:39:29.948Z","v":0}
 {"name":"poke-api","hostname":"lgdamien","pid":100379,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:40:56.698Z","v":0}
 {"name":"poke-api","hostname":"lgdamien","pid":101062,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:44:48.100Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":101658,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:47:36.988Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":102074,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:50:43.631Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":102120,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:50:48.925Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":102241,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:51:24.599Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":102476,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:53:18.800Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":102642,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:54:03.770Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":103682,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:56:25.612Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":103994,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:59:00.590Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104144,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T13:59:54.307Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104231,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:00:29.184Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104386,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:01:03.861Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104545,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:02:24.461Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104808,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:03:28.180Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104904,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:03:51.163Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":104967,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:04:00.036Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":105008,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:04:08.134Z","v":0}
+{"name":"poke-api","hostname":"lgdamien","pid":105147,"level":30,"msg":"Houston listening on port :  http://localhost:3456","time":"2023-06-01T14:04:37.771Z","v":0}

@@ -1,16 +1,14 @@
 const { type, poke } = require('../../models');
-const cacheServer = require('../cache/pokemon.cache');
-const { ApiError } = require('../../helpers/errorHandler');
-const getPokemonFromCache = require('./getPokemonFromCahe');
-const preformatPokemon = require('./preformatePokemon');
 
-const cache = cacheServer.getInstance();
+const { ApiError } = require('../../helpers/errorHandler');
+const inCache = require('./getPokemonFromCahe');
+const preformatPokemon = require('./preformatePokemon');
 
 module.exports = {
 
-  async findDamage(damage, id, res) {
+  async findDamage(damageLevel, id, res) {
     try {
-      const types = await type[damage](id);
+      const types = await type[damageLevel](id);
       if (!types) {
         throw new ApiError('No types found', { statusCode: 404 });
       }
@@ -19,10 +17,8 @@ module.exports = {
         const pokemons = await poke.findAllByTypeId(typ.id);
         const preformattedPokemons = await Promise.all(
           pokemons.map(async (pokemon) => {
-            const cachedPokemon = getPokemonFromCache(pokemon.id);
-            if (cachedPokemon) {
-              return cachedPokemon;
-            }
+            if (inCache(pokemon.id)) return inCache(pokemon.id);
+
             const preformattedPokemon = await preformatPokemon(pokemon);
 
             return preformattedPokemon;

@@ -23,7 +23,7 @@ GET {{local}}/pokemon
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/pil
+GET {{local}}/pokemon/ca
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
