@@ -30,11 +30,15 @@ module.exports = {
   async getOneByName(req, res) {
     const { name } = req.params;
     try {
-      const pokemon = await poke.findOneByName(name);
-      if (!pokemon) throw new ApiError(` pokemon ${name} not found `, { statusCode: 404 });
+      const pokemons = await poke.findOneByName(name);
+      if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 404 });
 
-      const formatedPokemon = await preformatPokemon(pokemon);
-      return res.json(formatedPokemon);
+      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
+
+      const allPokemons = await Promise.all(promises);
+      if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
+
+      return res.json(allPokemons);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }

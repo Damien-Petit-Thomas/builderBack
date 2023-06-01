@@ -38,7 +38,7 @@ module.exports = class CoreDatamapper {
       return null;
     }
 
-    return result.rows[0];
+    return result.rows;
   }
 
   /**
