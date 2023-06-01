@@ -14,10 +14,10 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/56
+GET {{api}}/pokemon/
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/56
+GET {{local}}/pokemon/
 
 
 
@@ -26,7 +26,7 @@ GET {{local}}/pokemon/56
 GET {{local}}/pokemon/pika
 
 ### get all pokemon imunise to a type
-GET {{local}}/pokemon/immune/type/3
+GET {{local}}/pokemon/immune/type/5
 ###get akk resistants pokemons 
 GET {{local}}/pokemon/resist/type/5
 
