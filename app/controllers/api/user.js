@@ -13,7 +13,7 @@ module.exports = {
 
     try {
       if (await user.getOneByEmail(email)) {
-        throw new ApiError('Email already used', { statusCode: 400 });
+        throw new ApiError('Email déjà utilisé', { statusCode: 400 });
       }
 
       const salt = await bcrypt.genSalt(12);
