@@ -37,6 +37,7 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
 
     return pokemons.rows;
   }
+  // todo: refacto findDamage whith making a function
 
   async findHalfDamageFrom(id) {
     const pokemons = await this.client.query(

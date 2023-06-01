@@ -3,7 +3,7 @@
 
 //* this service is used to seed the database with formatted data from the pokeApi  *//
 
-const { poke, type } = require('../../models/index.datamapper');
+const { poke, type } = require('../../models');
 const { pokeApi } = require('./index');
 const buildPokemonObjectFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const { getDamage } = require('../../utils/pokemon.utils/getDamage');

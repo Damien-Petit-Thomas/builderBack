@@ -64,7 +64,6 @@ module.exports = class PokemonService extends CoreService {
   async getAllTypesData() {
     try {
       const types = await this.getAllTypes();
-      console.log('types', types);
 
       const initialData = { damages: [], frenchType: [], englishName: [] };
       const result = await types.reduce(

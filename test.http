@@ -24,13 +24,13 @@ GET {{local}}/pokemon/2
 GET {{local}}/pokemon/pikachu
 
 ### get all pokemon imunise
-GET {{local}}/pokemon/imune/type/3
+GET {{local}}/pokemon/immune/type/5
 
 ###get akk resistants pokemons 
 GET {{api}}/pokemon/resist/type/1
 
 ###GET resistant and imune pokemon from a type
-GET  {{api}}/pokemon/resist/imune/type/2
+GET  {{api}}/pokemon/resist/immune/type/2
 ### GET all pokemon
 GET {{api}}/pokemon/full-random
 
@@ -78,7 +78,7 @@ Content-Type: application/json
 GET {{api}}/type
 
 ### GET all type with immunity from one type
-GET {{api}}/type/imune/type/1
+GET {{api}}/type/immune/type/5
 
 
 ### GET all types with resistance from one type

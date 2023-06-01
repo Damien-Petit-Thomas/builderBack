@@ -1,0 +1,72 @@
+/* eslint-disable no-await-in-loop */
+const { poke, type } = require('../../../models');
+
+const CacheServer = require('../../../utils/cache');
+const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
+const { getNumberOfResistanceByType } = require('../../../utils/teamCompletion/getTeamWeakness');
+const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
+const bestTwoTypes = require('../../../utils/teamCompletion/bestTwoTypes');
+const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons');
+const { ApiError } = require('../../../helpers/errorHandler');
+
+const cache = CacheServer.getInstance();
+module.exports = {
+
+  async getTeamCompletion(req, res) {
+    try {
+    // The req.body contains an array with Pokemon IDs
+      const poketeam = req.body;
+
+      // Check if the array contains between 1 and 5 Pokemons
+      if (poketeam.length < 1 || poketeam.length > 5) {
+        throw new ApiError('Bad request : The team must contain between 1 and 5 pokemons', { statusCode: 400 });
+      }
+
+      // Check if all the Pokemons in the team are different
+      if (new Set(poketeam).size !== poketeam.length) {
+        throw new ApiError('Bad request : The team must contain different pokemons', { statusCode: 400 });
+      }
+
+      // Retrieve Pokemons from the database or cache and format them
+      const promises = poketeam.map(async (id) => {
+        const inCache = cache.get(id);
+        if (inCache) return inCache;
+
+        const inDb = await poke.findByPk(id);
+        if (inDb) {
+          const formatedPokemon = await preformatPokemon(inDb);
+          return formatedPokemon;
+        }
+
+        throw new ApiError(` pokemon whith id  ${id} not found `, { statusCode: 404 });
+      });
+
+      const teamPokemons = (await Promise.all(promises)).flat();
+
+      while (teamPokemons.length < 6) {
+        const teamPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
+        // retrieve the number resistance of the team to each type
+        const weakNess = getNumberOfResistanceByType(teamPokemons);
+        // get en array of the most weak type the length depend of the number of pokemon in the team
+        const weak = getTeamSuggestion(weakNess, teamPokemons.length);
+        //
+        const typeList = weak.map((w) => w[0]);
+
+        const resistantTypes = await type.findResistanceToTypeList(typeList);
+
+        const bestTypes = bestTwoTypes(resistantTypes);
+
+        const bestPokemons = await getBestPokemons(bestTypes, teamPokemonsIds);
+
+        if (bestPokemons) {
+          const formatedPokemon = await preformatPokemon(bestPokemons);
+          teamPokemons.push(formatedPokemon);
+        }
+      }
+
+      return res.json(teamPokemons);
+    } catch (err) {
+      throw new ApiError(err.message, err.infos);
+    }
+  },
+};

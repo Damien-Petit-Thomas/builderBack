@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt');
 const debug = require('debug')('app:controllers:api:user');
-const { user } = require('../../models/index.datamapper');
+const { user } = require('../../models');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
-const team = require('../../models/index.datamapper');
-const teamHasPokemon = require('../../models/index.datamapper');
+const { team } = require('../../models');
+const { teamHasPokemon } = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
@@ -45,7 +45,7 @@ module.exports = {
       debug(req.ip);
       const token = await login.authentify(userFound, password);
 
-      return res.status(200).json({ token });
+      return res.status(200).json({ token }, userFound.username);
     } catch (err) {
       debug('error', err);
       throw new ApiError(err.message, err.infos);
@@ -72,10 +72,10 @@ module.exports = {
 
   createMyTeam: async (req, res) => {
     try {
-      const { teamName, user } = req.body;
+      const { teamName, usere } = req.body;
       const inputData = {
         name: teamName,
-        user_id: user.id,
+        user_id: usere.id,
       };
       const newTeam = await team.create(inputData);
 

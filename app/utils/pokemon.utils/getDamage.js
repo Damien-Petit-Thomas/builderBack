@@ -3,6 +3,7 @@
 //* this utils aims to get the damage multiplier from a pokemon type to another  *//
 module.exports = {
   getDamage(arr1, arr2, arr3) {
+    // todo dynamic types
     const types = [
       { id: 1, name: 'Normal' },
       { id: 2, name: 'Combat' },

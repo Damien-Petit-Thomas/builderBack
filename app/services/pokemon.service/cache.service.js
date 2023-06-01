@@ -3,7 +3,7 @@
 const CacheServer = require('../../utils/cache');
 
 const cache = CacheServer.getInstance();
-const { poke } = require('../../models/index.datamapper');
+const { poke } = require('../../models');
 const logger = require('../../helpers/logger');
 const preformatPokemon = require('../../utils/pokemon.utils/preformatePokemon');
 const { ApiError } = require('../../helpers/errorHandler');
@@ -24,7 +24,7 @@ module.exports = {
       formatedPokemons.forEach((pokemon) => {
         // this way each pokemon is fotmated and cached
         cache.set(pokemon.id, pokemon, cache.TTL);
-        logger.info(`pokemon ${pokemon.name} cached`);
+        console.info(`pokemon ${pokemon.name} cached`);
       });
       if (!formatedPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
       return formatedPokemons;

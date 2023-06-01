@@ -1,4 +1,4 @@
-const { gen } = require('../../models/index.datamapper');
+const { gen } = require('../../models');
 const logger = require('../../helpers/logger');
 const { ApiError } = require('../../helpers/errorHandler');
 

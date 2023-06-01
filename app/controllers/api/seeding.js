@@ -3,10 +3,9 @@
 /* eslint-disable no-await-in-loop */
 
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
-const { poke, type } = require('../../models/index.datamapper');
+const { poke, type, gen } = require('../../models');
 const logger = require('../../helpers/logger');
 const CacheServer = require('../../utils/cache');
-const { gen } = require('../../models/index.datamapper');
 const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../../services/pokemon.service/seeding.service');
 const { ApiError } = require('../../helpers/errorHandler');
 const { pokeApi } = require('../../services/pokemon.service');

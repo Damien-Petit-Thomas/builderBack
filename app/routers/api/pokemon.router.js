@@ -1,6 +1,9 @@
 const express = require('express');
-const { pokemonController: controller } = require('../../controllers/api');
-
+const {
+  pokemonController: controller,
+  pokeDamageController: controllerDamage,
+  completionController: controllerCompletion,
+} = require('../../controllers/api');
 const controllerHandler = require('../../helpers/controllerHandler');
 
 const router = express.Router();
@@ -23,16 +26,16 @@ router
   .get(controllerHandler(controller.getPokemonByGenId));
 router
   .route('/immune/type/:id(\\d+)')
-  .get(controllerHandler(controller.getNoDamageFrom));
+  .get(controllerHandler(controllerDamage.getNoDamageFrom));
 router
   .route('/resist/type/:id(\\d+)')
-  .get(controllerHandler(controller.getHalfDamageFrom));
+  .get(controllerHandler(controllerDamage.getHalfDamageFrom));
 // router
 //   .route('/weak/type/:id(\\d+)')
 //   .get(controllerHandler(controller.getDoubleDamageFrom));
 router
   .route('/resist-Immune/type/:id(\\d+)')
-  .get(controllerHandler(controller.getNoDamageFromOrHalfDamageFrom));
+  .get(controllerHandler(controllerDamage.getNoDamageFromOrHalfDamageFrom));
 // router
 //   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')
 //   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFromToTypes));
@@ -44,7 +47,7 @@ router
   .get(controllerHandler(controller.getFullRandomTeam));
 router
   .route('/complet-team')
-  .post(controllerHandler(controller.getTeamCompletion));
+  .post(controllerHandler(controllerCompletion.getTeamCompletion));
 // router
 //   .route('/:type1/:type2')
 //   .get(controllerHandler(controller.getDamageBetweenTwoTypes));

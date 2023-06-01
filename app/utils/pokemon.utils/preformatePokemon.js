@@ -1,7 +1,7 @@
 //* this utils function is to retrieve the pokemon data from the db and and pass it to the
 //* buildFormatedPokemonFromDb function then add the pokemon to the cache
 
-const { type } = require('../../models/index.datamapper');
+const { type } = require('../../models');
 const buildPokemonObjectFromPokeDb = require('./buildFormatedPokemonFromDb');
 const CacheServer = require('../cache');
 
