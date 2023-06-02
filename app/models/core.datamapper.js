@@ -59,7 +59,7 @@ module.exports = class CoreDatamapper {
       placeholders.push(`$${indexPlaceholder}`);
       indexPlaceholder += 1;
     });
-    const ssqlQuery = {
+    const sqlQuery = {
       text:
         `INSERT INTO "${this.tablename}"
         (${fields.join(', ')})
@@ -67,7 +67,7 @@ module.exports = class CoreDatamapper {
         RETURNING *`,
       values,
     };
-    const result = await this.client.query(ssqlQuery);
+    const result = await this.client.query(sqlQuery);
     return result.rows[0];
   }
 

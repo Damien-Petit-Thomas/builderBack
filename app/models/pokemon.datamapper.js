@@ -121,7 +121,7 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
   async getRandomTeam() {
     const randomIds = await this.client.query(
 
-      'SELECT id FROM random_team()',
+      'SELECT * FROM random_team()',
     );
     return randomIds.rows;
   }

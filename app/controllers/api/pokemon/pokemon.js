@@ -1,3 +1,4 @@
+const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 const { poke } = require('../../../models');
 
 const CachePokemon = require('../../../utils/cache/pokemon.cache');
@@ -32,13 +33,7 @@ module.exports = {
     try {
       const pokemons = await poke.findOneByName(name);
       if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 500 });
-
-      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-
-      const allPokemons = await Promise.all(promises);
-      if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
-
-      return res.json(allPokemons);
+      return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -69,13 +64,8 @@ module.exports = {
     const { id } = req.params;
     try {
       const pokemons = await poke.findAllByTypeId(id);
-
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-
-      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-      const allPokemons = await Promise.all(promises);
-      if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
-      return res.json(allPokemons);
+      return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -86,10 +76,7 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByTypesIds(id1, id2);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-      const allPokemons = await Promise.all(promises);
-      if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
-      return res.status(200).json(allPokemons);
+      return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -100,11 +87,7 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByGenId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-
-      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-      const allPokemons = await Promise.all(promises);
-      if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
-      return res.json(allPokemons);
+      return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -112,18 +95,10 @@ module.exports = {
 
   async getFullRandomTeam(_, res) {
     try {
-      const randomIds = await poke.getRandomTeam();
-      const promises = randomIds.map(async (id) => {
-        if (cache.get(id.id)) return cache.get(id.id);
-        const pokemon = await poke.findByPk(id.id);
-        const formatedPokemon = await preformatPokemon(pokemon);
-        return formatedPokemon;
-      });
-      const randomTeam = await Promise.all(promises);
-      return res.json(randomTeam);
+      const pokemons = await poke.getRandomTeam();
+      return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
   },
-
 };
