@@ -27,16 +27,13 @@ router
   .get(login.getUser, controllerHandler(controller.userPage));
 
 router
-  .route('/user/teams')
-  .post(login.getUser, controllerHandler(controller.createMyTeam));
+  .route('/user/team')
+  .post(login.getUser, controllerHandler(controller.createTeam));
 
 router
-  .route('/user/teams/:id')
-  .delete(login.getUser, controllerHandler(controller.deleteMyTeamById));
-
-router
-  .route('/user/teams/:id')
-  .patch(login.getUser, controllerHandler(controller.updateMyTeamById));
+  .route('/user/team/:id')
+  .delete(login.getUser, controllerHandler(controller.deleteTeam))
+  .patch(login.getUser, controllerHandler(controller.updateTeam));
 
 // router
 //   .route('/user/teams/:id/pokemons')

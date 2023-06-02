@@ -71,7 +71,7 @@ module.exports = {
     }
   },
 
-  createMyTeam: async (req, res) => {
+  createTeam: async (req, res) => {
     try {
       const { teamName, usere } = req.body;
       const inputData = {
@@ -98,5 +98,19 @@ module.exports = {
       throw new ApiError(error.message, error.infos);
     }
   },
+
+  deleteTeam: async (req, res) => {
+    const { id } = req.body;
+    try {
+      const response = team.delete(id);
+      res.status(200).json({ response, message: 'Team deleted' });
+    } catch (err) {
+      throw new ApiError(err.messagen, err.infos);
+    }
+  },
+
+  //   updateTeam: async (req, res) => {
+  // const { user.id } = req.body;
+  //   },
 
 };

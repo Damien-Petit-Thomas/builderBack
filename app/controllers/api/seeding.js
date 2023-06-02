@@ -98,7 +98,6 @@ module.exports = {
       const generations = await gen.findAll();
       if (!generations) throw new ApiError('No generations found to seed', { statusCode: 404 });
       // we get the generations from the db
-
       // at each iteration we get all the pokemons from one generation
       // and we push them in the pokemons array
       const promises = generations.map(async (generation, i) => {
