@@ -1,5 +1,4 @@
 const CoreDatamapper = require('./core.datamapper');
-const logger = require('../helpers/logger');
 
 module.exports = class TypeDatamapper extends CoreDatamapper {
   tablename = 'type';
@@ -12,36 +11,36 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
     if (isExist.rows[0]) {
       return isExist.rows[0];
     }
-    const type = await this.client.query(
+    const typ = await this.client.query(
       'SELECT * FROM insert_type($1)',
       [typeData],
 
     );
-    return type.rows[0];
+    return typ.rows[0];
   }
 
   async findNoDamageFrom(id) {
-    const pokemons = await this.client.query(
+    const typ = await this.client.query(
       'SELECT * from findDamage($1, $2)',
       [id, 0],
 
     );
 
-    return pokemons.rows;
+    return typ.rows;
   }
 
   async findHalfDamageFrom(id) {
-    const pokemons = await this.client.query(
+    const typ = await this.client.query(
       'SELECT * from findDamage($1, $2)',
       [id, 0.5],
 
     );
 
-    return pokemons.rows;
+    return typ.rows;
   }
 
   async findNoDamageFromAndHalfDamageFrom(id) {
-    const pokemons = await this.client.query(
+    const typ = await this.client.query(
       `SELECT *
       FROM type
       WHERE (
@@ -55,25 +54,25 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
       [id],
     );
 
-    return pokemons.rows;
+    return typ.rows;
   }
 
   async findDoubleDamageFrom(id) {
-    const pokemons = await this.client.query(
+    const typ = await this.client.query(
       'SELECT * from findDamage($1, $2)',
       [id, 2],
 
     );
 
-    return pokemons.rows;
+    return typ.rows;
   }
 
   async findResistanceToTypeList(types) {
-    const pokemons = await this.client.query(
+    const typ = await this.client.query(
       'SELECT * FROM filterTypes($1) ;',
       [types],
     );
 
-    return pokemons.rows;
+    return typ.rows;
   }
 };

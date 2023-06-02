@@ -2,8 +2,9 @@ const { poke } = require('../../../models');
 
 const CachePokemon = require('../../../utils/cache/pokemon.cache');
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
-const getPokemonFromCache = require('../../../utils/pokemon.utils/getPokemonFromCahe');
+const inCache = require('../../../utils/pokemon.utils/getPokemonFromCahe');
 const { ApiError } = require('../../../helpers/errorHandler');
+const { seedOnePokemon } = require('../seeding');
 
 const cache = CachePokemon.getInstance();
 module.exports = {
@@ -11,27 +12,26 @@ module.exports = {
   async getOne(req, res) {
     const { id } = req.params;
 
-    if (getPokemonFromCache(id)) {
-      return res.json(getPokemonFromCache(id));
-    }
+    if (inCache(id)) return res.json(inCache(id));
     try {
       const pokemon = await poke.findByPk(id);
+
       if (pokemon) {
         // we always return formated pokemon
         const formatedPokemon = await preformatPokemon(pokemon);
         return res.json(formatedPokemon);
       }
-      return res.redirect(`/seeding/${id}`);
+      return seedOnePokemon(req, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
   },
 
-  async getOneByName(req, res) {
+  async getByName(req, res) {
     const { name } = req.params;
     try {
       const pokemons = await poke.findOneByName(name);
-      if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 404 });
+      if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 500 });
 
       const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
 

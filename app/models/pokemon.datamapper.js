@@ -104,6 +104,7 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
       where p.id = g.poke_id
     `;
     try {
+      console.log(query);
       const response = await this.client.query(query);
       return response.rows;
     } catch (err) {

@@ -1,7 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-undef */
-/* eslint-disable no-await-in-loop */
-
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const { poke, type, gen } = require('../../models');
 const logger = require('../../helpers/logger');
@@ -9,6 +5,7 @@ const CachePokemon = require('../../utils/cache/pokemon.cache');
 const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../../services/pokemon.service/seeding.service');
 const { ApiError } = require('../../helpers/errorHandler');
 const { pokeApi } = require('../../services/pokemon.service');
+const inCache = require('../../utils/pokemon.utils/getPokemonFromCahe');
 
 const cache = CachePokemon.getInstance();
 
@@ -18,19 +15,15 @@ module.exports = {
 
   async seedOnePokemon(req, res) {
     const { id } = req.params;
-    if (!id) {
-      throw new ApiError('id is required', { statusCode: 400 });
-    }
-    const pokemonInCache = cache.get(id);
-    if (pokemonInCache) {
-      return res.json(pokemonInCache);
-    }
+
+    if (inCache(id)) return res.json(inCache(id));
 
     try {
       const pokemoon = await poke.findByPk(id);
       if (pokemoon) {
         return res.json(pokemoon);
       }
+
       const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
       if (!formatedPokemon) throw new ApiError('No pokemon found to seed', { statusCode: 404 });
       const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
@@ -105,23 +98,26 @@ module.exports = {
       const generations = await gen.findAll();
       if (!generations) throw new ApiError('No generations found to seed', { statusCode: 404 });
       // we get the generations from the db
-      const pokemons = [];
-      const records = [];
+
       // at each iteration we get all the pokemons from one generation
       // and we push them in the pokemons array
-      // we take the poke_id from the url and the gen_id from the iteration
-      for (let i = 0; i < generations.length; i += 1) {
-        pokemons[i] = await pokeApi.getAllPokeByGeneration(generations[i].id);
-        for (let j = 0; j < pokemons[i].length; j += 1) {
-          records.push({
-            poke_id: pokemons[i][j].url.split('/')[6], gen_id: i + 1,
-          });
-        }
+      const promises = generations.map(async (generation, i) => {
+        const pokemons = await pokeApi.getAllPokeByGeneration(generation.id);
+        const records = pokemons.map((pokemon) => ({
+          poke_id: pokemon.url.split('/')[6],
+          gen_id: i + 1,
+        }));
+        return records;
+      });
+      const allRecords = (await Promise.all(promises)).flat();
+
+      const responses = await poke.updatePokemonGen(allRecords);
+
+      if (responses.some((response) => !response)) {
+        throw new ApiError('An error occurred while seeding the gen_id column', { statusCode: 404 });
       }
-      // we update the gen_id column in the db
-      const response = poke.updatePokemonGen(records);
-      if (!response) throw new ApiError(' an error occured while seeding the gen_id column', { statusCode: 404 });
-      return response;
+
+      return responses;
     } catch (err) {
       logger.error(err);
       throw new ApiError(err.message, err.infos);

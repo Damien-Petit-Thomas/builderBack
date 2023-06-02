@@ -17,7 +17,7 @@
 GET {{api}}/pokemon
 
 ### GET one pokemon by id
-GET {{local}}/pokemon
+GET {{local}}/pokemon/4550
 
 
 
@@ -124,6 +124,18 @@ GET {{local}}/cache/all
 
 ### get all generations
 GET {{api}}/gen
+
+
+###get gen_id 
+GET {{local}}/seeding/generation_id
+
+
+
+
+
+
+
+
 
 ### create user
 

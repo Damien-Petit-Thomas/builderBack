@@ -1,3 +1,5 @@
+//* this controller is used to find the pokemon by the damage he can receive from a type
+
 const { ApiError } = require('../../../helpers/errorHandler');
 
 const { findDamage } = require('../../../utils/pokemon.utils/findDamage');

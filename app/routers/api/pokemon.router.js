@@ -41,7 +41,7 @@ router
 //   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFromToTypes));
 router
   .route('/:name([a-zA-Z]+)')
-  .get(controllerHandler(controller.getOneByName));
+  .get(controllerHandler(controller.getByName));
 router
   .route('/full-random')
   .get(controllerHandler(controller.getFullRandomTeam));

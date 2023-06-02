@@ -3,7 +3,7 @@
 
 const { type } = require('../../models');
 const buildPokemonObjectFromPokeDb = require('./buildFormatedPokemonFromDb');
-
+const { ApiError } = require('../../helpers/errorHandler');
 const CacheType = require('../cache/type.cache');
 
 const cacheType = CacheType.getInstance();
@@ -11,17 +11,20 @@ const cacheType = CacheType.getInstance();
 module.exports = async (pokemon) => {
   const { type1, type2 } = pokemon;
   const pokemonTypes = [type1, type2].filter(Boolean);
+  try {
+    const typesData = await Promise.all(pokemonTypes.map(async (typeId) => {
+      const cachedType = cacheType.get(typeId);
+      if (cachedType) {
+        return cachedType;
+      }
 
-  const typesData = await Promise.all(pokemonTypes.map(async (typeId) => {
-    const cachedType = cacheType.get(typeId);
-    if (cachedType) {
-      return cachedType;
-    }
+      const typeData = await type.findByPk(typeId);
+      cacheType.set(typeId, typeData, cacheType.TTL);
+      return typeData;
+    }));
 
-    const typeData = await type.findByPk(typeId);
-    cacheType.set(typeId, typeData, cacheType.TTL);
-    return typeData;
-  }));
-
-  return buildPokemonObjectFromPokeDb(pokemon, typesData);
+    return buildPokemonObjectFromPokeDb(pokemon, typesData);
+  } catch (err) {
+    throw new ApiError(err.message, err.infos);
+  }
 };
