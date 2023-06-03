@@ -3,7 +3,7 @@
 
 const NodeCache = require('node-cache');
 
-class CachePokemon {
+module.exports = class CachePokemon {
   static instance = null;
 
   constructor() {
@@ -33,6 +33,4 @@ class CachePokemon {
   flush() {
     return this.cache.flushAll();
   }
-}
-
-module.exports = CachePokemon;
+};

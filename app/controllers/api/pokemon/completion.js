@@ -7,7 +7,8 @@ const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggesti
 const bestTwoTypes = require('../../../utils/teamCompletion/bestTwoTypes');
 const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons');
 const { ApiError } = require('../../../helpers/errorHandler');
-const inCache = require('../../../utils/pokemon.utils/getPokemonFromCahe');
+const inCache = require('../../../utils/cache/inCache');
+const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 
 module.exports = {
 
@@ -28,7 +29,7 @@ module.exports = {
 
       // Retrieve Pokemons from the database or cache and format them
       const promises = poketeam.map(async (id) => {
-        if (inCache(id)) return inCache(id);
+        if (inCache(id, pokeCache)) return inCache(id, pokeCache);
 
         const inDb = await poke.findByPk(id);
         if (inDb) {

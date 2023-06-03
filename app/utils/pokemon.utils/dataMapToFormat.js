@@ -1,11 +1,12 @@
 const preformatePokemon = require('./preformatePokemon');
 const { ApiError } = require('../../helpers/errorHandler');
-const inCache = require('./getPokemonFromCahe');
+const inCache = require('../cache/inCache');
+const pokeCache = require('../cache/pokemon.cache').getInstance();
 
 module.exports = async (data, res) => {
   try {
     const promises = data.map(async (pokemon) => {
-      if (inCache(pokemon.id)) return inCache(pokemon.id);
+      if (inCache(pokemon.id, pokeCache)) return inCache(pokemon.id, pokeCache);
       return preformatePokemon(pokemon);
     });
     const allPokemons = await Promise.all(promises);

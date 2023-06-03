@@ -10,9 +10,9 @@ router
   .get(controllerHandler(controller.getAllTypes));
 router
   .route('/:id(\\d+)')
-  .post(controllerHandler(controller.getTypeById));
+  .get(controllerHandler(controller.getTypeById));
 router
-  .route('/imune/:id(\\d+)')
+  .route('/immune/:id(\\d+)')
   .get(controllerHandler(controller.getNoDamageFrom));
 router
   .route('/resist/:id(\\d+)')

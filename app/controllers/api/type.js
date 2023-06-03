@@ -79,6 +79,7 @@ module.exports = {
 
   async getTypeById(req, res) {
     const { id } = req.params;
+
     if (!id) throw new ApiError('No id provided', { statusCode: 400 });
     try {
       const result = await type.findByPk(id);

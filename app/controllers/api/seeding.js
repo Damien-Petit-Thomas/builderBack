@@ -1,13 +1,12 @@
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const { poke, type, gen } = require('../../models');
 const logger = require('../../helpers/logger');
-const CachePokemon = require('../../utils/cache/pokemon.cache');
+const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
+
 const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../../services/pokemon.service/seeding.service');
 const { ApiError } = require('../../helpers/errorHandler');
 const { pokeApi } = require('../../services/pokemon.service');
-const inCache = require('../../utils/pokemon.utils/getPokemonFromCahe');
-
-const cache = CachePokemon.getInstance();
+const inCache = require('../../utils/cache/inCache');
 
 require('dotenv').config();
 
@@ -16,7 +15,7 @@ module.exports = {
   async seedOnePokemon(req, res) {
     const { id } = req.params;
 
-    if (inCache(id)) return res.json(inCache(id));
+    if (inCache(id, pokeCache)) return res.json(inCache(id, pokeCache));
 
     try {
       const pokemoon = await poke.findByPk(id);

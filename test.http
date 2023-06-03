@@ -3,7 +3,7 @@
 # Nécessite l'extension REST Client pour VSCode
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 ################################################################################
-@api = https://boiling-forest-96071.herokuapp.com/api
+@api = https://obuilder.herokuapp.com/api
 @local= http://localhost:{{$dotenv PORT}}/api
 
 
@@ -17,7 +17,7 @@
 GET {{api}}/pokemon
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/4550
+GET {{local}}/pokemon/1
 
 
 
@@ -75,17 +75,18 @@ Content-Type: application/json
 ################################## type router #############################
 
 ### GET all types (with damage relations)
-GET {{api}}/type
+GET {{local}}/type/1
+
 
 ### GET all type with immunity from one type
-GET {{api}}/type/immune/type/5
+GET {{local}}/type/immune/5
 
 
 ### GET all types with resistance from one type
-GET {{api}}/type/resist/type/1
+GET {{local}}/type/resist/1
 
 ### GET all types with resistance or immunity from one type
-GET {{api}}/type/resist/imune/type/2
+GET {{local}}/type/resist-imune/2
 
 ####POSt get a list of types with resistance or immunity from a list of types
 POST {{api}}/type/resist/types

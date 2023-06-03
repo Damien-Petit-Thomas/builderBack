@@ -3,7 +3,7 @@
 
 const NodeCache = require('node-cache');
 
-class CacheType {
+module.exports = class CacheType {
   static instance = null;
 
   constructor() {
@@ -33,6 +33,4 @@ class CacheType {
   flush() {
     return this.cache.flushAll();
   }
-}
-
-module.exports = CacheType;
+};

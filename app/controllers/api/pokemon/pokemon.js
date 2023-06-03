@@ -1,19 +1,20 @@
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 const { poke } = require('../../../models');
 
-const CachePokemon = require('../../../utils/cache/pokemon.cache');
+const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
-const inCache = require('../../../utils/pokemon.utils/getPokemonFromCahe');
+const inCache = require('../../../utils/cache/inCache');
 const { ApiError } = require('../../../helpers/errorHandler');
 const { seedOnePokemon } = require('../seeding');
 
-const cache = CachePokemon.getInstance();
+// const pokeCache = CachePokemon.getInstance();
 module.exports = {
 
   async getOne(req, res) {
     const { id } = req.params;
 
-    if (inCache(id)) return res.json(inCache(id));
+    if (inCache(id, pokeCache)) return res.json(inCache(id, pokeCache));
+
     try {
       const pokemon = await poke.findByPk(id);
 
@@ -40,10 +41,8 @@ module.exports = {
   },
 
   async getAll(_, res) {
-    const pokemonsInCache = cache.get('all');
-    if (pokemonsInCache) {
-      return res.json(pokemonsInCache);
-    }
+    if (inCache('all', pokeCache)) return res.json(inCache('all', pokeCache));
+
     try {
       const pokemons = await poke.findAll();
       if (!pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
@@ -52,7 +51,7 @@ module.exports = {
       const allPokemons = await Promise.all(promises);
       if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
       // Let's take this opportunity to cache  them all with the key 'all'
-      cache.set('all', allPokemons, cache.TTL);
+      pokeCache.set('all', allPokemons, pokeCache.TTL);
 
       return res.json(allPokemons);
     } catch (err) {
