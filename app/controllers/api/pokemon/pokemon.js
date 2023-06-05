@@ -12,8 +12,8 @@ module.exports = {
 
   async getOne(req, res) {
     const { id } = req.params;
-
-    if (inCache(id, pokeCache)) return res.json(inCache(id, pokeCache));
+    const cache = inCache(id, pokeCache);
+    if (cache) return res.json(cache);
 
     try {
       const pokemon = await poke.findByPk(id);
@@ -41,9 +41,10 @@ module.exports = {
   },
 
   async getAll(_, res) {
-    if (inCache('all', pokeCache)) return res.json(inCache('all', pokeCache));
-
     try {
+      const cache = inCache('all', pokeCache);
+      if (cache) return res.json(cache);
+
       const pokemons = await poke.findAll();
       if (!pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
       const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
@@ -60,10 +61,14 @@ module.exports = {
   },
 
   async getPokemonByTypeId(req, res) {
-    const { id } = req.params;
     try {
+      const { id } = req.params;
+      const cache = inCache(`pokeType${id}`, pokeCache);
+      if (cache) return res.json(cache);
+
       const pokemons = await poke.findAllByTypeId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
+
       return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);

@@ -6,7 +6,9 @@ const pokeCache = require('../cache/pokemon.cache').getInstance();
 module.exports = async (data, res) => {
   try {
     const promises = data.map(async (pokemon) => {
-      if (inCache(pokemon.id, pokeCache)) return inCache(pokemon.id, pokeCache);
+      const cache = inCache(pokemon.id, pokeCache);
+      if (cache) return cache;
+
       return preformatePokemon(pokemon);
     });
     const allPokemons = await Promise.all(promises);

@@ -14,8 +14,8 @@ module.exports = {
 
   async seedOnePokemon(req, res) {
     const { id } = req.params;
-
-    if (inCache(id, pokeCache)) return res.json(inCache(id, pokeCache));
+    const cache = inCache(id, pokeCache);
+    if (cache) return res.json(cache);
 
     try {
       const pokemoon = await poke.findByPk(id);

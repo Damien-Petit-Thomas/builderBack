@@ -3,14 +3,19 @@ require('dotenv').config();
 const logger = require('../../helpers/logger');
 const { type } = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
+const typeCache = require('../../utils/cache/type.cache').getInstance();
+const inCache = require('../../utils/cache/inCache');
 
 module.exports = {
 
   async getAllTypes(_, res) {
     try {
+      const cache = inCache('allType', typeCache);
+      if (cache) return res.json(cache);
       const types = await type.findAll();
       if (!types) throw new ApiError('an error occured while fetching data', { statusCode: 500 });
       if (types.length === 0) throw new ApiError('No types found', { statusCode: 404 });
+      typeCache.set('allType', types, typeCache.TTL);
       return res.json(types);
     } catch (err) {
       logger.error(err);

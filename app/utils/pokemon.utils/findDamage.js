@@ -3,9 +3,8 @@ const { type, poke } = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 const inCache = require('../cache/inCache');
 const preformatPokemon = require('./preformatePokemon');
-const CachePokemon = require('../cache/pokemon.cache');
+const pokeCache = require('../cache/pokemon.cache').getInstance();
 
-const pokeCache = CachePokemon.getInstance();
 module.exports = {
 
   async findDamage(damageLevel, id, res) {
@@ -19,7 +18,8 @@ module.exports = {
         const pokemons = await poke.findAllByTypeId(typ.id);
         const preformattedPokemons = await Promise.all(
           pokemons.map(async (pokemon) => {
-            if (inCache(pokemon.id, pokeCache)) return inCache(pokemon.id, pokeCache);
+            const cache = inCache(pokemon.id, pokeCache);
+            if (cache) return cache;
 
             const preformattedPokemon = await preformatPokemon(pokemon);
 

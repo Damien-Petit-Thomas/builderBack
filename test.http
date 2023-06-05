@@ -17,7 +17,7 @@
 GET {{api}}/pokemon
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/1
+GET {{api}}/pokemon/1
 
 
 
@@ -75,7 +75,7 @@ Content-Type: application/json
 ################################## type router #############################
 
 ### GET all types (with damage relations)
-GET {{local}}/type/1
+GET {{local}}/type/2
 
 
 ### GET all type with immunity from one type

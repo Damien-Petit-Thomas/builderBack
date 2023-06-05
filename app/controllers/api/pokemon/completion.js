@@ -29,7 +29,8 @@ module.exports = {
 
       // Retrieve Pokemons from the database or cache and format them
       const promises = poketeam.map(async (id) => {
-        if (inCache(id, pokeCache)) return inCache(id, pokeCache);
+        const cache = inCache(id, pokeCache);
+        if (cache) return cache;
 
         const inDb = await poke.findByPk(id);
         if (inDb) {
