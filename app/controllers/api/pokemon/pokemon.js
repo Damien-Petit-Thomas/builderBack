@@ -68,7 +68,7 @@ module.exports = {
 
       const pokemons = await poke.findAllByTypeId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-
+      pokeCache.set(`pokeType${id}`, pokemons, pokeCache.TTL);
       return formatPoke(pokemons, res);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
