@@ -3,7 +3,7 @@ const { ApiError } = require('../../helpers/errorHandler');
 const inCache = require('../cache/inCache');
 const pokeCache = require('../cache/pokemon.cache').getInstance();
 
-module.exports = async (data, res) => {
+module.exports = async (data) => {
   try {
     const promises = data.map(async (pokemon) => {
       const cache = inCache(pokemon.id, pokeCache);
@@ -15,7 +15,7 @@ module.exports = async (data, res) => {
     if (!allPokemons) {
       throw new ApiError('no formated pokemon', { statusCode: 500 });
     }
-    return res.status(200).json(allPokemons);
+    return allPokemons;
   } catch (err) {
     throw new ApiError(err.message, err.infos);
   }

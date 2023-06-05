@@ -5,25 +5,24 @@ const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const inCache = require('../../../utils/cache/inCache');
 const { ApiError } = require('../../../helpers/errorHandler');
-const { seedOnePokemon } = require('../seeding');
-
+const logger = require('../../../helpers/logger');
 // const pokeCache = CachePokemon.getInstance();
 module.exports = {
 
   async getOne(req, res) {
     const { id } = req.params;
     const cache = inCache(id, pokeCache);
+
     if (cache) return res.json(cache);
 
     try {
       const pokemon = await poke.findByPk(id);
+      if (!pokemon) throw new ApiError(` pokemon ${id} not found `, { statusCode: 500 });
 
-      if (pokemon) {
-        // we always return formated pokemon
-        const formatedPokemon = await preformatPokemon(pokemon);
-        return res.json(formatedPokemon);
-      }
-      return seedOnePokemon(req, res);
+      // we always return formated pokemon
+      //! formatPoke wait for an array of pokemon
+      const response = await formatPoke([pokemon]);
+      return res.status(200).json(response[0]);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -34,7 +33,8 @@ module.exports = {
     try {
       const pokemons = await poke.findOneByName(name);
       if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 500 });
-      return formatPoke(pokemons, res);
+      const response = formatPoke(pokemons);
+      return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -47,14 +47,9 @@ module.exports = {
 
       const pokemons = await poke.findAll();
       if (!pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
-      const promises = pokemons.map(async (pokemon) => preformatPokemon(pokemon));
-
-      const allPokemons = await Promise.all(promises);
-      if (!allPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
-      // Let's take this opportunity to cache  them all with the key 'all'
-      pokeCache.set('all', allPokemons, pokeCache.TTL);
-
-      return res.json(allPokemons);
+      const response = await formatPoke(pokemons);
+      pokeCache.set('all', response, pokeCache.TTL);
+      return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -68,8 +63,10 @@ module.exports = {
 
       const pokemons = await poke.findAllByTypeId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-      pokeCache.set(`pokeType${id}`, pokemons, pokeCache.TTL);
-      return formatPoke(pokemons, res);
+
+      const response = await formatPoke(pokemons, res);
+      pokeCache.set(`pokeType${id}`, response, pokeCache.TTL);
+      return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -80,7 +77,8 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByTypesIds(id1, id2);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-      return formatPoke(pokemons, res);
+      const response = await formatPoke(pokemons, res);
+      return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -88,10 +86,14 @@ module.exports = {
 
   async getPokemonByGenId(req, res) {
     const { id } = req.params;
+    const cache = inCache(`gen${id}`, pokeCache);
+    if (cache) return res.json(cache);
     try {
       const pokemons = await poke.findAllByGenId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-      return formatPoke(pokemons, res);
+      const response = await formatPoke(pokemons, res);
+      pokeCache.set(`gen${id}`, response, pokeCache.TTL);
+      return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
@@ -100,7 +102,8 @@ module.exports = {
   async getFullRandomTeam(_, res) {
     try {
       const pokemons = await poke.getRandomTeam();
-      return formatPoke(pokemons, res);
+      const response = await formatPoke(pokemons, res);
+      return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
