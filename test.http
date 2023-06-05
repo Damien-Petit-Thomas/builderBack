@@ -14,10 +14,10 @@
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/52
+GET {{local}}/pokemon/
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/55
+GET {{api}}/pokemon/
 
 
 
@@ -39,7 +39,7 @@ GET {{local}}/pokemon/full-random
 GET {{api}}/pokemon/type/14/type/17
 
 ### GET all pokemon of one type
-GET {{local}}/pokemon/type/1
+GET {{local}}/pokemon/gen/5
 
 
 ### GET all pokemon by generation 
