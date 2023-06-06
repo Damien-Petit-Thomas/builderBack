@@ -2,7 +2,7 @@ const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 const { poke } = require('../../../models');
 
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
+
 const inCache = require('../../../utils/cache/inCache');
 const { ApiError } = require('../../../helpers/errorHandler');
 const logger = require('../../../helpers/logger');

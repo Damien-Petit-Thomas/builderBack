@@ -49,13 +49,45 @@ module.exports = class PokemonService extends CoreService {
     return response;
   }
 
-  //* method to get all existing types   *//
-  // endpoint : https://pokeapi.co/api/v2/type/
+  //* method to get  all existing types   *//
+  // endpoint : https://pokeapi.co/api/v2/type/?limit=1000
 
   async getAllTypes() {
     const response = await this.get('/type/');
+    return response.results;
+  }
+
+  //* method to get the  all existing abilities   *//
+  // endpoint : https://pokeapi.co/api/v2/ability/?limit=1000
+  async getAllAbilities() {
+    const response = await this.get('/ability/');
 
     return response.results;
+  }
+
+  async getAbilityData(abilityNameORId) {
+    const response = await this.get(`/ability/${abilityNameORId}`);
+    const { id } = response;
+    const { name } = response;
+    const frenchName = response.names.find((nam) => nam.language.name === 'fr').name;
+    const description = response.flavor_text_entries.filter((desc) => desc.language.name === 'fr').pop()?.flavor_text ?? 'No description';
+    const pokemons = [...new Set(response.pokemon.map((pokemon) => (pokemon.pokemon.url.split('/')[6])))]
+      .filter((poke) => poke < 10000);
+
+    return {
+      id, name, frenchName, pokemons, description,
+    };
+  }
+
+  async getAllAbilitiesData() {
+    try {
+      const response = await this.getAbilityData(298);
+      console.log(response);
+      return response;
+    } catch (err) {
+      logger.error(err);
+      throw new ApiError(err.message, err.info);
+    }
   }
 
   //* methode to get  damages, french name and english name of all types  *//

@@ -114,6 +114,8 @@ GET {{local}}/seeding/types
 ### seed all generations
 GET {{local}}/seeding/generations
 
+### seed pokemon abilities
+GET {{local}}/seeding/abilities
 
 ####################################cache router #############################
 

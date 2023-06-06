@@ -79,7 +79,8 @@ module.exports = {
   },
 
   async seedAllAbilities() {
-
+    const data = await pokeApi.getAllAbilitiesData();
+    return data;
   },
 
   async seedOneTypeById(typeId) {
