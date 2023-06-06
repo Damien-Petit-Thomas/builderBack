@@ -1,0 +1,22 @@
+:root{
+  /* background-color: #3773cd; */
+--header-bg: #F7D358; 
+--main-bg:  rgba(186,22,22,.376)
+
+}
+
+
+body{
+  background-color: var(--main-bg) ;
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+  background-color: var(--header-bg);
+}
+header a {
+  cursor: pointer;
+}

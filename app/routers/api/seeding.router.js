@@ -21,4 +21,7 @@ router
 router
   .route('/generations')
   .get(controllerHandler(controller.seedGenerations));
+router
+  .route('/abilities')
+  .get(controllerHandler(controller.seedAbilities));
 module.exports = router;

@@ -32,6 +32,12 @@ module.exports = {
   },
 
   async seedAllType() {
+    const numberOfTypes = 18; // there are 18 types in the pokeApi we don't want to seed the unknown and shadow types
+    let isTypeInDb = await type.findAll();
+    if (isTypeInDb.length === numberOfTypes) {
+      isTypeInDb = 'all types already in db';
+      return isTypeInDb;
+    }
     const { damages, frenchType, englishName } = await pokeApi.getAllTypesData();
 
     // we create formatted type objects from the pokeApi before inserting them in the db
@@ -40,8 +46,8 @@ module.exports = {
     const damageType = {};
     const promises = frenchType.map(async (typeData, index) => {
       try { // we check if the type is already in the db
-        const isTypeInDb = await type.findOneByName(typeData.name);
-        if (isTypeInDb) {
+        const isTypeInDbByName = await type.findOneByName(typeData.name);
+        if (isTypeInDbByName) {
           logger.log(`type ${frenchType.name} already in db`);
         } // if not we associate the damageFrom array to the type name
         damageType[typeData.name] = damages[index];
@@ -70,6 +76,10 @@ module.exports = {
     await Promise.all(formattedTypes.map((typObject) => type.insertType(typObject)));
 
     return formattedTypes;
+  },
+
+  async seedAllAbilities() {
+
   },
 
   async seedOneTypeById(typeId) {

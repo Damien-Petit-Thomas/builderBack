@@ -2,8 +2,7 @@ const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonF
 const { poke, type, gen } = require('../../models');
 const logger = require('../../helpers/logger');
 const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
-
-const { seedAllType, seedOneTypeById, seedAllPokemon } = require('../../services/pokemon.service/seeding.service');
+const seed = require('../../services/pokemon.service/seeding.service');
 const { ApiError } = require('../../helpers/errorHandler');
 const { pokeApi } = require('../../services/pokemon.service');
 const inCache = require('../../utils/cache/inCache');
@@ -36,7 +35,7 @@ module.exports = {
 
   async seedAllPokemon(req, res) {
     try {
-      const allPokemonData = await seedAllPokemon();
+      const allPokemonData = await seed.seedAllPokemon();
       if (!allPokemonData) throw new ApiError('No pokemon found to seed', { statusCode: 404 });
       return res.json(allPokemonData);
     } catch (err) {
@@ -56,7 +55,7 @@ module.exports = {
       if (typ) {
         return res.json(typ);
       }
-      const typeData = await seedOneTypeById(id);
+      const typeData = await seed.seedOneTypeById(id);
       if (!typeData) throw new ApiError(`No type found with id ${id}`, { statusCode: 404 });
       return res.json(typeData);
     } catch (err) {
@@ -67,11 +66,21 @@ module.exports = {
 
   async  seedTypes(_, res) {
     try {
-      const types = await seedAllType();
+      const types = await seed.seedAllType(res);
       if (!types) throw new ApiError('No types found to seed', { statusCode: 404 });
       return res.json(types);
     } catch (err) {
       logger.error(err);
+      throw new ApiError(err.message, err.infos);
+    }
+  },
+
+  async seedAbilities(_, res) {
+    try {
+      const abilities = await seed.seedAllAbilities();
+      if (!abilities) throw new ApiError('No ability found to seed', { statusCode: 400 });
+      return res.json(abilities);
+    } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
   },
