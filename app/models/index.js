@@ -1,5 +1,6 @@
 const client = require('../config/db');
 
+const Ability = require('./ability.datamapper');
 const Pokemon = require('./pokemon.datamapper');
 const Type = require('./type.datamapper');
 const Team = require('./team.datamapper');
@@ -8,6 +9,7 @@ const User = require('./user.datamapper');
 const TeamHasPokemon = require('./teamHasPokemon.datamapper');
 
 module.exports = {
+  ability: new Ability(client),
   teamHasPokemon: new TeamHasPokemon(client),
   user: new User(client),
   type: new Type(client),

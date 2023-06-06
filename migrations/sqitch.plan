@@ -19,3 +19,4 @@ user_id 2023-05-20T12:40:53Z Damien <damien.petit.thomas@gmail.com> # add user_i
 functionDamage 2023-06-01T09:02:49Z Damien <damien.petit.thomas@gmail.com> # add function to refacto findDdamage
 user_favorite 2023-06-05T08:42:20Z Damien <damien.petit.thomas@gmail.com> # add table use_has_favorite
 ability 2023-06-06T07:24:45Z Damien <damien.petit.thomas@gmail.com> # add table ability and pokemon_has_ability
+insert_abi 2023-06-06T14:05:44Z Damien <damien.petit.thomas@gmail.com> # insert ability

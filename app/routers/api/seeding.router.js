@@ -24,4 +24,10 @@ router
 router
   .route('/abilities')
   .get(controllerHandler(controller.seedAbilities));
+router
+  .route('/ability/:id(\\d+)')
+  .get(controllerHandler(controller.seedOneAbilities));
+router
+  .route('/pokemon_has_ability')
+  .get(controllerHandler(controller.seedPokemonHasAbility));
 module.exports = router;

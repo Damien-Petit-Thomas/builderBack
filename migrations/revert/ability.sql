@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP TABLE pokemon_ability;
-DROP TABLE ability;
+DROP TABLE pokemon_ability CASCADE;
+DROP TABLE ability CASCADE;
 
 COMMIT;

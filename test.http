@@ -17,7 +17,7 @@
 GET {{local}}/pokemon/179
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/45
+GET {{api}}/pokemon/292
 
 
 
@@ -116,6 +116,9 @@ GET {{local}}/seeding/generations
 
 ### seed pokemon abilities
 GET {{local}}/seeding/abilities
+
+### seed pokemon abilities 1 
+GET {{local}}/seeding/ability/25
 
 ####################################cache router #############################
 

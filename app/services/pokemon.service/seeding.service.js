@@ -3,12 +3,15 @@
 
 //* this service is used to seed the database with formatted data from the pokeApi  *//
 
-const { poke, type } = require('../../models');
+const { all } = require('axios');
+const { poke, type, ability } = require('../../models');
 const { pokeApi } = require('./index');
 const buildPokemonObjectFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
+const { getModifyingAbility } = require('../../utils/pokemon.utils/getModifyingAbility');
 const { getDamage } = require('../../utils/pokemon.utils/getDamage');
 const logger = require('../../helpers/logger');
 const { ApiError } = require('../../helpers/errorHandler');
+const { seedPokemonHasAbility } = require('../../controllers/api/seeding');
 
 module.exports = {
 
@@ -80,7 +83,61 @@ module.exports = {
 
   async seedAllAbilities() {
     const data = await pokeApi.getAllAbilitiesData();
+    const promises = data.map(async (item) => {
+      let damageFrom = [];
+      const modifyingAbility = [157, 114, 78, 31, 18, 297, 273, 47, 199];
+      if (modifyingAbility.includes(Number(item.id))) {
+        damageFrom = await getModifyingAbility(Number(item.id));
+      }
+
+      const abiInDb = {
+        id: item.id,
+        name: item.name,
+        frenchname: item.frenchName,
+        description: item.description,
+        damagefrom: damageFrom,
+      };
+
+      return ability.insertAbility(abiInDb);
+    });
+
+    await Promise.all(promises);
+
     return data;
+  },
+
+  async seedOneAbilityById(abilityId) {
+    const data = await pokeApi.getAbilityData(abilityId);
+    let damageFrom;
+    const modifyingAbility = [157, 114, 78, 31, 18, 297, 273, 47, 199, 11, 10, 25, 26];
+    if (modifyingAbility.includes(Number(data.id))) {
+      damageFrom = await getModifyingAbility(Number(data.id));
+    }
+
+    const abiInDb = {
+      id: data.id,
+      name: data.name,
+      frenchname: data.frenchName,
+      description: data.description,
+      damagefrom: damageFrom,
+    };
+
+    ability.insertAbility(abiInDb);
+    return abiInDb;
+  },
+
+  async seedPokemonAbility() {
+    const data = await pokeApi.getAllAbilitiesData();
+    const promises = data.map(async (item) => {
+      const records = await item.pokemons.map((index) => ({
+        poke_id: index,
+        abi_id: item.id,
+      }));
+      return records;
+    });
+    const allRecords = (await Promise.all(promises)).flat();
+
+    return allRecords;
   },
 
   async seedOneTypeById(typeId) {

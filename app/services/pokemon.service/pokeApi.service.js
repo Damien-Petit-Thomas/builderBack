@@ -58,9 +58,9 @@ module.exports = class PokemonService extends CoreService {
   }
 
   //* method to get the  all existing abilities   *//
-  // endpoint : https://pokeapi.co/api/v2/ability/?limit=1000
+  // endpoint : https://pokeapi.co/api/v2/ability/?limit=10000
   async getAllAbilities() {
-    const response = await this.get('/ability/');
+    const response = await this.get('/ability/?limit=10000');
 
     return response.results;
   }
@@ -81,9 +81,37 @@ module.exports = class PokemonService extends CoreService {
 
   async getAllAbilitiesData() {
     try {
-      const response = await this.getAbilityData(298);
-      console.log(response);
-      return response;
+      const abilities = await this.getAllAbilities();
+      const result = await abilities.reduce(
+        async (accPromise, ability) => {
+          const id = ability.url.split('/')[6];
+          if (id > 10000) {
+            return accPromise;
+          }
+          try {
+            const acc = await accPromise;
+            const abilityData = await this.getAbilityData(id);
+
+            const abi = {
+              id: abilityData.id,
+              name: abilityData.name,
+              frenchName: abilityData.frenchName,
+              description: abilityData.description,
+              pokemons: abilityData.pokemons,
+            };
+
+            acc.push(abi);
+
+            return acc;
+          } catch (err) {
+            logger.error(err);
+            throw new ApiError(err.message, err.info);
+          }
+        },
+        Promise.resolve([]),
+      );
+
+      return result;
     } catch (err) {
       logger.error(err);
       throw new ApiError(err.message, err.info);
@@ -99,17 +127,18 @@ module.exports = class PokemonService extends CoreService {
 
       const initialData = { damages: [], frenchType: [], englishName: [] };
       const result = await types.reduce(
-        async (accPromise, type, index) => {
+        async (accPromise, type) => {
           //! Important: This condition is used to skip types with an ID > 10000,
           // which helps to prevent bugs: as of the time of writing, there are 18 types
           // with IDs < 10000. Calling getTypeData(19) would result in a 404 error.
-          if (Number(type.url.split('/')[6]) > 10000) {
-            return accPromise;
-          }
 
           try {
+            const id = type.url.split('/')[6];
+            if (id > 10000) {
+              return accPromise;
+            }
             const acc = await accPromise;
-            const typeData = await this.getTypeData(index + 1);
+            const typeData = await this.getTypeData(id);
 
             acc.damages.push(typeData.damage_relations);
             acc.frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));

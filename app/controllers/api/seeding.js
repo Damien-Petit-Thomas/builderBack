@@ -1,5 +1,8 @@
+//* Purpose: seeding controller
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
-const { poke, type, gen } = require('../../models');
+const {
+  poke, type, gen, ability,
+} = require('../../models');
 const logger = require('../../helpers/logger');
 const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
 const seed = require('../../services/pokemon.service/seeding.service');
@@ -75,11 +78,33 @@ module.exports = {
     }
   },
 
+  async   seedOneAbilities(req, res) {
+    const { id } = req.params;
+    if (!id) {
+      throw new ApiError('id is required', { statusCode: 400 });
+    }
+    const { abiInDb, data } = await seed.seedOneAbilityById(id);
+
+    if (!data) throw new ApiError(`No ability found with id ${id}`, { statusCode: 404 });
+    const result = ability.insertAbility(abiInDb);
+    return res.json(result);
+  },
+
   async seedAbilities(_, res) {
     try {
       const abilities = await seed.seedAllAbilities();
       if (!abilities) throw new ApiError('No ability found to seed', { statusCode: 400 });
       return res.json(abilities);
+    } catch (err) {
+      throw new ApiError(err.message, err.infos);
+    }
+  },
+
+  async seedPokemonHasAbility(_, res) {
+    try {
+      const data = await seed.seedPokemonHasAbility();
+      console.log(data);
+      return res.json(data);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
