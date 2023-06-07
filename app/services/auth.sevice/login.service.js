@@ -45,9 +45,12 @@ module.exports = {
 
       next();
     } catch (err) {
-      logger.log(err, req.headers.authorization);
-      throw new ApiError(err.message, err.infos);
+      if (err instanceof jwt.JsonWebTokenError) {
+        res.status(401).json({ err });
+      } else {
+        logger.log(err, req.headers.authorization);
+        throw new ApiError(err.message, err.infos);
+      }
     }
   },
-
 };
