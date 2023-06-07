@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+const logger = require('../../helpers/logger');
 const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
@@ -35,8 +35,10 @@ module.exports = {
     if (!token) {
       throw new ApiError('Authentification failed : no token provided', { statusCode: 401 });
     }
+
     try {
       const user = jwt.verify(token, process.env.JWT_SECRET);
+
       if (!user || user.ip !== req.ip) {
         throw new ApiError('Authentification failed', { statusCode: 401 });
       }
@@ -44,6 +46,7 @@ module.exports = {
 
       next();
     } catch (err) {
+      logger.log(err);
       throw new ApiError(err.message, err.infos);
     }
   },
