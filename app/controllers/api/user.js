@@ -74,18 +74,17 @@ module.exports = {
   createTeam: async (req, res) => {
     try {
       const { teamName, usere } = req.body;
-      console.log(req.body);
+
       const inputData = {
         name: teamName,
         user_id: usere.id,
       };
       const newTeam = await team.create(inputData);
-      console.log(newTeam);
+
       const { pokemonIds } = req.body;
       let pokeInTeam;
-      console.log(pokemonIds);
+
       if (newTeam && Object.keys(newTeam).length > 0) {
-        console.log('coucou');
         pokeInTeam = await teamHasPokemon.insertTeam(pokemonIds, newTeam.id);
         if (!pokeInTeam || pokeInTeam.length === 0) {
           throw new ApiError('Failed to insert pokemon in team', { statusCode: 500 });

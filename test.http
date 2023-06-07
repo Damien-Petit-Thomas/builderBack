@@ -158,21 +158,21 @@ Content-Type: application/json
 }
 
 ### create user
-POST {{local}}/user/signup
+POST {{api}}/user/signup
 Content-Type: application/json
 
 {
     "username": "damien",   
     "password": "Damien!1",
-    "email": "damien@gmail.com"
+    "email": "damien100@gmail.com"
 }
 
 ### login user
-POST {{local}}/user/login
+POST {{api}}/user/login
 Content-Type: application/json
 
 {
-    "email" : "damien@gmail.com",
+    "email" : "damien100@gmail.com",
     "password" : "Damien!1"
 }
 
@@ -182,9 +182,8 @@ POST {{local}}/user/login
 Content-Type: application/json
 
 {
-    "email" : "damien105@gmail.com",
-    "password" : "P0kemons!", 
-    "passwordConfirm" : "P0kemons!"
+    "email" : "damien100@gmail.com",
+    "password" : "Damien!1"
 }
 
 
@@ -196,9 +195,9 @@ GET {{web}}
 
 ### create team
 
-POST {{api}}/user/user/team
+POST {{local}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJkYW1pZW4iLCJlbWFpbCI6ImRhbWllbkBnbWFpbC5jb20iLCJpcCI6Ijo6ZmZmZjoxMjcuMC4wLjEiLCJpYXQiOjE2ODYxMzAzNDksImV4cCI6MTY4NjEzMzk0OX0.fmpbeyjOkLbc_Fi-KBUR7nlf_IrTNIVyKp07JexGyPY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaXAiOiI6OmZmZmY6MTI3LjAuMC4xIiwiaWF0IjoxNjg2MTMzMDAzLCJleHAiOjE2ODYxMzY2MDN9.43XU3MPDmjAbUWHF2qwe6g6FfNTugQnGTWFMb1QXLp4
 
 {
     "teamName": "team1",
