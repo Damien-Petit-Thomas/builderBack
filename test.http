@@ -195,18 +195,25 @@ GET {{web}}
 
 ### create team
 
-POST {{local}}/user/user/team
+POST {{api}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaXAiOiI6OmZmZmY6MTI3LjAuMC4xIiwiaWF0IjoxNjg2MTMzMDAzLCJleHAiOjE2ODYxMzY2MDN9.43XU3MPDmjAbUWHF2qwe6g6FfNTugQnGTWFMb1QXLp4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MTQzNTM4LCJleHAiOjE2ODYxNDcxMzh9.noedIZ1So0UqX4ChecGTsqYQ5blBIRuWWTdv-_n_h-s
 
 {
-    "teamName": "team1",
+    "teamName": "maNewteam9",
     "pokemonIds": [
         1,
-        2,
+        25,
         3,
-        4,
-        5,
-        6
+        40,
+        500,
+        100
     ]
 }
+
+
+### get userpage with teams
+GET {{local}}/user/userpage
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MTQ0NzkyLCJleHAiOjE2ODYxNDgzOTJ9.LrvTKNSZfL3mgg__AdsTwSUBr95CXMYc5tMnqYrK77A
+

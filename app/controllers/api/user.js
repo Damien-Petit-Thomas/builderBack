@@ -55,14 +55,14 @@ module.exports = {
 
   userPage: async (req, res) => {
     try {
-      const userFound = await user.findById(req.user.id);
+      const userFound = await user.findByPk(req.usere.id);
       if (!userFound) {
-        throw new ApiError(`User with id ${req.user.id} not found`, { statusCode: 404 });
+        throw new ApiError(`User with id ${req.usere.id} not found`, { statusCode: 404 });
       }
 
-      const teams = await team.getTeamsByUserId(req.user.id);
+      const teams = await team.getTeamsByUserId(req.usere.id);
       if (!teams) {
-        throw new ApiError(`error while getting teams for user with id ${req.user.id}`, { statusCode: 404 });
+        throw new ApiError(`error while getting teams for user with id ${req.usere.id}`, { statusCode: 404 });
       }
       res.status(200).json({ userFound, teams });
     } catch (err) {
@@ -73,7 +73,8 @@ module.exports = {
 
   createTeam: async (req, res) => {
     try {
-      const { teamName, usere } = req.body;
+      const { teamName } = req.body;
+      const { usere } = req;
 
       const inputData = {
         name: teamName,

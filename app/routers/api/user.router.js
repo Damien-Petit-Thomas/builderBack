@@ -23,7 +23,7 @@ router
 //   .post(controllerHandler(controller.logout));
 
 router
-  .route('/userPage')
+  .route('/userpage')
   .get(login.getUser, controllerHandler(controller.userPage));
 
 router
