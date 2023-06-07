@@ -30,12 +30,12 @@ module.exports = {
  */
 
   async getUser(req, res, next) {
-    const token = req.headers.authorization?.replace('Bearer ', '');
-    if (!token) {
-      throw new ApiError('Authentification failed : no token provided', { statusCode: 401 });
-    }
-
     try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      if (!token) {
+        throw new ApiError('Authentification failed : no token provided', { statusCode: 401 });
+      }
+
       const user = await jwt.verify(token, process.env.JWT_SECRET);
 
       if (!user) {
