@@ -196,7 +196,7 @@ GET {{web}}
 
 ### create team
 
-POST {{local}}/user/user/team
+POST {{api}}/user/user/team
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJkYW1pZW4iLCJlbWFpbCI6ImRhbWllbkBnbWFpbC5jb20iLCJpcCI6Ijo6ZmZmZjoxMjcuMC4wLjEiLCJpYXQiOjE2ODYxMzAzNDksImV4cCI6MTY4NjEzMzk0OX0.fmpbeyjOkLbc_Fi-KBUR7nlf_IrTNIVyKp07JexGyPY
 
