@@ -17,7 +17,7 @@
 GET {{local}}/pokemon/179
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/292
+GET {{api}}/pokemon/771
 
 
 

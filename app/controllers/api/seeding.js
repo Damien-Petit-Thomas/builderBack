@@ -112,7 +112,7 @@ module.exports = {
         const abiId = parseInt(item.abi_id, 10);
         return abiId > max ? abiId : max;
       }, 0);
-
+      console.log(data);
       console.log(`====================${maxPokeId}==============================`);
       console.log(`====================${maxAbiId}==============================`);
       const response = await pokeHasAbi.insertPokemonHasAbility(data);

@@ -4,18 +4,15 @@ module.exports = class PokemonHasAbilityDatamapper extends CoreDatamapper {
   tablename = 'pokemon_ability';
 
   async insertPokemonHasAbility(data) {
-    let counter = 1;
-    const parameters = [];
-    const values = [];
-    data.forEach((item) => {
-      parameters.push(`($${counter}, $${counter + 1})`);
-      counter += 2;
-      values.push(item.poke_id, item.abi_id);
-    });
-    const query = `
-    INSERT INTO ${this.tablename} (pokemon_id, ability_id)
-     VALUES ${parameters.join(', ')} RETURNING *`;
-    const pokemonHasAbility = await this.client.query(query, values);
-    return pokemonHasAbility.rows;
+    const sql = `INSERT INTO ${this.tablename} (pokemon_id, ability_id) VALUES`;
+    const placeholders = data.map((_, i) => `($${i * 2 + 1}, $${i * 2 + 2})`).join(', ');
+    const values = data.flatMap((item) => [Number(item.poke_id), item.abi_id]);
+    const query = {
+      text: `${sql}${placeholders} RETURNING *`,
+      values,
+    };
+
+    const response = await this.client.query(query);
+    return response.rows;
   }
 };
