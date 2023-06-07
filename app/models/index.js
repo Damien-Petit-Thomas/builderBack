@@ -7,8 +7,10 @@ const Team = require('./team.datamapper');
 const Gen = require('./gen.datamapper');
 const User = require('./user.datamapper');
 const TeamHasPokemon = require('./teamHasPokemon.datamapper');
+const PokemonHasAbility = require('./pokemonHasAbility.datamapper');
 
 module.exports = {
+  pokeHasAbi: new PokemonHasAbility(client),
   ability: new Ability(client),
   teamHasPokemon: new TeamHasPokemon(client),
   user: new User(client),

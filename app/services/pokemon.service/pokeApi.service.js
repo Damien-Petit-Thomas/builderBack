@@ -85,7 +85,7 @@ module.exports = class PokemonService extends CoreService {
       const result = await abilities.reduce(
         async (accPromise, ability) => {
           const id = ability.url.split('/')[6];
-          if (id > 10000) {
+          if (id >= 10000) {
             return accPromise;
           }
           try {

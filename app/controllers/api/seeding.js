@@ -1,7 +1,7 @@
 //* Purpose: seeding controller
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const {
-  poke, type, gen, ability,
+  poke, type, gen, ability, pokeHasAbi,
 } = require('../../models');
 const logger = require('../../helpers/logger');
 const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
@@ -102,9 +102,22 @@ module.exports = {
 
   async seedPokemonHasAbility(_, res) {
     try {
-      const data = await seed.seedPokemonHasAbility();
-      console.log(data);
-      return res.json(data);
+      const data = await seed.seedPokemonAbility();
+
+      const maxPokeId = data.reduce((max, item) => {
+        const pokeId = parseInt(item.poke_id, 10);
+        return pokeId > max ? pokeId : max;
+      }, 0);
+      const maxAbiId = data.reduce((max, item) => {
+        const abiId = parseInt(item.abi_id, 10);
+        return abiId > max ? abiId : max;
+      }, 0);
+
+      console.log(`====================${maxPokeId}==============================`);
+      console.log(`====================${maxAbiId}==============================`);
+      const response = await pokeHasAbi.insertPokemonHasAbility(data);
+      if (!response) throw new ApiError('No pokemon ability found to seed', { statusCode: 404 });
+      return res.json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }

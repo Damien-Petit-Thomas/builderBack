@@ -120,6 +120,10 @@ GET {{local}}/seeding/abilities
 ### seed pokemon abilities 1 
 GET {{local}}/seeding/ability/25
 
+
+### seed /pokemon_has_ability
+GET {{local}}/seeding/pokemon_has_ability
+
 ####################################cache router #############################
 
 ### cache all pokemon
@@ -158,9 +162,9 @@ POST {{local}}/user/signup
 Content-Type: application/json
 
 {
-    "username": "csdfcds",   
-    "password": "D2qfqfdsfdsfdsf!",
-    "email": "damien2@gmail.com"
+    "username": "damien",   
+    "password": "Damien!1",
+    "email": "damien@gmail.com"
 }
 
 ### login user
@@ -168,8 +172,8 @@ POST {{local}}/user/login
 Content-Type: application/json
 
 {
-    "email" : "damien10@gmail.com",
-    "password" : "P0kemons!"
+    "email" : "damien@gmail.com",
+    "password" : "Damien!1"
 }
 
 
@@ -188,3 +192,22 @@ Content-Type: application/json
 @web = http://localhost:{{$dotenv PORT}}/
 
 GET {{web}}
+
+
+### create team
+
+POST {{local}}/user/user/team
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJkYW1pZW4iLCJlbWFpbCI6ImRhbWllbkBnbWFpbC5jb20iLCJpcCI6Ijo6ZmZmZjoxMjcuMC4wLjEiLCJpYXQiOjE2ODYxMzAzNDksImV4cCI6MTY4NjEzMzk0OX0.fmpbeyjOkLbc_Fi-KBUR7nlf_IrTNIVyKp07JexGyPY
+
+{
+    "teamName": "team1",
+    "pokemonIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+    ]
+}

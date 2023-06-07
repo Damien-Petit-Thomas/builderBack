@@ -40,7 +40,8 @@ module.exports = {
       if (!user || user.ip !== req.ip) {
         throw new ApiError('Authentification failed', { statusCode: 401 });
       }
-      req.usere = user;
+      req.body.usere = user;
+
       next();
     } catch (err) {
       throw new ApiError(err.message, err.infos);

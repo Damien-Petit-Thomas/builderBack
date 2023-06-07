@@ -6,7 +6,7 @@ module.exports = class TeamHasPokemon extends CoreDatamapper {
 
   async insertTeam(pokemonIds, teamId) {
     const sql = `INSERT INTO ${this.tablename} (pokemon_id, team_id) VALUES `;
-    const placeholders = pokemonIds.map((_, index) => `($${index + 1}, $${index + 2})`).join(', ');
+    const placeholders = pokemonIds.map((_, index) => `($${index * 2 + 1}, $${index * 2 + 2})`).join(', ');
     const values = pokemonIds.flatMap((id) => [id, teamId]);
     const query = {
       text: `${sql}${placeholders} RETURNING *`,

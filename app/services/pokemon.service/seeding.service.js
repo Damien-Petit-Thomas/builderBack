@@ -3,7 +3,6 @@
 
 //* this service is used to seed the database with formatted data from the pokeApi  *//
 
-const { all } = require('axios');
 const { poke, type, ability } = require('../../models');
 const { pokeApi } = require('./index');
 const buildPokemonObjectFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
@@ -11,12 +10,11 @@ const { getModifyingAbility } = require('../../utils/pokemon.utils/getModifyingA
 const { getDamage } = require('../../utils/pokemon.utils/getDamage');
 const logger = require('../../helpers/logger');
 const { ApiError } = require('../../helpers/errorHandler');
-const { seedPokemonHasAbility } = require('../../controllers/api/seeding');
 
 module.exports = {
 
   async seedAllPokemon() {
-    for (let i = 1; i <= 1010; i += 1) {
+    for (let i = 1; i <= 9999; i += 1) {
       try {
         const isPokemonInDb = await poke.findByPk(i);
         if (!isPokemonInDb) {
