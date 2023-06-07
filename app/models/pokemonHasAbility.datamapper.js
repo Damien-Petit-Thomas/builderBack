@@ -15,4 +15,13 @@ module.exports = class PokemonHasAbilityDatamapper extends CoreDatamapper {
     const response = await this.client.query(query);
     return response.rows;
   }
+
+  async findAllByAbilityId(id) {
+    console.log(id);
+    const pokemons = await this.client.query(
+      `SELECT * FROM ${this.tablename} WHERE ability_id = $1 ORDER BY pokemon_id`,
+      [id],
+    );
+    return pokemons.rows;
+  }
 };

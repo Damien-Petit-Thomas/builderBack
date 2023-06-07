@@ -1,5 +1,5 @@
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
-const { poke } = require('../../../models');
+const { poke, pokeHasAbi } = require('../../../models');
 
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 
@@ -64,7 +64,7 @@ module.exports = {
       const pokemons = await poke.findAllByTypeId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
 
-      const response = await formatPoke(pokemons, res);
+      const response = await formatPoke(pokemons);
       pokeCache.set(`pokeType${id}`, response, pokeCache.TTL);
       return res.status(200).json(response);
     } catch (err) {
@@ -77,7 +77,7 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByTypesIds(id1, id2);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-      const response = await formatPoke(pokemons, res);
+      const response = await formatPoke(pokemons);
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
@@ -91,8 +91,29 @@ module.exports = {
     try {
       const pokemons = await poke.findAllByGenId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
-      const response = await formatPoke(pokemons, res);
+      const response = await formatPoke(pokemons);
       pokeCache.set(`gen${id}`, response, pokeCache.TTL);
+      return res.status(200).json(response);
+    } catch (err) {
+      throw new ApiError(err.message, err.infos);
+    }
+  },
+
+  async getPokemonByAbilityId(req, res) {
+    const { id } = req.params;
+    console.log(id);
+    const cache = inCache(`abi${id}`, pokeCache);
+    if (cache) return res.json(cache);
+    try {
+      const pokemons = await pokeHasAbi.findAllByAbilityId(id);
+      if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
+      const promises = pokemons.map(async (pokemon) => {
+        const pokeData = await poke.findByPk(pokemon.pokemon_id);
+        return pokeData;
+      });
+      const allPokemon = await Promise.all(promises);
+      const response = await formatPoke(allPokemon);
+      pokeCache.set(`abi${id}`, response, pokeCache.TTL);
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);

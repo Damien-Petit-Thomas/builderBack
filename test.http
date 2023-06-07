@@ -36,10 +36,13 @@ GET  {{local}}/pokemon/resist-immune/type/2
 GET {{local}}/pokemon/full-random
 
 ###GET pokemon by 2 types
-GET {{api}}/pokemon/type/14/type/17
+GET {{api}}/pokemon/type/14/17
 
 ### GET all pokemon of one type
 GET {{local}}/pokemon/gen/5
+
+### GET all pokemon whith one ability
+GET {{local}}/pokemon/ability/2
 
 
 ### GET all pokemon by generation 
@@ -197,14 +200,14 @@ GET {{web}}
 
 POST {{local}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MTQ3NTY1LCJleHAiOjE2ODYxNTExNjV9.DftqqqIqWJeXhzOHKacJASp7PX6wLVBc51AIadI67Ko
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MTczMDc0LCJleHAiOjE2ODYxNzY2NzR9.v3VMxGWoOy6XzbD1bkYz0I0QwkVe0iPczpEeOU-M2hw
 
 {
-    "teamName": "maNewteam10",
+    "teamName": "test",
     "pokemonIds": [
-        1,
+        100,
         250,
-        3,
+        30,
         40,
         500,
         100
