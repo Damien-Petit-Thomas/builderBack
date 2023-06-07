@@ -37,7 +37,7 @@ module.exports = {
     }
 
     try {
-      const user = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await jwt.verify(token, process.env.JWT_SECRET);
 
       if (!user || user.ip !== req.ip) {
         throw new ApiError('Authentification failed', { statusCode: 401 });
