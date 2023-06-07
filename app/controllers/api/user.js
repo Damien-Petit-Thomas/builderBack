@@ -1,11 +1,16 @@
 const bcrypt = require('bcrypt');
 const debug = require('debug')('app:controllers:api:user');
-const { user } = require('../../models');
+const formatPoke = require('../../utils/pokemon.utils/dataMapToFormat');
+
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
-const { team } = require('../../models');
-const { teamHasPokemon } = require('../../models');
+const {
+  team, poke, teamHasPokemon, user,
+} = require('../../models');
+
 const { ApiError } = require('../../helpers/errorHandler');
+const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
+const inCache = require('../../utils/cache/inCache');
 
 module.exports = {
   register: async (req, res) => {
@@ -37,13 +42,10 @@ module.exports = {
       const { email, password } = req.body;
       const userFound = await user.getOneByEmail(email);
 
-      debug(userFound);
       if (!userFound) {
         throw new ApiError(`User with email ${email} not found`, { statusCode: 404 });
       }
-      userFound.ip = req.ip;
 
-      debug(req.ip);
       const token = await login.authentify(userFound, password);
       const userName = userFound.username;
       return res.status(200).json({ token, userName });
@@ -56,15 +58,44 @@ module.exports = {
   userPage: async (req, res) => {
     try {
       const userFound = await user.findByPk(req.usere.id);
+      console.log(userFound);
       if (!userFound) {
         throw new ApiError(`User with id ${req.usere.id} not found`, { statusCode: 404 });
       }
 
       const teams = await team.getTeamsByUserId(req.usere.id);
-      if (!teams) {
-        throw new ApiError(`error while getting teams for user with id ${req.usere.id}`, { statusCode: 404 });
+      console.log(teams);
+      if (!teams || teams.length === 0) {
+        throw new ApiError(`No teams found for user with id ${req.usere.id}`, { statusCode: 404 });
       }
-      res.status(200).json({ userFound, teams });
+
+      const teamPromises = teams.map(async (pokeTeam) => {
+        const pokemonPromises = pokeTeam.pokemon_id.map(async (id) => {
+          const cache = inCache(id, pokeCache);
+          if (cache) {
+            return cache;
+          }
+          try {
+            const pokemon = await poke.findByPk(id);
+            if (!pokemon) {
+              throw new ApiError(`Pokemon with id ${id} not found`, { statusCode: 500 });
+            }
+            const response = await formatPoke([pokemon]);
+            return response[0];
+          } catch (err) {
+            logger.log('error', err);
+            throw new ApiError(err.message, err.infos);
+          }
+        });
+
+        const pokemonData = await Promise.all(pokemonPromises);
+
+        return { ...pokeTeam, pokemon: pokemonData };
+      });
+
+      const teamsData = await Promise.all(teamPromises);
+
+      res.status(200).json({ user: userFound, teams: teamsData });
     } catch (err) {
       logger.log('error', err);
       throw new ApiError(err.message, err.infos);
