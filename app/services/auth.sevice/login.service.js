@@ -19,7 +19,6 @@ module.exports = {
       id: user.id,
       username: user.username,
       email: user.email,
-      ip: user.ip,
     }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     return token;
@@ -39,14 +38,14 @@ module.exports = {
     try {
       const user = await jwt.verify(token, process.env.JWT_SECRET);
 
-      if (!user || user.ip !== req.ip) {
+      if (!user) {
         throw new ApiError('Authentification failed', { statusCode: 401 });
       }
       req.body.usere = user;
 
       next();
     } catch (err) {
-      logger.log(err);
+      logger.log(err, req.headers.authorization);
       throw new ApiError(err.message, err.infos);
     }
   },
