@@ -58,13 +58,13 @@ module.exports = {
   userPage: async (req, res) => {
     try {
       const userFound = await user.findByPk(req.usere.id);
-      console.log(userFound);
+
       if (!userFound) {
         throw new ApiError(`User with id ${req.usere.id} not found`, { statusCode: 404 });
       }
 
       const teams = await team.getTeamsByUserId(req.usere.id);
-      console.log(teams);
+
       if (!teams || teams.length === 0) {
         throw new ApiError(`No teams found for user with id ${req.usere.id}`, { statusCode: 404 });
       }

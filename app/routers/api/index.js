@@ -7,6 +7,7 @@ const teamRouter = require('./team.router');
 const cacheRouter = require('./cache.router');
 const userRouter = require('./user.router');
 const generationRouter = require('./generation.router');
+const abilityController = require('./ability.router');
 const { apiController } = require('../../controllers/api');
 const { ApiError } = require('../../helpers/errorHandler');
 
@@ -17,6 +18,7 @@ router.all('/', apiController.home);
 router.use('/pokemon', pokeRouter);
 router.use('/type', typeRouter);
 router.use('/gen', generationRouter);
+router.use('/ability', abilityController);
 router.use('/seeding', pokeSeedRouter);
 router.use('/team', teamRouter);
 router.use('/cache', cacheRouter);

@@ -23,7 +23,7 @@ GET {{api}}/pokemon/771
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/cach
+GET {{local}}/pokemon/mun
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
@@ -45,7 +45,7 @@ GET {{local}}/pokemon/gen/5
 GET {{local}}/pokemon/ability/2
 
 ###get all abilities from a pokemon
-GET {{local}}/pokemon/186/abilities
+GET {{local}}/pokemon/292/abilities
 
 
 ### GET all pokemon by generation 
@@ -221,5 +221,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MjI3MTQzLCJleHAiOjE2ODYyMzA3NDN9.3aanBcdIWsQ2DaRk_JMJ0eS8KsQvbKxBMdQFKdBSbcQ
 

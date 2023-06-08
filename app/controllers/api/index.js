@@ -7,6 +7,7 @@ const teamController = require('./team');
 const cacheController = require('./cache');
 const userController = require('./user');
 const generationController = require('./generation');
+const abilityController = require('./ability');
 
 const apiController = {
 
@@ -20,6 +21,7 @@ const apiController = {
 };
 
 module.exports = {
+  abilityController,
   completionController,
   generationController,
   apiController,

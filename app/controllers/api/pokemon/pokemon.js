@@ -32,8 +32,9 @@ module.exports = {
     const { name } = req.params;
     try {
       const pokemons = await poke.findOneByName(name);
+
       if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 500 });
-      const response = formatPoke(pokemons);
+      const response = await formatPoke(pokemons);
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
