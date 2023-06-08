@@ -28,6 +28,9 @@ router
   .route('/ability/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByAbilityId));
 router
+  .route('/:id(\\d+)/abilities')
+  .get(controllerHandler(controller.getAbilitiesByPokemonId));
+router
   .route('/immune/type/:id(\\d+)')
   .get(controllerHandler(controllerDamage.getNoDamageFrom));
 router

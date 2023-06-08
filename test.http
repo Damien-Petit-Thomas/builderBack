@@ -44,6 +44,9 @@ GET {{local}}/pokemon/gen/5
 ### GET all pokemon whith one ability
 GET {{local}}/pokemon/ability/2
 
+###get all abilities from a pokemon
+GET {{local}}/pokemon/186/abilities
+
 
 ### GET all pokemon by generation 
 GET {{local}}/pokemon/gen/

@@ -1,5 +1,5 @@
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
-const { poke, pokeHasAbi } = require('../../../models');
+const { poke, pokeHasAbi, aby } = require('../../../models');
 
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 
@@ -117,6 +117,27 @@ module.exports = {
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
+    }
+  },
+
+  async getAbilitiesByPokemonId(req, res) {
+    const { id } = req.params;
+    try {
+      const pokemon = await poke.findByPk(id);
+
+      if (!pokemon) throw new ApiError(` pokemon ${id} not found `, { statusCode: 500 });
+      const pokemonData = await formatPoke([pokemon]);
+      const abilities = await pokeHasAbi.findAllByPokemmonId(pokemonData[0].id);
+      const promises = abilities.map(async (ability) => {
+        const abilityData = await aby.findByPk(ability.ability_id);
+        return abilityData;
+      });
+      const allAbility = await Promise.all(promises);
+      pokemonData[0].abilities = allAbility;
+
+      return res.status(200).json(pokemonData[0]);
+    } catch (err) {
+      throw new ApiError(err.message, err.info);
     }
   },
 

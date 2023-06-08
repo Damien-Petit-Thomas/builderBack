@@ -1,7 +1,7 @@
 //* Purpose: seeding controller
 const buildPokemonFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const {
-  poke, type, gen, ability, pokeHasAbi,
+  poke, type, gen, aby, pokeHasAbi,
 } = require('../../models');
 const logger = require('../../helpers/logger');
 const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
@@ -86,7 +86,7 @@ module.exports = {
     const { abiInDb, data } = await seed.seedOneAbilityById(id);
 
     if (!data) throw new ApiError(`No ability found with id ${id}`, { statusCode: 404 });
-    const result = ability.insertAbility(abiInDb);
+    const result = aby.insertAbility(abiInDb);
     return res.json(result);
   },
 

@@ -11,7 +11,7 @@ const PokemonHasAbility = require('./pokemonHasAbility.datamapper');
 
 module.exports = {
   pokeHasAbi: new PokemonHasAbility(client),
-  ability: new Ability(client),
+  aby: new Ability(client),
   teamHasPokemon: new TeamHasPokemon(client),
   user: new User(client),
   type: new Type(client),
