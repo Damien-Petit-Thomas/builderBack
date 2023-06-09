@@ -149,19 +149,20 @@ GET {{local}}/seeding/generation_id
 ################################      USER ROUTER ################################
 
 #### add pokemon in favorite 
-POST {{local}}/user/addPokemon
+POST {{local}}/user/pokemon/25
 content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzAzNDY2LCJleHAiOjE2ODYzMDcwNjZ9.N2j5WEo_V6mO_YwhUzgBJwTzHantULSNZa3ZXx4Xaf8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
 
-{
-    "pokemonId" : 25
-}
+### delete pokemon in favorite 
+DELETE {{local}}/user/pokemon/25
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
 
 
 
 ### create user
 
-POST {{api}}/user/signup
+POST {{local}}/user/signup
 Content-Type: application/json
 
 {
@@ -171,7 +172,7 @@ Content-Type: application/json
 }
 
 ### create user
-POST {{api}}/user/signup
+POST {{local}}/user/signup
 Content-Type: application/json
 
 {
@@ -181,7 +182,7 @@ Content-Type: application/json
 }
 
 ### login user
-POST {{api}}/user/login
+POST {{local}}/user/login
 Content-Type: application/json
 
 {
@@ -226,7 +227,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 
 
 ### get userpage with teams
-GET {{api}}/user/userpage
+GET {{local}}/user/userpage
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2Mjk4OTI5LCJleHAiOjE2ODYzMDI1Mjl9.Ad-MWW9Z69mdBZQZbKuEBITeUV_IqFVR-0cXkD7L_QM
 

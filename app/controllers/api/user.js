@@ -94,8 +94,28 @@ module.exports = {
       });
 
       const teamsData = await Promise.all(teamPromises);
+      const userFavorites = await userHasFavo.getFavoritesByUserId(req.usere.id);
+      const favoritesPromises = userFavorites.map(async (favorite) => {
+        const cache = inCache(favorite.favorite_id, pokeCache);
+        if (cache) {
+          return cache;
+        }
+        try {
+          const pokemon = await poke.findByPk(favorite.favorite_id);
+          if (!pokemon) {
+            throw new ApiError(`Pokemon with id ${favorite.favorite_id} not found`, { statusCode: 500 });
+          }
+          const response = await formatPoke([pokemon]);
+          return response[0];
+        } catch (err) {
+          logger.log('error', err);
+          throw new ApiError(err.message, err.infos);
+        }
+      });
 
-      res.status(200).json({ user: userFound, teams: teamsData });
+      const favoritesData = await Promise.all(favoritesPromises);
+
+      return res.status(200).json({ user: userFound, teams: teamsData, favorites: favoritesData });
     } catch (err) {
       logger.log('error', err);
       throw new ApiError(err.message, err.infos);
@@ -148,12 +168,29 @@ module.exports = {
   async addPokemonInFavorite(req, res) {
     try {
       const userId = req.usere.id;
-      const favoriteId = req.body.pokemonId;
+      const favoriteId = req.params.id;
+      const isInDb = await userHasFavo.findOne(userId, favoriteId);
+      if (isInDb) throw new ApiError(`Pokemon ${favoriteId} already in favorite`, { statusCode: 401 });
       const result = await userHasFavo.create({ user_id: userId, favorite_id: favoriteId });
-      if (!result) throw new ApiError('a probleme accured', { statusCode: 401 });
-      res.status(201).json(`Pokemon ${userId} add to favorite`);
+      if (!result) throw new ApiError('a probleme occured', { statusCode: 401 });
+      res.status(201).json(`Pokemon ${favoriteId} add to favorite`);
     } catch (err) {
       throw new ApiError(err.message, err.info);
     }
   },
+
+  async deletePokemonFromFavorite(req, res) {
+    try {
+      const userId = req.usere.id;
+      const favoriteId = req.params.id;
+      const isInDb = await userHasFavo.findOne(userId, favoriteId);
+      if (!isInDb) throw new ApiError(`Pokemon ${favoriteId} not in favorite`, { statusCode: 401 });
+      const result = await userHasFavo.deleteOne(userId, favoriteId);
+      if (!result) throw new ApiError('a probleme occured', { statusCode: 401 });
+      res.status(201).json(`Pokemon ${favoriteId} delete from favorite`);
+    } catch (err) {
+      throw new ApiError(err.message, err.info);
+    }
+  },
+
 };

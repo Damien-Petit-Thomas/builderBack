@@ -21,22 +21,24 @@ router
 // router
 //   .route('/logout')
 //   .post(controllerHandler(controller.logout));
+router.use(login.getUser);
 
 router
   .route('/userpage')
-  .get(login.getUser, controllerHandler(controller.userPage));
+  .get(controllerHandler(controller.userPage));
 
 router
   .route('/user/team')
-  .post(login.getUser, controllerHandler(controller.createTeam));
+  .post(controllerHandler(controller.createTeam));
 
 router
   .route('/user/team/:id')
-  .delete(login.getUser, controllerHandler(controller.deleteTeam))
-  .patch(login.getUser, controllerHandler(controller.updateTeam));
+  .delete(controllerHandler(controller.deleteTeam))
+  .patch(controllerHandler(controller.updateTeam));
 router
-  .route('/addPokemon')
-  .post(login.getUser, controllerHandler(controller.addPokemonInFavorite));
+  .route('/pokemon/:id(\\d+)')
+  .post(controllerHandler(controller.addPokemonInFavorite))
+  .delete(controllerHandler(controller.deletePokemonFromFavorite));
 // router
 //   .route('/user/teams/:id/pokemons')
 //   .get(controllerHandler(controller.getMyTeamPokemons));
