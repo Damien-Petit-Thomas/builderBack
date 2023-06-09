@@ -146,9 +146,16 @@ GET {{local}}/seeding/generation_id
 
 
 
+################################      USER ROUTER ################################
 
+#### add pokemon in favorite 
+POST {{local}}/user/addPokemon
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzAzNDY2LCJleHAiOjE2ODYzMDcwNjZ9.N2j5WEo_V6mO_YwhUzgBJwTzHantULSNZa3ZXx4Xaf8
 
-
+{
+    "pokemonId" : 25
+}
 
 
 
@@ -203,7 +210,7 @@ GET {{web}}
 
 POST {{local}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MTczMDc0LCJleHAiOjE2ODYxNzY2NzR9.v3VMxGWoOy6XzbD1bkYz0I0QwkVe0iPczpEeOU-M2hw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2Mjk4NjQzLCJleHAiOjE2ODYzMDIyNDN9._Wn6WydAM3ceTbDg35m2pMu4A3lBOZnKcpqPoSabbns
 
 {
     "teamName": "test",
@@ -219,9 +226,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 
 
 ### get userpage with teams
-GET {{local}}/user/userpage
+GET {{api}}/user/userpage
 Content-Type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2Mjk4OTI5LCJleHAiOjE2ODYzMDI1Mjl9.Ad-MWW9Z69mdBZQZbKuEBITeUV_IqFVR-0cXkD7L_QM
 
 ##########################abiliy router ##################################"
 

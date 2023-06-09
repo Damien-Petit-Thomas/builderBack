@@ -12,7 +12,7 @@ module.exports = class TeamHasPokemon extends CoreDatamapper {
       text: `${sql}${placeholders} RETURNING *`,
       values,
     };
-    console.log(query);
+
     const response = await this.client.query(query);
     return response.rows;
   }

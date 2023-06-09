@@ -5,7 +5,7 @@ const formatPoke = require('../../utils/pokemon.utils/dataMapToFormat');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
 const {
-  team, poke, teamHasPokemon, user,
+  team, poke, teamHasPokemon, user, userHasFavo,
 } = require('../../models');
 
 const { ApiError } = require('../../helpers/errorHandler');
@@ -145,5 +145,15 @@ module.exports = {
   //   updateTeam: async (req, res) => {
   // const { user.id } = req.body;
   //   },
-
+  async addPokemonInFavorite(req, res) {
+    try {
+      const userId = req.usere.id;
+      const favoriteId = req.body.pokemonId;
+      const result = await userHasFavo.create({ user_id: userId, favorite_id: favoriteId });
+      if (!result) throw new ApiError('a probleme accured', { statusCode: 401 });
+      res.status(201).json(`Pokemon ${userId} add to favorite`);
+    } catch (err) {
+      throw new ApiError(err.message, err.info);
+    }
+  },
 };

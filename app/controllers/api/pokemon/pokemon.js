@@ -1,5 +1,7 @@
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
-const { poke, pokeHasAbi, aby } = require('../../../models');
+const {
+  poke, pokeHasAbi, aby,
+} = require('../../../models');
 
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 
@@ -151,4 +153,5 @@ module.exports = {
       throw new ApiError(err.message, err.infos);
     }
   },
+
 };

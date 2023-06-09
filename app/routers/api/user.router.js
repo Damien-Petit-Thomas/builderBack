@@ -34,7 +34,9 @@ router
   .route('/user/team/:id')
   .delete(login.getUser, controllerHandler(controller.deleteTeam))
   .patch(login.getUser, controllerHandler(controller.updateTeam));
-
+router
+  .route('/addPokemon')
+  .post(login.getUser, controllerHandler(controller.addPokemonInFavorite));
 // router
 //   .route('/user/teams/:id/pokemons')
 //   .get(controllerHandler(controller.getMyTeamPokemons));
