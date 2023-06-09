@@ -184,7 +184,7 @@ Content-Type: application/json
 
 
 ### login user
-POST {{api}}/user/login
+POST {{local}}/user/login
 Content-Type: application/json
 
 {
@@ -221,7 +221,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer 
+
 
 ##########################abiliy router ##################################"
 
