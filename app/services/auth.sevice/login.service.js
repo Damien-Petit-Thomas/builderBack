@@ -33,24 +33,26 @@ module.exports = {
     try {
       const token = req.headers.authorization?.replace('Bearer ', '');
       if (!token) {
-        throw new ApiError('Authentification failed : no token provided', { statusCode: 401 });
+        return res.status(401).json({ error: 'Authentication failed: no token provided' });
       }
 
       const user = await jwt.verify(token, process.env.JWT_SECRET);
 
       if (!user) {
-        throw new ApiError('Authentification failed', { statusCode: 401 });
+        return res.status(401).json({ error: 'No user found' });
       }
-      req.usere = user;
+      req.user = user;
 
       next();
     } catch (err) {
       if (err instanceof jwt.JsonWebTokenError) {
-        res.status(401).json({ err });
-      } else {
-        logger.log(err, req.headers.authorization);
-        throw new ApiError(err.message, err.infos);
+        return res.status(401).json(err);
       }
+      logger.log(err, req.headers.authorization);
+      throw new ApiError(err.message, err.infos);
     }
+
+    return Promise.resolve();
   },
+
 };

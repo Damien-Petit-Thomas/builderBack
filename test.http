@@ -23,7 +23,7 @@ GET {{api}}/pokemon/771
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/mun
+GET {{local}}/pokemon/p
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
@@ -184,7 +184,7 @@ Content-Type: application/json
 
 
 ### login user
-POST {{local}}/user/login
+POST {{api}}/user/login
 Content-Type: application/json
 
 {
@@ -221,5 +221,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MjI3MTQzLCJleHAiOjE2ODYyMzA3NDN9.3aanBcdIWsQ2DaRk_JMJ0eS8KsQvbKxBMdQFKdBSbcQ
+Authorization: Bearer 
 
+##########################abiliy router ##################################"
+
+###get all abilities
+GET {{local}}/ability
