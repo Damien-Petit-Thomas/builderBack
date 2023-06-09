@@ -1,16 +1,14 @@
 const bcrypt = require('bcrypt');
 const debug = require('debug')('app:controllers:api:user');
-const formatPoke = require('../../utils/pokemon.utils/dataMapToFormat');
-
+const { cacheOrFormatPokemon: getPokemon } = require('../../utils/pokemon.utils/cacheOrFormatPokemon');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
 const {
-  team, poke, teamHasPokemon, user, userHasFavo,
+  team, teamHasPokemon, user, userHasFavo,
 } = require('../../models');
 
 const { ApiError } = require('../../helpers/errorHandler');
 const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
-const inCache = require('../../utils/cache/inCache');
 
 module.exports = {
   register: async (req, res) => {
@@ -71,21 +69,8 @@ module.exports = {
 
       const teamPromises = teams.map(async (pokeTeam) => {
         const pokemonPromises = pokeTeam.pokemon_id.map(async (id) => {
-          const cache = inCache(id, pokeCache);
-          if (cache) {
-            return cache;
-          }
-          try {
-            const pokemon = await poke.findByPk(id);
-            if (!pokemon) {
-              throw new ApiError(`Pokemon with id ${id} not found`, { statusCode: 500 });
-            }
-            const response = await formatPoke([pokemon]);
-            return response[0];
-          } catch (err) {
-            logger.log('error', err);
-            throw new ApiError(err.message, err.infos);
-          }
+          const result = await getPokemon(id, pokeCache);
+          return result;
         });
 
         const pokemonData = await Promise.all(pokemonPromises);
@@ -94,23 +79,11 @@ module.exports = {
       });
 
       const teamsData = await Promise.all(teamPromises);
+
       const userFavorites = await userHasFavo.getFavoritesByUserId(req.usere.id);
       const favoritesPromises = userFavorites.map(async (favorite) => {
-        const cache = inCache(favorite.favorite_id, pokeCache);
-        if (cache) {
-          return cache;
-        }
-        try {
-          const pokemon = await poke.findByPk(favorite.favorite_id);
-          if (!pokemon) {
-            throw new ApiError(`Pokemon with id ${favorite.favorite_id} not found`, { statusCode: 500 });
-          }
-          const response = await formatPoke([pokemon]);
-          return response[0];
-        } catch (err) {
-          logger.log('error', err);
-          throw new ApiError(err.message, err.infos);
-        }
+        const result = await getPokemon(favorite.favotite_id, pokeCache);
+        return result;
       });
 
       const favoritesData = await Promise.all(favoritesPromises);
@@ -131,6 +104,8 @@ module.exports = {
         name: teamName,
         user_id: usere.id,
       };
+      const teamFound = await team.getOneByName(teamName, usere.id);
+      if (teamFound) throw new ApiError(`Team with name ${teamName} already exists`, { statusCode: 400 });
       const newTeam = await team.create(inputData);
 
       const { pokemonIds } = req.body;
@@ -156,7 +131,8 @@ module.exports = {
     const { id } = req.body;
     try {
       const response = team.delete(id);
-      res.status(200).json({ response, message: 'Team deleted' });
+      if (!response) throw new ApiError('Failed to delete team', { statusCode: 500 });
+      res.status(200).json({ response, message: `Team ${id} deleted` });
     } catch (err) {
       throw new ApiError(err.messagen, err.infos);
     }

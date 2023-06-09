@@ -28,11 +28,11 @@ router
   .get(controllerHandler(controller.userPage));
 
 router
-  .route('/user/team')
-  .post(controllerHandler(controller.createTeam));
+  .route('/user/team');
 
 router
-  .route('/user/team/:id')
+  .route('/user/team/')
+  .post(controllerHandler(controller.createTeam))
   .delete(controllerHandler(controller.deleteTeam))
   .patch(controllerHandler(controller.updateTeam));
 router

@@ -149,12 +149,12 @@ GET {{local}}/seeding/generation_id
 ################################      USER ROUTER ################################
 
 #### add pokemon in favorite 
-POST {{local}}/user/pokemon/25
+POST {{local}}/user/pokemon/1
 content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
 
 ### delete pokemon in favorite 
-DELETE {{local}}/user/pokemon/25
+DELETE {{local}}/user/pokemon/24
 content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
 
@@ -211,7 +211,7 @@ GET {{web}}
 
 POST {{local}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2Mjk4NjQzLCJleHAiOjE2ODYzMDIyNDN9._Wn6WydAM3ceTbDg35m2pMu4A3lBOZnKcpqPoSabbns
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
 
 {
     "teamName": "test",
@@ -229,9 +229,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2Mjk4OTI5LCJleHAiOjE2ODYzMDI1Mjl9.Ad-MWW9Z69mdBZQZbKuEBITeUV_IqFVR-0cXkD7L_QM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzE5MjkxLCJleHAiOjE2ODYzMjI4OTF9.I-dwNtpWTbpxX4kbeVz9qxMBUZ_Rkgvi7R4oA6CdcGI
 
-##########################abiliy router ##################################"
+
+
+### delete team
+
+DELETE {{local}}/user/user/team/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzE5MjkxLCJleHAiOjE2ODYzMjI4OTF9.I-dwNtpWTbpxX4kbeVz9qxMBUZ_Rkgvi7R4oA6CdcGI
+
+########################## abiliy router ##################################"
 
 ###get all abilities
 GET {{local}}/ability

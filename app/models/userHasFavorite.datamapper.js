@@ -18,7 +18,7 @@ module.exports = class UserHasFavorite extends CoreDatamapper {
   }
 
   async getFavoritesByUserId(userId) {
-    const sql = `SELECT * FROM ${this.tablename} WHERE user_id = $1`;
+    const sql = `SELECT * FROM ${this.tablename} WHERE user_id = $1 ORDER BY favorite_id`;
     const values = [userId];
     const result = await this.client.query(sql, values);
     return result.rows;

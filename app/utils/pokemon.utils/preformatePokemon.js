@@ -4,7 +4,7 @@
 const { type } = require('../../models');
 const buildPokemonObjectFromPokeDb = require('./buildFormatedPokemonFromDb');
 const { ApiError } = require('../../helpers/errorHandler');
-const cacheType = require('../cache/type.cache').getInstance();
+const typeCache = require('../cache/type.cache').getInstance();
 const inCache = require('../cache/inCache');
 
 module.exports = async (pokemon) => {
@@ -12,10 +12,10 @@ module.exports = async (pokemon) => {
   const pokemonTypes = [type1, type2].filter(Boolean);
   try {
     const typesData = await Promise.all(pokemonTypes.map(async (id) => {
-      const cache = inCache(id, cacheType);
+      const cache = inCache(id, typeCache);
       if (cache) return cache;
       const typeData = await type.findByPk(id);
-      cacheType.set(id, typeData, cacheType.TTL);
+      typeCache.set(id, typeData, typeCache.TTL);
       return typeData;
     }));
 
