@@ -18,10 +18,10 @@ router
   .route('/login')
   .post(validate('body', loginShema), controllerHandler(controller.login));
 
-// router
-//   .route('/logout')
-//   .post(controllerHandler(controller.logout));
 router.use(login.getUser);
+router
+  .route('/logout')
+  .get(controllerHandler(controller.logout));
 
 router
   .route('/userpage')

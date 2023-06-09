@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const debug = require('debug')('app:controllers:api:user');
+
 const { cacheOrFormatPokemon: getPokemon } = require('../../utils/pokemon.utils/cacheOrFormatPokemon');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
@@ -8,10 +8,11 @@ const {
 } = require('../../models');
 
 const { ApiError } = require('../../helpers/errorHandler');
+
 const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
 
 module.exports = {
-  register: async (req, res) => {
+  async register(req, res) {
     const { email, password, username } = req.body;
 
     try {
@@ -35,7 +36,7 @@ module.exports = {
     }
   },
 
-  login: async (req, res) => {
+  async login(req, res) {
     try {
       const { email, password } = req.body;
       const userFound = await user.getOneByEmail(email);
@@ -48,12 +49,24 @@ module.exports = {
       const userName = userFound.username;
       return res.status(200).json({ token, userName });
     } catch (err) {
-      debug('error', err);
       throw new ApiError(err.message, err.infos);
     }
   },
 
-  userPage: async (req, res) => {
+  async logout(req, res) {
+    try {
+      const token = req.headers.authorization?.replace('Bearer ', '');
+      const result = await login.logout(token);
+      if (!result) {
+        throw new ApiError('Logout failed', { statusCode: 500 });
+      }
+      return res.status(200).json({ message: 'User logged out' });
+    } catch (err) {
+      throw new ApiError(err.message, err.infos);
+    }
+  },
+
+  async userPage(req, res) {
     try {
       const userFound = await user.findByPk(req.usere.id);
 
@@ -82,7 +95,7 @@ module.exports = {
 
       const userFavorites = await userHasFavo.getFavoritesByUserId(req.usere.id);
       const favoritesPromises = userFavorites.map(async (favorite) => {
-        const result = await getPokemon(favorite.favotite_id, pokeCache);
+        const result = await getPokemon(favorite.favorite_id, pokeCache);
         return result;
       });
 
@@ -95,7 +108,7 @@ module.exports = {
     }
   },
 
-  createTeam: async (req, res) => {
+  async createTeam(req, res) {
     try {
       const { teamName } = req.body;
       const { usere } = req;
@@ -127,8 +140,12 @@ module.exports = {
     }
   },
 
-  deleteTeam: async (req, res) => {
+  async deleteTeam(req, res) {
     const { id } = req.body;
+    const teamFound = await team.findByPk(id);
+    if (!teamFound || teamFound.user_id !== req.usere.id) {
+      throw new ApiError(`Team with id ${id} not found`, { statusCode: 404 });
+    }
     try {
       const response = team.delete(id);
       if (!response) throw new ApiError('Failed to delete team', { statusCode: 500 });

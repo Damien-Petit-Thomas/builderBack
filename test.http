@@ -200,6 +200,11 @@ Content-Type: application/json
     "password" : "Damien!1"
 }
 
+### logout user
+GET {{local}}/user/logout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzQ2MDc1LCJleHAiOjE2ODYzNDk2NzV9.6S1MMHaDOnQIk7EHJmcdI9-eXHW6aVmhXXPrhzW1qlQ
+
 
 ### home page
 @web = http://localhost:{{$dotenv PORT}}/
@@ -229,13 +234,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzE5MjkxLCJleHAiOjE2ODYzMjI4OTF9.I-dwNtpWTbpxX4kbeVz9qxMBUZ_Rkgvi7R4oA6CdcGI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzQ2MDc1LCJleHAiOjE2ODYzNDk2NzV9.6S1MMHaDOnQIk7EHJmcdI9-eXHW6aVmhXXPrhzW1qlQ
 
 
 
 ### delete team
 
-DELETE {{local}}/user/user/team/1
+DELETE {{local}}/user/user/team/3
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzE5MjkxLCJleHAiOjE2ODYzMjI4OTF9.I-dwNtpWTbpxX4kbeVz9qxMBUZ_Rkgvi7R4oA6CdcGI
 
