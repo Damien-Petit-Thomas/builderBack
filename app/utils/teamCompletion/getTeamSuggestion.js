@@ -11,7 +11,7 @@ function getTeamSuggestion(weakness, resistance) {
   const weak = Object.entries(weakness);
   const resistSort = resist.sort((a, b) => a[1] - b[1]);
   const weakSort = weak.sort((a, b) => b[1] - a[1]);
-  const mostWeak = weakSort.slice(0, 3);
+  const mostWeak = weakSort.slice(0, 4);
 
   if (noResist.length > 12) {
     const response = {
