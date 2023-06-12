@@ -9,6 +9,7 @@ const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons')
 const { ApiError } = require('../../../helpers/errorHandler');
 const inCache = require('../../../utils/cache/inCache');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
+const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 
 module.exports = {
 

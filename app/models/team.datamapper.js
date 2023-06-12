@@ -17,7 +17,7 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
     return response.rows;
   }
 
-  async asyncgetOneByName(name, userId) {
+  async getOneByName(name, userId) {
     const sql = `SELECT * FROM ${this.tablename} WHERE name = $1 AND user_id = $2`;
     const values = [name, userId];
     const result = await this.client.query(sql, values);
