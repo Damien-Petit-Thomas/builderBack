@@ -29,7 +29,16 @@ function getTeamSuggestion(totalresWeak, resistance) {
   if (noResist.length > 8) {
     const response = {
       noResist,
-      weak: tooWeak.length > 0 ? tooWeak : mostWeak,
+      weak: tooWeak.length > 0 ? tooWeak : limit,
+
+    };
+
+    return response;
+  }
+  if (noResist.length > 4) {
+    const response = {
+      noResist,
+      weak: tooWeak.concat(limit),
 
     };
 
@@ -40,7 +49,7 @@ function getTeamSuggestion(totalresWeak, resistance) {
     const response = {
       noResist,
 
-      weak: tooWeak.length > 0 ? tooWeak : mostWeak,
+      weak: tooWeak.concat(limit) > 0 ? tooWeak.concat(limit) : mostWeak,
 
     };
 
@@ -49,14 +58,14 @@ function getTeamSuggestion(totalresWeak, resistance) {
   if (isOneResistance.length > 0) {
     const response = {
       noResist: isOneResistance,
-      weak: tooWeak.length < 3 ? tooWeak.concat(limit) : tooWeak,
+      weak: tooWeak.length > 0 ? tooWeak.concat(limit) : mostWeak,
 
     };
     return response;
   }
   const response = {
     noResist: mostWeak,
-    weak: tooWeak.concat(limit).length < 3 ? tooWeak.concat(limit) : tooWeak,
+    weak: tooWeak.concat(limit).length > 0 ? tooWeak.concat(limit) : tooWeak,
 
   };
 
