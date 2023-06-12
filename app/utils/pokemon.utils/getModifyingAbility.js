@@ -233,7 +233,7 @@ module.exports = {
       default:
         break;
     }
-    console.log(damage);
+
     return damage;
   },
 

@@ -77,6 +77,7 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
       noResist: isOneResistance,
       weak: limitResist,
     };
+
     return response;
   }
   const response = {
@@ -84,7 +85,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     weak: limitResist,
 
   };
-
   return response;
 }
 

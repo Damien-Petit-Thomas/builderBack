@@ -104,7 +104,7 @@ module.exports = {
 
   async getPokemonByAbilityId(req, res) {
     const { id } = req.params;
-    console.log(id);
+
     const cache = inCache(`abi${id}`, pokeCache);
     if (cache) return res.json(cache);
     try {

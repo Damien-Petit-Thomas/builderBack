@@ -60,7 +60,8 @@ module.exports = {
         const team = getTeamSuggestion(totalResWeak, numberOfresistance, len);
 
         const resistTypeList = team.noResist.map((w) => w[0]);
-        const weakTypeListSorted = team.weak.sort((a, b) => b[1] - a[1]);
+        const weakTypeListSorted = team.weak.sort((a, b) => a[1] - b[1]);
+
         const weakTypeList = weakTypeListSorted.map((w) => w[0]);
 
         // const typeList = weak.map((w) => w[0]);

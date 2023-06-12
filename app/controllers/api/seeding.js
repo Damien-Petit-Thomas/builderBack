@@ -104,17 +104,6 @@ module.exports = {
     try {
       const data = await seed.seedPokemonAbility();
 
-      const maxPokeId = data.reduce((max, item) => {
-        const pokeId = parseInt(item.poke_id, 10);
-        return pokeId > max ? pokeId : max;
-      }, 0);
-      const maxAbiId = data.reduce((max, item) => {
-        const abiId = parseInt(item.abi_id, 10);
-        return abiId > max ? abiId : max;
-      }, 0);
-      console.log(data);
-      console.log(`====================${maxPokeId}==============================`);
-      console.log(`====================${maxAbiId}==============================`);
       const response = await pokeHasAbi.insertPokemonHasAbility(data);
       if (!response) throw new ApiError('No pokemon ability found to seed', { statusCode: 404 });
       return res.json(response);

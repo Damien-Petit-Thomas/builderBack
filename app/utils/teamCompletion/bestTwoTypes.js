@@ -3,7 +3,7 @@
 
 module.exports = function bestTwoTypes(data) {
   const pairs = [];
-  console.log(data);
+
   for (let i = 0; i < data.length; i += 1) {
     for (let j = i; j < data.length; j += 1) {
       if (i === j) {

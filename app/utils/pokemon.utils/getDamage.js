@@ -24,7 +24,7 @@ module.exports = {
       { id: 17, name: 'Ténèbre' },
       { id: 18, name: 'Fée' },
     ];
-    console.log(arr1, arr2, arr3);
+
     const totalDamageFrom = [];
     types.forEach((type) => {
       // we count the number of time the type is in the array

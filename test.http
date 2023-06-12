@@ -23,7 +23,7 @@ GET {{api}}/pokemon/771
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/p
+GET {{local}}/pokemon/scalpereur
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
@@ -36,7 +36,7 @@ GET  {{local}}/pokemon/resist-immune/type/2
 GET {{local}}/pokemon/full-random
 
 ###GET pokemon by 2 types
-GET {{api}}/pokemon/type/14/17
+GET {{api}}/pokemon/type/9/17
 
 ### GET all pokemon of one type
 GET {{local}}/pokemon/gen/5

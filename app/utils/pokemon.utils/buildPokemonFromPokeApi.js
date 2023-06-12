@@ -8,7 +8,6 @@ const { getDamage } = require('./getDamage');
 const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = async function buildPokemonFromPokeApi(id) {
-  console.log('coucou');
   //* method to get all what we need to build a pokemon object from pokeApi
   //* and put it in cache
   try {
