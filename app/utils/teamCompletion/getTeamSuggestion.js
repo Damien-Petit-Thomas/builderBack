@@ -10,7 +10,7 @@ function getTeamSuggestion(weakness, resistance) {
   // const arrSorted = arr.sort((a, b) => a[1] - b[1]);
   const noResist = resist.filter((damage) => damage[1] === 0);
   const weak = Object.entries(weakness);
-  const resistSort = resist.sort((a, b) => a[1] - b[1]);
+  const resistSort = resist.sort((a, b) => b[1] - a[1]);
   const weakSort = weak.sort((a, b) => b[1] - a[1]);
   const mostWeak = weakSort.slice(0, 4);
 
