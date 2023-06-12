@@ -16,11 +16,12 @@ function getTeamSuggestion(totalresWeak, resistance) {
   const tooWeak = weak.filter((damage) => damage[1] < 0);
   const limit = weak.filter((damage) => damage[1] === 0);
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
+  const limitResist = weak.filter((damage) => damage[1] <= 0);
 
   if (noResist.length > 12) {
     const response = {
       noResist,
-      weak: [],
+      weak: limitResist,
     };
 
     return response;
@@ -29,7 +30,7 @@ function getTeamSuggestion(totalresWeak, resistance) {
   if (noResist.length > 8) {
     const response = {
       noResist,
-      weak: tooWeak.length > 0 ? tooWeak : limit,
+      weak: limitResist,
 
     };
 
@@ -38,7 +39,7 @@ function getTeamSuggestion(totalresWeak, resistance) {
   if (noResist.length > 4) {
     const response = {
       noResist,
-      weak: tooWeak.concat(limit),
+      weak: limitResist,
 
     };
 
@@ -49,7 +50,7 @@ function getTeamSuggestion(totalresWeak, resistance) {
     const response = {
       noResist,
 
-      weak: tooWeak.concat(limit) > 0 ? tooWeak.concat(limit) : mostWeak,
+      weak: limitResist,
 
     };
 
