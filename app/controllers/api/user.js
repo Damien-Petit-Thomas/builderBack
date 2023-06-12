@@ -69,7 +69,7 @@ module.exports = {
   async userPage(req, res) {
     try {
       const userFound = await user.findByPk(req.usere.id);
-
+      delete userFound.password;
       if (!userFound) {
         throw new ApiError(`User with id ${req.usere.id} not found`, { statusCode: 404 });
       }

@@ -59,7 +59,7 @@ GET {{local}}/pokemon/gen/
 GET {{api}}/pokemon/full-random
 
 ###POST a team to get a complete team with 6 pokemon
-POST {{api}}/pokemon/complet-team
+POST {{local}}/pokemon/complet-team
 Content-Type: application/json
 
 
@@ -203,7 +203,7 @@ Content-Type: application/json
 ### logout user
 GET {{local}}/user/logout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzQ2MDc1LCJleHAiOjE2ODYzNDk2NzV9.6S1MMHaDOnQIk7EHJmcdI9-eXHW6aVmhXXPrhzW1qlQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTUzODc0LCJleHAiOjE2ODY1NTc0NzR9.V9JMk8DhzDjZulasQywX1fNKBk4_mVFv2hKree5d1cA
 
 
 ### home page
@@ -234,8 +234,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzQ2MDc1LCJleHAiOjE2ODYzNDk2NzV9.6S1MMHaDOnQIk7EHJmcdI9-eXHW6aVmhXXPrhzW1qlQ
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTUzODc0LCJleHAiOjE2ODY1NTc0NzR9.V9JMk8DhzDjZulasQywX1fNKBk4_mVFv2hKree5d1cA
 
 
 ### delete team
