@@ -49,13 +49,14 @@ module.exports = {
       const teamPokemons = (await Promise.all(promises)).flat();
 
       while (teamPokemons.length < 6) {
+        const len = teamPokemons.length;
         const teamPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
         // retrieve the number resistance of the team to each type
         const numberOfresistance = getNumberOfResistanceByType(teamPokemons);
         // const weakness = getNumberOfWeaknessByType(teamPokemons);
         const totalResWeak = totalResistance(teamPokemons);
         // get en array of the most weak type the length depend of the number of pokemon in the team
-        const team = getTeamSuggestion(totalResWeak, numberOfresistance);
+        const team = getTeamSuggestion(totalResWeak, numberOfresistance, len);
 
         const resistTypeList = team.noResist.map((w) => w[0]);
         const weakTypeList = team.weak.map((w) => w[0]);

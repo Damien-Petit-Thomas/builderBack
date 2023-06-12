@@ -5,7 +5,7 @@
 // for ulterior improvement we could add a parameter to the function to set the range
 // in case the user give a team with already > 4 pokemons
 
-function getTeamSuggestion(totalResWeak, numberOfresistance) {
+function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   const nbResist = Object.entries(numberOfresistance);
   const total = Object.entries(totalResWeak);
   // const arrSorted = arr.sort((a, b) => a[1] - b[1]);
@@ -18,44 +18,45 @@ function getTeamSuggestion(totalResWeak, numberOfresistance) {
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
   const limitResist = total.filter((type) => type[1] <= 1);
 
-  if (noResist.length > 12) {
+  if (len < 3) {
     const response = {
       noResist,
-      weak: limitResist,
+      weak: [],
     };
 
     return response;
   }
 
-  if (noResist.length > 8) {
-    const response = {
-      noResist,
-      weak: limitResist,
+  // if (noResist.length > 8) {
+  //   const response = {
+  //     noResist,
+  //     weak: limitResist,
 
-    };
+  //   };
 
-    return response;
-  }
-  if (noResist.length > 4) {
-    const response = {
-      noResist,
-      weak: limitResist,
+  //   return response;
+  // }
+  // if (noResist.length > 4) {
+  //   const response = {
+  //     noResist,
+  //     weak: limitResist,
 
-    };
+  //   };
 
-    return response;
-  }
+  //   return response;
+  // }
 
-  if (noResist.length > 0) {
-    const response = {
-      noResist,
+  // if (noResist.length > 0) {
+  //   const response = {
+  //     noResist,
 
-      weak: limitResist,
+  //     weak: limitResist,
 
-    };
+  //   };
 
-    return response;
-  }
+  //   return response;
+  // }
+
   if (isOneResistance.length > 0) {
     const response = {
       noResist: isOneResistance,
