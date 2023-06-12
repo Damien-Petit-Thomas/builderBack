@@ -4,6 +4,7 @@
 // resistant to a most specific type
 // for ulterior improvement we could add a parameter to the function to set the range
 // in case the user give a team with already > 4 pokemons
+
 function getTeamSuggestion(weakness, resistance) {
   const resist = Object.entries(resistance);
   // const arrSorted = arr.sort((a, b) => a[1] - b[1]);

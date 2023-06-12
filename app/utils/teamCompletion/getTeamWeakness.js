@@ -48,9 +48,26 @@ function getNumberOfImmunityByType(pokemons) {
   }, {});
 }
 
+function totalResistance(pokemons) {
+  const totalDamages = getTotalDamages(pokemons);
+
+  return totalDamages.reduce((acc, damage) => {
+    if (damage.damage > 1) {
+      acc[damage.id] = (acc[damage.id] || 0) - 1;
+    } else if (damage.damage < 1) {
+      acc[damage.id] = (acc[damage.id] || 0) + 1;
+    } else {
+      acc[damage.id] = acc[damage.id] || 0;
+    }
+
+    return acc;
+  }, {});
+}
+
 module.exports = {
   getTotalDamages,
   getNumberOfResistanceByType,
   getNumberOfWeaknessByType,
   getNumberOfImmunityByType,
+  totalResistance,
 };

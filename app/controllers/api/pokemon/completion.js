@@ -5,6 +5,7 @@ const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon
 const {
   getNumberOfResistanceByType,
   getNumberOfWeaknessByType,
+  totalResistance,
 } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
 const bestTwoTypes = require('../../../utils/teamCompletion/bestTwoTypes');
@@ -50,8 +51,9 @@ module.exports = {
       while (teamPokemons.length < 6) {
         const teamPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
         // retrieve the number resistance of the team to each type
-        const resistance = getNumberOfResistanceByType(teamPokemons);
+        // const resistance = getNumberOfResistanceByType(teamPokemons);
         const weakness = getNumberOfWeaknessByType(teamPokemons);
+        const resistance = totalResistance(teamPokemons);
         // get en array of the most weak type the length depend of the number of pokemon in the team
         const team = getTeamSuggestion(weakness, resistance);
 
