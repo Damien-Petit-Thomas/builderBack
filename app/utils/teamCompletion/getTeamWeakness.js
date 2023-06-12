@@ -9,23 +9,16 @@ function getTotalDamages(pokemons) {
 
 function getNumberOfResistanceByType(pokemons) {
   const totalDamages = getTotalDamages(pokemons);
-  const idCounts = {};
 
-  totalDamages.forEach((elem) => {
-    if (elem.damage < 1) {
-      if (idCounts[elem.id]) {
-        idCounts[elem.id] += 1;
-      } else {
-        idCounts[elem.id] = 1;
-      }
-    } else if (idCounts[elem.id]) {
-      idCounts[elem.id] += 0;
+  return totalDamages.reduce((acc, damage) => {
+    if (damage.damage < 1) {
+      acc[damage.id] = (acc[damage.id] || 0) + 1;
     } else {
-      idCounts[elem.id] = 0;
+      acc[damage.id] = acc[damage.id] || 0;
     }
-  });
 
-  return idCounts;
+    return acc;
+  }, {});
 }
 
 function getNumberOfWeaknessByType(pokemons) {
@@ -33,10 +26,11 @@ function getNumberOfWeaknessByType(pokemons) {
 
   return totalDamages.reduce((acc, damage) => {
     if (damage.damage > 1) {
-      acc[damage.name] = (acc[damage.name] || 0) + 1;
+      acc[damage.id] = (acc[damage.id] || 0) + 1;
     } else {
-      acc[damage.name] = acc[damage.name] || 0;
+      acc[damage.id] = acc[damage.id] || 0;
     }
+
     return acc;
   }, {});
 }
@@ -46,9 +40,9 @@ function getNumberOfImmunityByType(pokemons) {
 
   return totalDamages.reduce((acc, damage) => {
     if (damage.damage === 0) {
-      acc[damage.name] = (acc[damage.name] || 0) + 1;
+      acc[damage.id] = (acc[damage.id] || 0) + 1;
     } else {
-      acc[damage.name] = acc[damage.name] || 0;
+      acc[damage.id] = acc[damage.id] || 0;
     }
     return acc;
   }, {});

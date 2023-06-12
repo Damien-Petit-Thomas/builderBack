@@ -4,31 +4,50 @@
 // resistant to a most specific type
 // for ulterior improvement we could add a parameter to the function to set the range
 // in case the user give a team with already > 4 pokemons
-function getTeamSuggestion(damages, i) {
-  const arr = Object.entries(damages);
-  const arrSorted = arr.sort((a, b) => a[1] - b[1]);
+function getTeamSuggestion(weakness, resistance) {
+  const resist = Object.entries(resistance);
+  // const arrSorted = arr.sort((a, b) => a[1] - b[1]);
+  const noResist = resist.filter((damage) => damage[1] === 0);
+  const weak = Object.entries(weakness);
+  const resistSort = resist.sort((a, b) => a[1] - b[1]);
+  const weakSort = weak.sort((a, b) => b[1] - a[1]);
+  const mostWeak = weakSort.slice(0, 2);
 
-  if (i < 2) {
-    const weakNess = arrSorted.slice(0, 5);
+  if (noResist.length > 12) {
+    const response = {
+      noResist,
+      weak: [],
+    };
 
-    return weakNess;
+    return response;
   }
 
-  if (i < 3) {
-    const weakNess = arrSorted.slice(0, 4);
+  if (noResist.length > 8) {
+    const response = {
+      noResist,
+      weak: mostWeak,
 
-    return weakNess;
+    };
+
+    return response;
   }
 
-  if (i < 5) {
-    const weakNess = arrSorted.slice(0, 2);
+  if (noResist.length > 0) {
+    const response = {
+      noResist,
+      needResist: resistSort.slice(0, 4),
+      weak: mostWeak,
+    };
 
-    return weakNess;
+    return response;
   }
 
-  const weakNess = arrSorted.slice(0, 1);
+  const response = {
+    noResist: resistSort.slice(0, 5),
+    weak: mostWeak,
+  };
 
-  return weakNess;
+  return response;
 }
 
 module.exports = getTeamSuggestion;

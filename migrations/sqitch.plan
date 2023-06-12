@@ -20,3 +20,4 @@ functionDamage 2023-06-01T09:02:49Z Damien <damien.petit.thomas@gmail.com> # add
 user_favorite 2023-06-05T08:42:20Z Damien <damien.petit.thomas@gmail.com> # add table use_has_favorite
 ability 2023-06-06T07:24:45Z Damien <damien.petit.thomas@gmail.com> # add table ability and pokemon_has_ability
 insert_abi 2023-06-06T14:05:44Z Damien <damien.petit.thomas@gmail.com> # insert ability
+filterV2 2023-06-12T11:39:01Z Damien <damien.petit.thomas@gmail.com> # add exclude

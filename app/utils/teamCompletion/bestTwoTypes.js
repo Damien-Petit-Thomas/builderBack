@@ -24,6 +24,6 @@ module.exports = function bestTwoTypes(data) {
   }
 
   const sort = pairs.sort((a, b) => b.matching_ids.size - a.matching_ids.size);
-  // console.log(sort);
+
   return sort;
 };

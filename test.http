@@ -64,7 +64,7 @@ Content-Type: application/json
 
 
 [
-    14
+    14, 16
 ]
 
 ###POST a team to get a complete team with 6 pokemon
@@ -217,10 +217,10 @@ GET {{web}}
 
 POST {{local}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTU4OTcyLCJleHAiOjE2ODY1NjI1NzJ9.39OfhHs2JwQpvbOsnoyosOwq926AK2ocygDn-yPkgAc
 
 {
-    "teamName": "test",
+    "teamName": "plou4d",
     "pokemonIds": [
         100,
         250,
@@ -235,14 +235,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTUzODc0LCJleHAiOjE2ODY1NTc0NzR9.V9JMk8DhzDjZulasQywX1fNKBk4_mVFv2hKree5d1cA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTYwMTg1LCJleHAiOjE2ODY1NjM3ODV9.MQbR-hkhXewF6uN5VPcGIROeOC_8HTbujVzX1_8c9p8
 
 
 ### delete team
 
-DELETE {{local}}/user/user/team/3
+DELETE {{local}}/user/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzE5MjkxLCJleHAiOjE2ODYzMjI4OTF9.I-dwNtpWTbpxX4kbeVz9qxMBUZ_Rkgvi7R4oA6CdcGI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTYwMTg1LCJleHAiOjE2ODY1NjM3ODV9.MQbR-hkhXewF6uN5VPcGIROeOC_8HTbujVzX1_8c9p8
+
+{
+ "id":  4
+
+}
 
 ########################## abiliy router ##################################"
 
