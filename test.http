@@ -64,7 +64,7 @@ Content-Type: application/json
 
 
 [
-    14, 16
+    1
 ]
 
 ###POST a team to get a complete team with 6 pokemon

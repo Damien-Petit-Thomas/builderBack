@@ -6,17 +6,17 @@
 // in case the user give a team with already > 4 pokemons
 
 function getTeamSuggestion(totalResWeak, numberOfresistance) {
-  const nbResist = Object.entries(resistance);
+  const nbResist = Object.entries(numberOfresistance);
+  const total = Object.entries(totalResWeak);
   // const arrSorted = arr.sort((a, b) => a[1] - b[1]);
-  const noResist = numberOfresistance.filter((type) => type[1] === 0);
-  const weak = Object.entries(totalResWeak);
-  const resistSort = nbResist.sort((a, b) => b[1] - a[1]);
-  const weakSort = weak.sort((a, b) => b[1] - a[1]);
-  const mostWeak = weakSort.slice(0, 4);
-  const tooWeak = weak.filter((damage) => damage[1] < 0);
-  const limit = weak.filter((damage) => damage[1] === 0);
+  const noResist = nbResist.filter((type) => type[1] === 0);
+  // const resistSort = nbResist.sort((a, b) => b[1] - a[1]);
+  // const weakSort = weak.sort((a, b) => b[1] - a[1]);
+  const mostWeak = nbResist.slice(0, 4);
+  // const tooWeak = total.filter((damage) => damage[1] < 0);
+  // const limit = weak.filter((damage) => damage[1] === 0);
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
-  const limitResist = weak.filter((type) => type[1] <= 0);
+  const limitResist = total.filter((type) => type[1] <= 0);
 
   if (noResist.length > 12) {
     const response = {
@@ -59,14 +59,13 @@ function getTeamSuggestion(totalResWeak, numberOfresistance) {
   if (isOneResistance.length > 0) {
     const response = {
       noResist: isOneResistance,
-      weak: tooWeak.length > 0 ? tooWeak.concat(limit) : mostWeak,
-
+      weak: limitResist,
     };
     return response;
   }
   const response = {
     noResist: mostWeak,
-    weak: tooWeak.concat(limit).length > 0 ? tooWeak.concat(limit) : tooWeak,
+    weak: limitResist,
 
   };
 

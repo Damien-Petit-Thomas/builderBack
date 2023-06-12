@@ -4,7 +4,7 @@ const { poke, type } = require('../../../models');
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const {
   getNumberOfResistanceByType,
-  getNumberOfWeaknessByType,
+  // getNumberOfWeaknessByType,
   totalResistance,
 } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
@@ -13,7 +13,7 @@ const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons')
 const { ApiError } = require('../../../helpers/errorHandler');
 const inCache = require('../../../utils/cache/inCache');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
+// const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 
 module.exports = {
 
@@ -59,11 +59,12 @@ module.exports = {
 
         const resistTypeList = team.noResist.map((w) => w[0]);
         const weakTypeList = team.weak.map((w) => w[0]);
+        const weakTypeListSorted = weakTypeList.sort((a, b) => b[1] - a[1]);
         // const typeList = weak.map((w) => w[0]);
 
         let resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
         while (resistantTypes.length < 2) {
-          resistTypeList.pop();
+          weakTypeListSorted.pop();
           resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
         }
 
