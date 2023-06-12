@@ -55,20 +55,24 @@ module.exports = {
         const numberOfresistance = getNumberOfResistanceByType(teamPokemons);
         // const weakness = getNumberOfWeaknessByType(teamPokemons);
         const totalResWeak = totalResistance(teamPokemons);
-        // get en array of the most weak type the length depend of the number of pokemon in the team
+
+        // set priority
         const team = getTeamSuggestion(totalResWeak, numberOfresistance, len);
 
         const resistTypeList = team.noResist.map((w) => w[0]);
-        const weakTypeList = team.weak.map((w) => w[0]);
-        const weakTypeListSorted = weakTypeList.sort((a, b) => b[1] - a[1]);
+        const weakTypeListSorted = team.weak.sort((a, b) => b[1] - a[1]);
+        const weakTypeList = weakTypeListSorted.map((w) => w[0]);
+
         // const typeList = weak.map((w) => w[0]);
 
+        // find the best types to counter the weakness
         let resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
         while (resistantTypes.length < 2) {
-          weakTypeListSorted.pop();
+          weakTypeList.pop();
+
           resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
         }
-
+        // find the best pair of types to counter the weakness
         const bestTypes = bestTwoTypes(resistantTypes);
 
         const bestPokemons = await getBestPokemons(bestTypes, teamPokemonsIds);

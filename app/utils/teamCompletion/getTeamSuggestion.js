@@ -27,6 +27,15 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     return response;
   }
 
+  if (len <= 3 && isOneResistance.length > 0) {
+    const response = {
+      noResist: isOneResistance,
+      weak: [],
+    };
+
+    return response;
+  }
+
   // if (noResist.length > 8) {
   //   const response = {
   //     noResist,

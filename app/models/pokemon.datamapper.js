@@ -44,6 +44,13 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
     return pokemons.rows;
   }
 
+  async findAllByTypeId1(id) {
+    const query = 'SELECT * FROM pokemon WHERE type1 = $1 AND type2 IS NULL ORDER BY RANDOM() LIMIT 1';
+    const values = [id];
+    const response = await this.client.query(query, values);
+    return response.rows[0];
+  }
+
   /**
    * retrieve pokemon with 2 types
    * @param {number} id1
