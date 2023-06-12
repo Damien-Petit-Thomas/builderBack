@@ -5,18 +5,18 @@
 // for ulterior improvement we could add a parameter to the function to set the range
 // in case the user give a team with already > 4 pokemons
 
-function getTeamSuggestion(totalresWeak, resistance) {
+function getTeamSuggestion(totalResWeak, numberOfresistance) {
   const nbResist = Object.entries(resistance);
   // const arrSorted = arr.sort((a, b) => a[1] - b[1]);
-  const noResist = nbResist.filter((damage) => damage[1] === 0);
-  const weak = Object.entries(totalresWeak);
+  const noResist = numberOfresistance.filter((type) => type[1] === 0);
+  const weak = Object.entries(totalResWeak);
   const resistSort = nbResist.sort((a, b) => b[1] - a[1]);
   const weakSort = weak.sort((a, b) => b[1] - a[1]);
   const mostWeak = weakSort.slice(0, 4);
   const tooWeak = weak.filter((damage) => damage[1] < 0);
   const limit = weak.filter((damage) => damage[1] === 0);
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
-  const limitResist = weak.filter((damage) => damage[1] <= 0);
+  const limitResist = weak.filter((type) => type[1] <= 0);
 
   if (noResist.length > 12) {
     const response = {
