@@ -14,11 +14,11 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   // const weakSort = weak.sort((a, b) => b[1] - a[1]);
   const mostWeak = nbResist.slice(0, 4);
   // const tooWeak = total.filter((damage) => damage[1] < 0);
-  // const limit = weak.filter((damage) => damage[1] === 0);
+  const limit = total.filter((damage) => damage[1] <= 0);
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
   const limitResist = total.filter((type) => type[1] <= 1);
 
-  if (len <= 2 && noResist.length > 0) {
+  if (len === 1) {
     const response = {
       noResist,
       weak: [],
@@ -27,63 +27,71 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     return response;
   }
 
-  // if (len <= 3 && isOneResistance.length > 0) {
-  //   const response = {
-  //     noResist: isOneResistance,
-  //     weak: [],
-  //   };
-
-  //   return response;
-  // }
-
-  // if (noResist.length > 8) {
-  //   const response = {
-  //     noResist,
-  //     weak: limitResist,
-
-  //   };
-
-  //   return response;
-  // }
-  // if (noResist.length > 4) {
-  //   const response = {
-  //     noResist,
-  //     weak: limitResist,
-
-  //   };
-
-  //   return response;
-  // }
-
-  // if (noResist.length > 0) {
-  //   const response = {
-  //     noResist,
-
-  //     weak: limitResist,
-
-  //   };
-
-  //   return response;
-  // }
-  if (noResist.length > 0) {
+  if (len === 2 && noResist.length > 0) {
     const response = {
       noResist,
-      weak: limitResist,
+      weak: limit,
     };
+
     return response;
   }
-  if (isOneResistance.length > 0) {
+
+  if (len === 3 && noResist.length > 0) {
+    const response = {
+      noResist,
+      weak: limit,
+    };
+
+    return response;
+  }
+
+  if (len === 3 && isOneResistance.length > 0) {
     const response = {
       noResist: isOneResistance,
-      weak: limitResist,
+      weak: limit,
+    };
+
+    return response;
+  }
+
+  if (len === 4 && noResist.length > 0) {
+    const response = {
+      noResist,
+      weak: limit,
+    };
+
+    return response;
+  }
+
+  if (len === 4 && isOneResistance.length > 0) {
+    const response = {
+      noResist: isOneResistance,
+      weak: limit,
+    };
+
+    return response;
+  }
+
+  if (len === 5 && noResist.length > 0) {
+    const response = {
+      noResist,
+      weak: limit,
+    };
+
+    return response;
+  }
+
+  if (len === 5 && isOneResistance.length > 0) {
+    const response = {
+      noResist: isOneResistance,
+      weak: limit,
     };
 
     return response;
   }
   const response = {
     noResist: mostWeak,
-    weak: limitResist,
-
+    weak: limit,
   };
   return response;
 }
