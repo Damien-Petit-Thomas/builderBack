@@ -18,7 +18,7 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
   const limitResist = total.filter((type) => type[1] <= 1);
 
-  if (len <= 3) {
+  if (len <= 3 && noResist.length > 0) {
     const response = {
       noResist,
       weak: [],
