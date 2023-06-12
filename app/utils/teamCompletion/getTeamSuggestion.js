@@ -5,14 +5,17 @@
 // for ulterior improvement we could add a parameter to the function to set the range
 // in case the user give a team with already > 4 pokemons
 
-function getTeamSuggestion(weakness, resistance) {
-  const resist = Object.entries(resistance);
+function getTeamSuggestion(totalresWeak, resistance) {
+  const nbResist = Object.entries(resistance);
   // const arrSorted = arr.sort((a, b) => a[1] - b[1]);
-  const noResist = resist.filter((damage) => damage[1] === 0);
-  const weak = Object.entries(weakness);
-  const resistSort = resist.sort((a, b) => b[1] - a[1]);
+  const noResist = nbResist.filter((damage) => damage[1] === 0);
+  const weak = Object.entries(totalresWeak);
+  const resistSort = nbResist.sort((a, b) => b[1] - a[1]);
   const weakSort = weak.sort((a, b) => b[1] - a[1]);
   const mostWeak = weakSort.slice(0, 4);
+  const tooWeak = weak.filter((damage) => damage[1] < 0);
+  const limit = weak.filter((damage) => damage[1] === 0);
+  const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
 
   if (noResist.length > 12) {
     const response = {
@@ -26,7 +29,7 @@ function getTeamSuggestion(weakness, resistance) {
   if (noResist.length > 8) {
     const response = {
       noResist,
-      weak: mostWeak,
+      weak: tooWeak > 0 ? tooWeak : mostWeak,
 
     };
 
@@ -36,16 +39,25 @@ function getTeamSuggestion(weakness, resistance) {
   if (noResist.length > 0) {
     const response = {
       noResist,
-      needResist: resistSort.slice(0, 4),
-      weak: mostWeak,
+
+      weak: tooWeak > 0 ? tooWeak : mostWeak,
+
     };
 
     return response;
   }
+  if (isOneResistance.length > 0) {
+    const response = {
+      noResist: isOneResistance,
+      weak: tooWeak.concat(limit).length > 0 ? tooWeak.concat(limit) : mostWeak,
 
+    };
+    return response;
+  }
   const response = {
-    noResist: resistSort.slice(0, 5),
-    weak: mostWeak,
+    noResist: mostWeak,
+    weak: tooWeak.concat(limit).length > 0 ? tooWeak.concat(limit) : mostWeak,
+
   };
 
   return response;

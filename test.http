@@ -235,13 +235,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTYwMTg1LCJleHAiOjE2ODY1NjM3ODV9.MQbR-hkhXewF6uN5VPcGIROeOC_8HTbujVzX1_8c9p8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTc3OTIyLCJleHAiOjE2ODY1ODE1MjJ9.THZCinVeK7s7mLArMAdbXkPK2wIz8iregT7IcP8ReIw
 
 
 
 ### add pokemon in favorite
 
-POST {{local}}/user/pokemon/1
+POST {{local}}/user/pokemon/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTc3OTIyLCJleHAiOjE2ODY1ODE1MjJ9.THZCinVeK7s7mLArMAdbXkPK2wIz8iregT7IcP8ReIw
 
 ### delete team
 
