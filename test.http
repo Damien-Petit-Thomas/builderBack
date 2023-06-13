@@ -73,7 +73,7 @@ Content-Type: application/json
 
 [
 
-15
+1
 
 ]
 
@@ -82,7 +82,7 @@ POST {{local}}/pokemon/complet-team/random
 Content-Type: application/json
 
 [
-    620
+    1000
 ]
 
 
