@@ -84,20 +84,19 @@ module.exports = {
         // find the best pair of types to counter the weakness
         const best2Types = bestTwoTypes(resistantTypes);
 
-        // if (teamPokemons.length === 1) {
-        //   const best4Types = best4types(best2Types, isResist);
-        //   if (best4Types) {
-        //     const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
-        //     if (bestPokemons) {
-        //       const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
-        //       const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
-        //       teamPokemons.push(formatedPokemon1);
-        //       teamPokemons.push(formatedPokemon2);
-        //       console.log(teamPokemons.length);
-        //       console.log('ppppppppppppppppppppppppppppppppppppppppppppppp');
-        //     }
-        //   }
-        // }
+        if (teamPokemons.length === 1) {
+          const best4Types = best4types(best2Types, isResist);
+          if (best4Types) {
+            const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
+            if (bestPokemons) {
+              const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
+              const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
+              teamPokemons.push(formatedPokemon1);
+              teamPokemons.push(formatedPokemon2);
+              console.log('coucou');
+            }
+          }
+        }
         // while (teamPokemons.length > 5 && resistTypeList.length === 0) {
         //   const best4Types = best4types(best2Types, isResist);
         //   if (best4Types) {
