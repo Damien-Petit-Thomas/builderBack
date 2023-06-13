@@ -49,12 +49,13 @@ async function getTheBestRandomTeam(poketeam) {
     let teamFormat;
     let isNeutral = [];
     let isResistant = [];
+    let isTooWeak = [];
     // Generate a team until the condition is met or a maximum number of iterations is reached
     let iterations = 0;
     const maxIterations = 100000;
     // Set a maximum number of iterations to avoid potential infinite loop
 
-    while (isNeutral.length < 17 && isResistant.length < 15 && iterations < maxIterations) {
+    while ((isNeutral.length < 18 || isResistant.length < 10 || isTooWeak.length > 0) && iterations < maxIterations) {
       const generatedIds = [];
       const remainingSlots = 6 - poketeam.length;
 
@@ -68,10 +69,20 @@ async function getTheBestRandomTeam(poketeam) {
       const teamWithGeneratedIds = [...poketeam, ...generatedIds];
       teamFormat = await generateFormatedTeam(teamWithGeneratedIds);
       const totalResWeak = totalResistance(teamFormat);
+      // console.log(totalResWeak);
       isNeutral = Object.keys(totalResWeak)
         .filter((key) => totalResWeak[key] >= 0);
+
+      console.log('---------------------------------------------------------');
+      console.log(isNeutral.length, 'isNeutral.length');
       isResistant = Object.keys(totalResWeak)
         .filter((key) => totalResWeak[key] > 0);
+      console.log('---------------------------------------------------------');
+      console.log(isResistant.length, 'isResistant.length');
+      isTooWeak = Object.keys(totalResWeak)
+        .filter((key) => totalResWeak[key] < -1);
+      console.log('---------------------------------------------------------');
+      console.log(isTooWeak.length, 'isTooWeak.length');
       iterations += 1;
     }
 
