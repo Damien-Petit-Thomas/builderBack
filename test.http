@@ -247,9 +247,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 
 ### delete team
 
-DELETE {{local}}/user/user/team
+DELETE {{local}}/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTYwMTg1LCJleHAiOjE2ODY1NjM3ODV9.MQbR-hkhXewF6uN5VPcGIROeOC_8HTbujVzX1_8c9p8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NjQ0MzYwLCJleHAiOjE2ODY2NDc5NjB9.9rOJjiHjlLOnpO9KmDRLnnPsEs4mRE2JpT9gpb5tulA
 
 {
  "id":  4
@@ -261,6 +261,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get all favorites
 
 GET {{local}}/user/favorites
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NjQ0MzYwLCJleHAiOjE2ODY2NDc5NjB9.9rOJjiHjlLOnpO9KmDRLnnPsEs4mRE2JpT9gpb5tulA
 
 ########################## abiliy router ##################################"
 
