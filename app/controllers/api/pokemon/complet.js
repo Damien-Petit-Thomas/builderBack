@@ -178,6 +178,7 @@ module.exports = {
                   teamPokemons.pop();
                   console.log(isGood);
                 } else {
+                  console.log('yyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeeeeeeeeessssssssssssssss');
                   isGood = true;
                 }
               }
