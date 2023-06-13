@@ -8,12 +8,12 @@ const {
   totalResistance,
 } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
-const bestTwoTypes = require('../../../utils/teamCompletion/bestTwoTypes');
-const getBestPokemons = require('../../../utils/teamCompletion/getBestPokemons');
+const { bestTwoTypes, best4types } = require('../../../utils/teamCompletion/bestTwoTypes');
+const { bestPokemon, best2Pokemons } = require('../../../utils/teamCompletion/getBestPokemons');
 const { ApiError } = require('../../../helpers/errorHandler');
 const inCache = require('../../../utils/cache/inCache');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-// const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
+const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 
 module.exports = {
 
@@ -56,6 +56,10 @@ module.exports = {
         // const weakness = getNumberOfWeaknessByType(teamPokemons);
         const totalResWeak = totalResistance(teamPokemons);
 
+        const isResist = Object.keys(totalResWeak)
+          .filter((key) => totalResWeak[key] > 0)
+          .map((key) => Number(key));
+
         // set priority
         const team = getTeamSuggestion(totalResWeak, numberOfresistance, len);
 
@@ -68,19 +72,39 @@ module.exports = {
 
         // find the best types to counter the weakness
         let resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
-        while (resistantTypes.length < 2) {
+        while (resistantTypes.length < 1) {
           weakTypeList.pop();
 
           resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
         }
         // find the best pair of types to counter the weakness
-        const bestTypes = bestTwoTypes(resistantTypes);
+        const best2Types = bestTwoTypes(resistantTypes);
 
-        const bestPokemons = await getBestPokemons(bestTypes, teamPokemonsIds);
+        if (teamPokemons.length === 1) {
+          const best4Types = best4types(best2Types, isResist);
+          if (best4Types) {
+            let bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
+            if (bestPokemons) {
+              console.log(bestPokemons);
+              const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
+              const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
+              teamPokemons.push(formatedPokemon1);
+              teamPokemons.push(formatedPokemon2);
+            } else {
+              bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
+              if (bestPokemons) {
+                const formatedPokemon = await preformatPokemon(bestPokemons);
+                teamPokemons.push(formatedPokemon);
+              }
+            }
+          }
+        } else {
+          const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
 
-        if (bestPokemons) {
-          const formatedPokemon = await preformatPokemon(bestPokemons);
-          teamPokemons.push(formatedPokemon);
+          if (bestPokemons) {
+            const formatedPokemon = await preformatPokemon(bestPokemons);
+            teamPokemons.push(formatedPokemon);
+          }
         }
       }
 

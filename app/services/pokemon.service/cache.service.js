@@ -24,7 +24,6 @@ module.exports = {
       formatedPokemons.forEach((pokemon) => {
         // this way each pokemon is fotmated and cached
         cache.set(pokemon.id, pokemon, cache.TTL);
-        console.info(`pokemon ${pokemon.name} cached`);
       });
       if (!formatedPokemons) throw new ApiError('no formated pokemon', { statusCode: 500 });
       return formatedPokemons;

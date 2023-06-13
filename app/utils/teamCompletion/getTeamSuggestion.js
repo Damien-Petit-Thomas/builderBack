@@ -13,7 +13,9 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   // const resistSort = nbResist.sort((a, b) => b[1] - a[1]);
   // const weakSort = weak.sort((a, b) => b[1] - a[1]);
   const mostWeak = nbResist.slice(0, 4);
-  // const tooWeak = total.filter((damage) => damage[1] < 0);
+  const tooWeak = total.filter((damage) => damage[1] < 0);
+  const weakest = total.sort((a, b) => a[1] - b[1]);
+
   const limit = total.filter((damage) => damage[1] <= 0);
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
   const limitResist = total.filter((type) => type[1] <= 1);
@@ -72,18 +74,9 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     return response;
   }
 
-  if (len === 5 && noResist.length > 0) {
+  if (len === 5 && tooWeak.length > 0) {
     const response = {
-      noResist,
-      weak: limit,
-    };
-
-    return response;
-  }
-
-  if (len === 5 && isOneResistance.length > 0) {
-    const response = {
-      noResist: isOneResistance,
+      noResist: weakest.slice(0, tooWeak.length),
       weak: limit,
     };
 
