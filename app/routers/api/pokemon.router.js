@@ -3,6 +3,7 @@ const {
   pokemonController: controller,
   pokeDamageController: controllerDamage,
   completionController: controllerCompletion,
+  completionRandomController: controllerCompletionRandom,
 } = require('../../controllers/api');
 const controllerHandler = require('../../helpers/controllerHandler');
 
@@ -54,6 +55,9 @@ router
 router
   .route('/complet-team')
   .post(controllerHandler(controllerCompletion.getTeamCompletion));
+router
+  .route('/complet-team/random')
+  .post(controllerHandler(controllerCompletionRandom.getTheBestRandomTeam));
 // router
 //   .route('/:type1/:type2')
 //   .get(controllerHandler(controller.getDamageBetweenTwoTypes));

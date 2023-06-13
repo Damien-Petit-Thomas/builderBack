@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const { poke, type } = require('../../../models');
-
+const { getTheBestRandomTeam } = require('./random');
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const {
   getNumberOfResistanceByType,
@@ -19,7 +19,11 @@ module.exports = {
     try {
       // The req.body contains an array with Pokemon IDs
       const poketeam = req.body;
-
+      if (poketeam.length === 1) {
+        console.log('random');
+        const response = await getTheBestRandomTeam(poketeam);
+        return res.status(200).json(response);
+      }
       // Check if the array contains between 1 and 5 Pokemons
       if (poketeam.length < 1 || poketeam.length > 5) {
         throw new ApiError('Bad request: The team must contain between 1 and 5 pokemons', { statusCode: 400 });
