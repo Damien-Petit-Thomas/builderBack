@@ -97,6 +97,19 @@ module.exports = {
             }
           }
         }
+        if (teamPokemons.length === 3) {
+          const best4Types = best4types(best2Types, isResist);
+          if (best4Types) {
+            const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
+            if (bestPokemons) {
+              const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
+              const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
+              teamPokemons.push(formatedPokemon1);
+              teamPokemons.push(formatedPokemon2);
+              console.log('coucou');
+            }
+          }
+        }
         // while (teamPokemons.length > 5 && resistTypeList.length === 0) {
         //   const best4Types = best4types(best2Types, isResist);
         //   if (best4Types) {
