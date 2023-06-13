@@ -114,24 +114,45 @@ module.exports = {
           }
 
           case 2: {
+            let i = 0;
             console.log('case 2');
             best4Types = best4types(best2Types, isResist);
-            if (!best4Types) {
-              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
-
-              if (bestPokemons) {
-                const formatedPokemon = await preformatPokemon(bestPokemons);
-                teamPokemons.push(formatedPokemon);
-              }
-            } else if (best4Types) {
+            let isGood = false;
+            while (best4Types && !isGood) {
               const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
               if (bestPokemons) {
                 const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
                 const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
                 teamPokemons.push(formatedPokemon1);
                 teamPokemons.push(formatedPokemon2);
+                best4Types = best4Types.slice(1);
+                const notAllResist = Object.entries(totalResistance(teamPokemons))
+                  .filter((e) => e[1] < 0);
+
+                if (notAllResist.length > 2 && i < 5) {
+                  i += 1;
+                  console.log(i, 'je suis le i qui se console.log(i)');
+                  console.log('RAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEE');
+
+                  teamPokemons.pop();
+                  teamPokemons.pop();
+                  console.log(isGood);
+                } else {
+                  isGood = true;
+                }
               }
             }
+
+            if (!best4Types) {
+              console.log('pas de best4Types pour 1 pokemon');
+              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
+
+              if (bestPokemons) {
+                const formatedPokemon = await preformatPokemon(bestPokemons);
+                teamPokemons.push(formatedPokemon);
+              }
+            }
+
             break;
           }
           case 3: {
@@ -175,25 +196,42 @@ module.exports = {
           }
 
           case 4: {
+            let i = 0;
+            console.log('case 4');
             best4Types = best4types(best2Types, isResist);
-            if (!best4Types) {
-              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
-
-              if (bestPokemons) {
-                const formatedPokemon = await preformatPokemon(bestPokemons);
-                teamPokemons.push(formatedPokemon);
-                console.log(teamPokemons.length);
-              }
-            } else {
+            let isGood = false;
+            while (best4Types && !isGood) {
               const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
               if (bestPokemons) {
                 const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
                 const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
                 teamPokemons.push(formatedPokemon1);
                 teamPokemons.push(formatedPokemon2);
-                console.log(teamPokemons.length);
+                best4Types = best4Types.slice(1);
+                const notAllResist = Object.entries(totalResistance(teamPokemons))
+                  .filter((e) => e[1] < 0);
+
+                if (notAllResist.length > 0 && i < 5) {
+                  console.log('RAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEE');
+                  i += 1;
+                  teamPokemons.pop();
+                  teamPokemons.pop();
+                  console.log(isGood);
+                } else {
+                  isGood = true;
+                }
               }
             }
+
+            if (!best4Types) {
+              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
+
+              if (bestPokemons) {
+                const formatedPokemon = await preformatPokemon(bestPokemons);
+                teamPokemons.push(formatedPokemon);
+              }
+            }
+
             break;
           }
 

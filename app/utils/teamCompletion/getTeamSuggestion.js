@@ -48,7 +48,7 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     return response;
   }
 
-  if (len === 3 && noResist.length <= 2) {
+  if (len === 3 && noResist.length <= 3) {
     const response = {
       noResist: noResist.concat(isOneResistance),
       weak: limit,
@@ -59,14 +59,14 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
 
   if (len === 3 && noResist.length > 2) {
     const response = {
-      noResist,
+      noResist: mostWeak,
       weak: limit,
     };
 
     return response;
   }
 
-  if (len === 4 && noResist.length > 0) {
+  if (len === 4 && noResist.length <= 2) {
     const response = {
       noResist,
       weak: limit,
