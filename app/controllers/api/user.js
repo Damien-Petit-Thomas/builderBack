@@ -165,10 +165,10 @@ module.exports = {
       const isInDb = await userHasFavo.findOne(userId, favoriteId);
       if (isInDb) throw new ApiError(`Pokemon ${favoriteId} already in favorite`, { statusCode: 401 });
       const result = await userHasFavo.create({ user_id: userId, favorite_id: favoriteId });
-      if (!result) throw new ApiError('a probleme occured', { statusCode: 401 });
+      if (!result) throw new ApiError('a probleme occured', { statusCode: 500 });
       res.status(201).json(`Pokemon ${favoriteId} add to favorite`);
     } catch (err) {
-      throw new ApiError(err.message, err.info);
+      throw new ApiError(err.message, err.infos);
     }
   },
 
@@ -182,7 +182,7 @@ module.exports = {
       if (!result) throw new ApiError('a probleme occured', { statusCode: 401 });
       res.status(201).json(`Pokemon ${favoriteId} delete from favorite`);
     } catch (err) {
-      throw new ApiError(err.message, err.info);
+      throw new ApiError(err.message, err.infos);
     }
   },
 

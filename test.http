@@ -1,4 +1,4 @@
-################################################################################
+c################################################################################
 # Fichier de test des routes HTTP de l'API
 # Nécessite l'extension REST Client pour VSCode
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
@@ -14,7 +14,7 @@
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/179
+
 
 ### GET one pokemon by id
 GET {{api}}/pokemon/771
@@ -241,9 +241,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 
 ### add pokemon in favorite
 
-POST {{local}}/user/pokemon/2
+POST {{local}}/user/pokemon/215
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTc3OTIyLCJleHAiOjE2ODY1ODE1MjJ9.THZCinVeK7s7mLArMAdbXkPK2wIz8iregT7IcP8ReIw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NjQyNDUyLCJleHAiOjE2ODY2NDYwNTJ9.C7Olxbzp5qhSVYIMpYs1dFF-slX2w0PCVcWNW9soryc
 
 ### delete team
 
