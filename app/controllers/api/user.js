@@ -193,7 +193,7 @@ module.exports = {
       const userFavorites = await userHasFavo.getFavoritesByUserId(userId);
       const favorites = userFavorites.map(({ favorite_id }) => favorite_id);
       console.log(favorites);
-      return res.status(200).json({ favorites });
+      return res.status(200).json(favorites);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
     }
