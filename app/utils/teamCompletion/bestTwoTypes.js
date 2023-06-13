@@ -61,6 +61,7 @@ module.exports = {
 
     if (maxi.length > 0) {
       const group = [];
+      const combinations = new Set();
       for (let i = 0; i < maxi.length; i += 1) {
         const types = maxi[i].type_ids;
         for (let j = 0; j < types.length - 1; j += 1) {
@@ -70,12 +71,23 @@ module.exports = {
             for (let l = 0; l < remain.length - 1; l += 1) {
               for (let m = l + 1; m < remain.length; m += 1) {
                 const group2 = [remain[l], remain[m]];
-                group.push({ group1, group2 });
+
+                group1.sort();
+                group2.sort();
+                const combination = [group1, group2];
+                combination.sort();
+                const key = JSON.stringify(combination);
+
+                if (!combinations.has(key)) {
+                  combinations.add(key);
+                  group.push({ group1, group2 });
+                }
               }
             }
           }
         }
       }
+
       return group;
     }
     return null;

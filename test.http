@@ -23,7 +23,7 @@ GET {{api}}/pokemon/771
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/scalpereur
+GET {{local}}/pokemon/tart
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
@@ -268,3 +268,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 
 ###get all abilities
 GET {{local}}/ability
+
+
+
+12, 13, 5, 14, 8 
