@@ -94,6 +94,7 @@ module.exports = {
       const teamsData = await Promise.all(teamPromises);
 
       const userFavorites = await userHasFavo.getFavoritesByUserId(req.usere.id);
+      console.log(userFavorites);
       const favoritesPromises = userFavorites.map(async (favorite) => {
         const result = await getPokemon(favorite.favorite_id, pokeCache);
         return result;
@@ -186,4 +187,15 @@ module.exports = {
     }
   },
 
+  async getUserFavorites(req, res) {
+    try {
+      const userId = req.usere.id;
+      const userFavorites = await userHasFavo.getFavoritesByUserId(userId);
+      const favorites = userFavorites.map(({ favorite_id }) => favorite_id);
+      console.log(favorites);
+      return res.status(200).json({ favorites });
+    } catch (err) {
+      throw new ApiError(err.message, err.infos);
+    }
+  },
 };

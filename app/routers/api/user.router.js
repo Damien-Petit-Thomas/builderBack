@@ -28,10 +28,7 @@ router
   .get(controllerHandler(controller.userPage));
 
 router
-  .route('/user/team');
-
-router
-  .route('/user/team/')
+  .route('/team/')
   .post(controllerHandler(controller.createTeam))
   .delete(controllerHandler(controller.deleteTeam))
   .patch(controllerHandler(controller.updateTeam));
@@ -42,6 +39,9 @@ router
 // router
 //   .route('/user/teams/:id/pokemons')
 //   .get(controllerHandler(controller.getMyTeamPokemons));
+router
+  .route('/favorites')
+  .get(controllerHandler(controller.getUserFavorites));
 
 router.use(() => {
   throw new Error('Route not found');

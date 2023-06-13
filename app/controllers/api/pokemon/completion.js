@@ -79,8 +79,11 @@ module.exports = {
         }
         // find the best pair of types to counter the weakness
         const best2Types = bestTwoTypes(resistantTypes);
-
-        if (teamPokemons.length === 1) {
+        let i = 0;
+        if (teamPokemons.length < 5 && i < 5) {
+          console.log('000000000000000000000000000000000000000', i, '000000000000000000000000000000000000');
+          console.log(teamPokemons.length, 'teamPokemons.length');
+          i += 1;
           const best4Types = best4types(best2Types, isResist);
           if (best4Types) {
             let bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
@@ -90,11 +93,13 @@ module.exports = {
               const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
               teamPokemons.push(formatedPokemon1);
               teamPokemons.push(formatedPokemon2);
+              break;
             } else {
               bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
               if (bestPokemons) {
                 const formatedPokemon = await preformatPokemon(bestPokemons);
                 teamPokemons.push(formatedPokemon);
+                break;
               }
             }
           }

@@ -235,7 +235,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 ### get userpage with teams
 GET {{local}}/user/userpage
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTc3OTIyLCJleHAiOjE2ODY1ODE1MjJ9.THZCinVeK7s7mLArMAdbXkPK2wIz8iregT7IcP8ReIw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NjQ0MzYwLCJleHAiOjE2ODY2NDc5NjB9.9rOJjiHjlLOnpO9KmDRLnnPsEs4mRE2JpT9gpb5tulA
 
 
 
@@ -255,6 +255,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
  "id":  4
 
 }
+
+
+
+### get all favorites
+
+GET {{local}}/user/favorites
 
 ########################## abiliy router ##################################"
 
