@@ -1,6 +1,6 @@
 const pokemonController = require('./pokemon/pokemon');
 const pokeDamageController = require('./pokemon/damage');
-const completionController = require('./pokemon/completion');
+const completionController = require('./pokemon/complet');
 const seedingController = require('./seeding');
 const typeController = require('./type');
 const teamController = require('./team');

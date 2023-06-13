@@ -18,6 +18,7 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
 
   const limit = total.filter((damage) => damage[1] <= 0);
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
+  const isTwoResistance = nbResist.filter((damage) => damage[1] === 2);
   const limitResist = total.filter((type) => type[1] <= 1);
 
   if (len === 1) {
@@ -33,6 +34,15 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     const response = {
       noResist,
       weak: limit,
+    };
+
+    return response;
+  }
+
+  if (len === 3 && noResist.length === 0) {
+    const response = {
+      noResist: isOneResistance,
+      weak: [],
     };
 
     return response;
@@ -77,6 +87,14 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   if (len === 5 && tooWeak.length > 0) {
     const response = {
       noResist: weakest.slice(0, tooWeak.length),
+      weak: limit,
+    };
+
+    return response;
+  }
+  if (len === 5 && isOneResistance.length === 0) {
+    const response = {
+      noResist: isTwoResistance,
       weak: limit,
     };
 
