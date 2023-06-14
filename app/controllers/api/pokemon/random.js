@@ -11,7 +11,7 @@ async function getTheBestRandomTeam(poketeam) {
   try {
     const len = poketeam.length;
     // Check if the array contains between 1 and 5 Pokemons
-    if (len < 1 || len > 5) {
+    if (len > 5) {
       throw new ApiError('Bad request: The team must contain between 1 and 5 pokemons', { statusCode: 400 });
     }
 
@@ -39,7 +39,7 @@ async function getTheBestRandomTeam(poketeam) {
     const bestTeam = [];
     let iterations = 0;
 
-    const maxIterations = 2;
+    const maxIterations = 10000;
 
     while ((isNeutral.size < 18 || isResistant.size < 10 || isTooWeak.size > 0) && iterations < maxIterations) {
       const generatedIds = [];

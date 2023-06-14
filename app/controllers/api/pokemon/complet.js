@@ -24,8 +24,8 @@ module.exports = {
         return res.status(200).json(response);
       }
       // Check if the array contains between 1 and 5 Pokemons
-      if (poketeam.length < 1 || poketeam.length > 5) {
-        throw new ApiError('Bad request: The team must contain between 1 and 5 pokemons', { statusCode: 400 });
+      if (poketeam.length > 5) {
+        throw new ApiError('Bad request: The team must contain 5 pokemons maximum', { statusCode: 400 });
       }
 
       // Check if all the Pokemons in the team are different
