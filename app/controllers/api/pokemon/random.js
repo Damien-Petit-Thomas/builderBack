@@ -73,16 +73,12 @@ async function getTheBestRandomTeam(poketeam) {
       isNeutral = Object.keys(totalResWeak)
         .filter((key) => totalResWeak[key] >= 0);
 
-      console.log('---------------------------------------------------------');
-      console.log(isNeutral.length, 'isNeutral.length');
       isResistant = Object.keys(totalResWeak)
         .filter((key) => totalResWeak[key] > 0);
-      console.log('---------------------------------------------------------');
-      console.log(isResistant.length, 'isResistant.length');
+
       isTooWeak = Object.keys(totalResWeak)
         .filter((key) => totalResWeak[key] < -1);
-      console.log('---------------------------------------------------------');
-      console.log(isTooWeak.length, 'isTooWeak.length');
+
       iterations += 1;
     }
 
