@@ -38,6 +38,7 @@ async function getTheBestRandomTeam(poketeam) {
     let isTooWeak = new Set();
     const bestTeam = [];
     let iterations = 0;
+
     const maxIterations = 10000;
 
     while ((isNeutral.size < 18 || isResistant.size < 10 || isTooWeak.size > 0) && iterations < maxIterations) {
@@ -52,31 +53,30 @@ async function getTheBestRandomTeam(poketeam) {
       }
 
       const teamWithGeneratedIds = [...poketeam, ...generatedIds];
+      console.log('teamWithGeneratedIds', teamWithGeneratedIds);
       teamFormat = await generateFormatedTeam(teamWithGeneratedIds);
 
       const totalResWeak = totalResistance(teamFormat);
       isNeutral = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] >= 0));
       isResistant = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] > 0));
       isTooWeak = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] < -1));
+      if (bestTeam.length === 0 || isTooWeak.size < bestTeam[0].isTooWeak.size) {
+        bestTeam.push(
+          {
+            ...teamFormat,
 
-      if (bestTeam.length === 0 || isNeutral.size < bestTeam[0].isNeutral.size) {
-        bestTeam[0] = {
-          ...teamFormat,
-          isNeutral,
-          isResistant,
-          isTooWeak,
-        };
+            isTooWeak,
+          },
+        );
       }
-
       iterations += 1;
-    }
 
-    if (iterations === maxIterations) {
+      if (iterations === maxIterations) {
       // Return bestTeam if the condition is not met within the maximum iterations
-      console.log('Maximum iterations reached');
-      return bestTeam[0];
+        console.log('Maximum iterations reached');
+        return [...Object.values(bestTeam[0])];
+      }
     }
-
     return teamFormat;
   } catch (err) {
     throw new ApiError(err.message, err.infos);
