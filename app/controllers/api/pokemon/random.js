@@ -53,7 +53,7 @@ async function getTheBestRandomTeam(poketeam) {
       }
 
       const teamWithGeneratedIds = [...poketeam, ...generatedIds];
-      console.log('teamWithGeneratedIds', teamWithGeneratedIds);
+
       teamFormat = await generateFormatedTeam(teamWithGeneratedIds);
 
       const totalResWeak = totalResistance(teamFormat);
