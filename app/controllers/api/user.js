@@ -95,7 +95,7 @@ module.exports = {
       const teamsData = await Promise.all(teamPromises);
 
       const userFavorites = await userHasFavo.getFavoritesByUserId(req.usere.id);
-      console.log(userFavorites);
+
       const favoritesPromises = userFavorites.map(async (favorite) => {
         const result = await getPokemon(favorite.favorite_id, pokeCache);
         return result;

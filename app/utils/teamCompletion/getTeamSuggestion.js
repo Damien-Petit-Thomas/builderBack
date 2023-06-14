@@ -23,7 +23,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   const limitResist = total.filter((type) => type[1] <= 1);
 
   if (len === 1) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
     const response = {
       noResist,
       weak: [],
@@ -33,8 +32,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 2 && noResist.length > 0) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii22222222222222222');
-
     const response = {
       noResist,
       weak: limit,
@@ -44,8 +41,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 3 && noResist.length === 0) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii23333333333333333333333333');
-
     const response = {
       noResist: isOneResistance,
       weak: [],
@@ -55,8 +50,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 3 && noResist.length < 3) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii244444444444444444444');
-
     const response = {
       noResist: noResist.concat(isOneResistance),
       weak: limit,
@@ -66,8 +59,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 3 && noResist.length >= 3) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiii5555555555555555555');
-
     const response = {
       noResist: mostWeak,
       weak: limit,
@@ -77,8 +68,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 4 && noResist.length <= 2 && noResist.length > 0) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii666666666666666666666');
-
     const response = {
       noResist: noResist.concat(isOneResistance),
       weak: limit,
@@ -88,8 +77,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 4 && noResist.length === 0) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii22777777777777777777777');
-
     const response = {
       noResist: isOneResistance,
       weak: limit,
@@ -99,8 +86,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   }
 
   if (len === 5 && tooWeak.length > 0) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii2888888888888888888888888888');
-
     const response = {
       noResist: weakest.slice(0, tooWeak.length),
       weak: limit,
@@ -109,8 +94,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     return response;
   }
   if (len === 5 && strong.length === 18) {
-    console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiii29999999999999999999999999999');
-
     const response = {
       noResist: isTwoResistance,
       weak: limit,
@@ -123,8 +106,6 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
     noResist: mostWeak,
     weak: limit,
   };
-  console.log('ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiMMMMMMMMMMMMMMMMMMMMMMMMMM');
-  console.log('je suis la ');
   return response;
 }
 

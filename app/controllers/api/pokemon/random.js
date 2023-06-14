@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 const {
-  poke, team,
+  poke,
 } = require('../../../models');
 const {
 

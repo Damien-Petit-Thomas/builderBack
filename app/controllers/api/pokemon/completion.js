@@ -87,7 +87,6 @@ module.exports = {
         if (teamPokemons.length === 1) {
           const best4Types = best4types(best2Types, isResist);
           if (best4Types) {
-            console.log(teamPokemonsIds);
             const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
             if (bestPokemons) {
               const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
@@ -100,7 +99,6 @@ module.exports = {
         if (teamPokemons.length === 3) {
           const best4Types = best4types(best2Types, isResist);
           if (best4Types) {
-            console.log(teamPokemonsIds);
             const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
             if (bestPokemons) {
               const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);

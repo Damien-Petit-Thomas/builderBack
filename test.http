@@ -223,16 +223,16 @@ GET {{web}}
 
 ### create team
 
-POST {{local}}/user/user/team
+POST {{local}}/user/team
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTU4OTcyLCJleHAiOjE2ODY1NjI1NzJ9.39OfhHs2JwQpvbOsnoyosOwq926AK2ocygDn-yPkgAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NzI3MjU3LCJleHAiOjE2ODY3MzA4NTd9.DNoiiIXmhb656lgDEyec3Eh1pH6upT39WABFV-TQxro
 
 {
-    "teamName": "plou4d",
+    "teamName": "topteam",
     "pokemonIds": [
-        100,
-        250,
-        30,
+        10,
+        25,
+        300,
         40,
         500,
         100

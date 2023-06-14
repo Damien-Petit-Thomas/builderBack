@@ -20,7 +20,6 @@ module.exports = {
       // The req.body contains an array with Pokemon IDs
       const poketeam = req.body;
       if (poketeam.length === 1) {
-        console.log('random');
         const response = await getTheBestRandomTeam(poketeam);
         return res.status(200).json(response);
       }
@@ -76,7 +75,7 @@ module.exports = {
         switch (teamPokemons.length) {
           case 1: {
             let i = 0;
-            console.log('case 1');
+
             best4Types = best4types(best2Types, isResist);
             let isGood = false;
             while (best4Types && !isGood) {
@@ -92,12 +91,9 @@ module.exports = {
 
                 if (notAllResist.length > 2 && i < 5) {
                   i += 1;
-                  console.log(i, 'je suis le i qui se console.log(i)');
-                  console.log('RAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEE');
 
                   teamPokemons.pop();
                   teamPokemons.pop();
-                  console.log(isGood);
                 } else {
                   isGood = true;
                 }
@@ -105,7 +101,6 @@ module.exports = {
             }
 
             if (!best4Types) {
-              console.log('pas de best4Types pour 1 pokemon');
               const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
 
               if (bestPokemons) {
@@ -119,7 +114,7 @@ module.exports = {
 
           case 2: {
             let i = 0;
-            console.log('case 2');
+
             best4Types = best4types(best2Types, isResist);
             let isGood = false;
             while (best4Types && !isGood) {
@@ -135,12 +130,9 @@ module.exports = {
 
                 if (notAllResist.length > 2 && i < 5) {
                   i += 1;
-                  console.log(i, 'je suis le i qui se console.log(i)');
-                  console.log('RAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEE');
 
                   teamPokemons.pop();
                   teamPokemons.pop();
-                  console.log(isGood);
                 } else {
                   isGood = true;
                 }
@@ -148,7 +140,6 @@ module.exports = {
             }
 
             if (!best4Types) {
-              console.log('pas de best4Types pour 1 pokemon');
               const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
 
               if (bestPokemons) {
@@ -161,7 +152,7 @@ module.exports = {
           }
           case 3: {
             let i = 0;
-            console.log('case 3');
+
             best4Types = best4types(best2Types, isResist);
             let isGood = false;
             while (best4Types && !isGood) {
@@ -176,13 +167,10 @@ module.exports = {
                   .filter((e) => e[1] < 0);
 
                 if (notAllResist.length > 0 && i < 5) {
-                  console.log('RAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEE');
                   i += 1;
                   teamPokemons.pop();
                   teamPokemons.pop();
-                  console.log(isGood);
                 } else {
-                  console.log('yyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeeeeeeeeessssssssssssssss');
                   isGood = true;
                 }
               }
@@ -202,7 +190,7 @@ module.exports = {
 
           case 4: {
             let i = 0;
-            console.log('case 4');
+
             best4Types = best4types(best2Types, isResist);
             let isGood = false;
             while (best4Types && !isGood) {
@@ -217,11 +205,9 @@ module.exports = {
                   .filter((e) => e[1] < 0);
 
                 if (notAllResist.length > 0 && i < 5) {
-                  console.log('RAAAAAAAAAAAAAAAAAAAAAAAAAAAATTTTTTTTTTTTTTTTTTTTTTTTTEEEEEEEEEEEEEEEE');
                   i += 1;
                   teamPokemons.pop();
                   teamPokemons.pop();
-                  console.log(isGood);
                 } else {
                   isGood = true;
                 }
