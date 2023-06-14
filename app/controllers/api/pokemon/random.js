@@ -39,7 +39,7 @@ async function getTheBestRandomTeam(poketeam) {
     const bestTeam = [];
     let iterations = 0;
 
-    const maxIterations = 10000;
+    const maxIterations = 2;
 
     while ((isNeutral.size < 18 || isResistant.size < 10 || isTooWeak.size > 0) && iterations < maxIterations) {
       const generatedIds = [];
@@ -74,6 +74,7 @@ async function getTheBestRandomTeam(poketeam) {
       if (iterations === maxIterations) {
       // Return bestTeam if the condition is not met within the maximum iterations
         console.log('Maximum iterations reached');
+        delete bestTeam[0].isTooWeak;
         return [...Object.values(bestTeam[0])];
       }
     }
