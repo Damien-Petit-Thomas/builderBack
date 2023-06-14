@@ -21,8 +21,13 @@ async function getTheBestRandomTeam(poketeam) {
     }
 
     const totalPokemon = await poke.count();
-    const getRandomPokemonId = () => Math.floor(Math.random() * totalPokemon) + 1;
+    const allPokemonIds = Array.from({ length: totalPokemon }, (_, i) => i + 1);
+    const getAllRandomPokemonId = () => {
+      const randomIndex = Math.floor(Math.random() * allPokemonIds.length);
+      return allPokemonIds.splice(randomIndex, 1)[0];
+    };
 
+    const getRandomPokemonId = () => Math.floor(Math.random() * totalPokemon) + 1;
     const generateFormatedTeam = async (team) => {
       const promises = team.map(async (id) => {
         const result = await getPokemon(id, pokeCache);
@@ -38,17 +43,27 @@ async function getTheBestRandomTeam(poketeam) {
     let isTooWeak = new Set();
     const bestTeam = [];
     let iterations = 0;
-
-    const maxIterations = 10000;
+    // const alreadyUsed = new Set(poketeam);
+    let maxIterations = 30000;
+    if (len === 5) {
+      maxIterations = totalPokemon;
+    }
 
     while ((isNeutral.size < 18 || isResistant.size < 10 || isTooWeak.size > 0) && iterations < maxIterations) {
-      const generatedIds = [];
-      const remainingSlots = 6 - poketeam.length;
+      const generatedIds = new Set();
+      const remainingSlots = 6 - len;
 
-      while (generatedIds.length < remainingSlots) {
+      if (len === 5) {
+        while (generatedIds.size < remainingSlots) {
+          const randomId = getAllRandomPokemonId();
+          generatedIds.add(randomId);
+        }
+      }
+
+      while (generatedIds.size < remainingSlots) {
         const randomId = getRandomPokemonId();
-        if (!poketeam.includes(randomId) && !generatedIds.includes(randomId)) {
-          generatedIds.push(randomId);
+        if (!poketeam.includes(randomId)) {
+          generatedIds.add(randomId);
         }
       }
 
