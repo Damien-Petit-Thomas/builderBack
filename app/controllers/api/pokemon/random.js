@@ -1,27 +1,22 @@
 /* eslint-disable no-await-in-loop */
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
-const {
-  poke,
-} = require('../../../models');
-const {
-
-  // getNumberOfWeaknessByType,
-  totalResistance,
-} = require('../../../utils/teamCompletion/getTeamWeakness');
+const { poke } = require('../../../models');
+const { totalResistance } = require('../../../utils/teamCompletion/getTeamWeakness');
+const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-
 const inCache = require('../../../utils/cache/inCache');
 const { ApiError } = require('../../../helpers/errorHandler');
 
 async function getTheBestRandomTeam(poketeam) {
   try {
+    const len = poketeam.length;
     // Check if the array contains between 1 and 5 Pokemons
-    if (poketeam.length < 1 || poketeam.length > 5) {
+    if (len < 1 || len > 5) {
       throw new ApiError('Bad request: The team must contain between 1 and 5 pokemons', { statusCode: 400 });
     }
 
     // Check if all the Pokemons in the team are different
-    if (new Set(poketeam).size !== poketeam.length) {
+    if (new Set(poketeam).size !== len) {
       throw new ApiError('Bad request: The team must contain different pokemons', { statusCode: 400 });
     }
 
@@ -29,33 +24,23 @@ async function getTheBestRandomTeam(poketeam) {
     const getRandomPokemonId = () => Math.floor(Math.random() * totalPokemon) + 1;
 
     const generateFormatedTeam = async (team) => {
-      while (team.length < 6) {
-        team.push(getRandomPokemonId());
-      }
       const promises = team.map(async (id) => {
-        const cache = inCache(id, pokeCache);
-        if (cache) return cache;
-
-        const inDb = await poke.findByPk(id);
-        if (inDb) {
-          const formatedPokemon = await formatPoke([inDb]);
-          return formatedPokemon;
-        }
+        const result = await getPokemon(id, pokeCache);
+        return result;
       });
       const teamPokemons = (await Promise.all(promises)).flat();
       return teamPokemons;
     };
 
     let teamFormat;
-    let isNeutral = [];
-    let isResistant = [];
-    let isTooWeak = [];
-    // Generate a team until the condition is met or a maximum number of iterations is reached
+    let isNeutral = new Set();
+    let isResistant = new Set();
+    let isTooWeak = new Set();
+    const bestTeam = [];
     let iterations = 0;
-    const maxIterations = 100000;
-    // Set a maximum number of iterations to avoid potential infinite loop
+    const maxIterations = 10000;
 
-    while ((isNeutral.length < 18 || isResistant.length < 10 || isTooWeak.length > 0) && iterations < maxIterations) {
+    while ((isNeutral.size < 18 || isResistant.size < 10 || isTooWeak.size > 0) && iterations < maxIterations) {
       const generatedIds = [];
       const remainingSlots = 6 - poketeam.length;
 
@@ -68,24 +53,28 @@ async function getTheBestRandomTeam(poketeam) {
 
       const teamWithGeneratedIds = [...poketeam, ...generatedIds];
       teamFormat = await generateFormatedTeam(teamWithGeneratedIds);
+
       const totalResWeak = totalResistance(teamFormat);
-      // console.log(totalResWeak);
-      isNeutral = Object.keys(totalResWeak)
-        .filter((key) => totalResWeak[key] >= 0);
+      isNeutral = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] >= 0));
+      isResistant = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] > 0));
+      isTooWeak = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] < -1));
 
-      isResistant = Object.keys(totalResWeak)
-        .filter((key) => totalResWeak[key] > 0);
-
-      isTooWeak = Object.keys(totalResWeak)
-        .filter((key) => totalResWeak[key] < -1);
+      if (bestTeam.length === 0 || isNeutral.size < bestTeam[0].isNeutral.size) {
+        bestTeam[0] = {
+          ...teamFormat,
+          isNeutral,
+          isResistant,
+          isTooWeak,
+        };
+      }
 
       iterations += 1;
     }
 
     if (iterations === maxIterations) {
-      // Return a default value or handle the
-      // case when the condition is not met within the maximum iterations
-      return null;
+      // Return bestTeam if the condition is not met within the maximum iterations
+      console.log('Maximum iterations reached');
+      return bestTeam[0];
     }
 
     return teamFormat;

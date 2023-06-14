@@ -19,7 +19,7 @@ module.exports = {
     try {
       // The req.body contains an array with Pokemon IDs
       const poketeam = req.body;
-      if (poketeam.length === 1) {
+      if (poketeam) {
         const response = await getTheBestRandomTeam(poketeam);
         return res.status(200).json(response);
       }

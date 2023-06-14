@@ -228,12 +228,12 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NzI3MjU3LCJleHAiOjE2ODY3MzA4NTd9.DNoiiIXmhb656lgDEyec3Eh1pH6upT39WABFV-TQxro
 
 {
-    "teamName": "topteam",
+    "teamName": "topteam2",
     "pokemonIds": [
-        10,
+        100,
         25,
         300,
-        40,
+        4000,
         500,
         100
     ]
