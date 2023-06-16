@@ -23,7 +23,7 @@ GET {{api}}/pokemon/771
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/tart
+GET {{local}}/pokemon
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/5
@@ -64,7 +64,7 @@ Content-Type: application/json
 
 
 [
-    620 
+    
 ]
 
 ###POST a team to get a complete team with 6 pokemon
@@ -73,9 +73,12 @@ Content-Type: application/json
 
 [
 
-1
+1 , 2 , 3 , 4 ,5
 
 ]
+
+### cache all pokemon
+GET {{local}}/cache/all
 
 ###POST a team to get a complete team with 6 pokemon
 POST {{local}}/pokemon/complet-team/random

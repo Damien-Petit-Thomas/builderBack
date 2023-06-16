@@ -25,7 +25,7 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
 
   async findRandomOne() {
     const pokemon = await this.client.query(
-      'SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 1',
+      'SELECT id FROM pokemon ORDER BY RANDOM() LIMIT 1',
     );
     return pokemon.rows[0];
   }

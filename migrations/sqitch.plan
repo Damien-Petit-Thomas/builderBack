@@ -15,7 +15,6 @@ alter-insert 2023-05-12T09:37:37Z Damien <damien.petit.thomas@gmail.com> # add g
 function_filtertypes 2023-05-12T10:01:00Z Damien <damien.petit.thomas@gmail.com> # add function filtertypes
 user_table 2023-05-20T12:29:50Z Damien <damien.petit.thomas@gmail.com> # add user table
 user_id 2023-05-20T12:40:53Z Damien <damien.petit.thomas@gmail.com> # add user_id in team table
-
 functionDamage 2023-06-01T09:02:49Z Damien <damien.petit.thomas@gmail.com> # add function to refacto findDdamage
 user_favorite 2023-06-05T08:42:20Z Damien <damien.petit.thomas@gmail.com> # add table use_has_favorite
 ability 2023-06-06T07:24:45Z Damien <damien.petit.thomas@gmail.com> # add table ability and pokemon_has_ability

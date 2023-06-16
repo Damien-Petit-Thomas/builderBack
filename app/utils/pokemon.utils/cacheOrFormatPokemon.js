@@ -6,6 +6,7 @@ const formatPoke = require('./dataMapToFormat');
 module.exports = {
   async cacheOrFormatPokemon(id, cacheInstance) {
     const cache = inCache(id, cacheInstance);
+
     if (cache) return cache;
 
     try {

@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const { poke, type } = require('../../../models');
-const { getTheBestRandomTeam } = require('./random');
+const { getTheBestRandomTeam } = require('../../../utils/teamCompletion/getTheBestRandomTeam');
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const {
   getNumberOfResistanceByType,
@@ -13,16 +13,13 @@ const { bestPokemon, best2Pokemons } = require('../../../utils/teamCompletion/ge
 const { ApiError } = require('../../../helpers/errorHandler');
 const inCache = require('../../../utils/cache/inCache');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
+const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
 
 module.exports = {
   async getTeamCompletion(req, res) {
     try {
       // The req.body contains an array with Pokemon IDs
       const poketeam = req.body;
-      if (poketeam) {
-        const response = await getTheBestRandomTeam(poketeam);
-        return res.status(200).json(response);
-      }
       // Check if the array contains between 1 and 5 Pokemons
       if (poketeam.length > 5) {
         throw new ApiError('Bad request: The team must contain 5 pokemons maximum', { statusCode: 400 });
@@ -33,24 +30,29 @@ module.exports = {
         throw new ApiError('Bad request: The team must contain different pokemons', { statusCode: 400 });
       }
 
+      if (poketeam.length === 0) {
+        const firstPokemon = await poke.findRandomOne();
+        poketeam.push(firstPokemon.id);
+      }
+
+      // if (poketeam) {
+      //   console.log('on passe par ici');
+      //   console.log(len);
+      //   const response = await getTheBestRandomTeam(poketeam);
+      //   return res.status(200).json(response);
+      // }
+
       // Retrieve Pokemons from the database or cache and format them
       const promises = poketeam.map(async (id) => {
-        const cache = inCache(id, pokeCache);
-        if (cache) return cache;
+        const result = await getPokemon(id, pokeCache);
 
-        const inDb = await poke.findByPk(id);
-        if (inDb) {
-          const formatedPokemon = await preformatPokemon(inDb);
-          return formatedPokemon;
-        }
-
-        throw new ApiError(`Pokemon with id ${id} not found`, { statusCode: 404 });
+        return result;
       });
+
       const teamPokemons = (await Promise.all(promises)).flat();
 
       const completeTeam = async () => {
         let best4Types;
-        const teamPokemonsIds = teamPokemons.map((pokemon) => pokemon.id);
         const numberOfresistance = getNumberOfResistanceByType(teamPokemons);
 
         const totalResWeak = totalResistance(teamPokemons);
@@ -72,172 +74,83 @@ module.exports = {
 
         const best2Types = bestTwoTypes(resistantTypes);
 
-        switch (teamPokemons.length) {
-          case 1: {
-            let i = 0;
+        if (teamPokemons.length === 1) {
+          let i = 0;
 
-            best4Types = best4types(best2Types, isResist);
-            let isGood = false;
-            while (best4Types && !isGood) {
-              const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
-              if (bestPokemons) {
-                const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
-                const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
-                teamPokemons.push(formatedPokemon1);
-                teamPokemons.push(formatedPokemon2);
-                best4Types = best4Types.slice(1);
-                const notAllResist = Object.entries(totalResistance(teamPokemons))
-                  .filter((e) => e[1] < 0);
+          best4Types = best4types(best2Types, isResist);
+          let isGood = false;
+          while (best4Types && !isGood) {
+            const bestPokemons = await best2Pokemons(best4Types, poketeam);
+            if (bestPokemons) {
+              const formatedPokemon1 = await getPokemon(bestPokemons[0].id, pokeCache);
+              const formatedPokemon2 = await getPokemon(bestPokemons[1].id, pokeCache);
+              teamPokemons.push(formatedPokemon1, formatedPokemon2);
+              best4Types = best4Types.slice(1);
+              const notAllResist = Object.entries(totalResistance(teamPokemons))
+                .filter((e) => e[1] < 0);
 
-                if (notAllResist.length > 2 && i < 5) {
-                  i += 1;
+              if (notAllResist.length > 2 && i < 5) {
+                i += 1;
 
-                  teamPokemons.pop();
-                  teamPokemons.pop();
-                } else {
-                  isGood = true;
-                }
+                teamPokemons.pop();
+                teamPokemons.pop();
+              } else {
+                isGood = true;
               }
             }
-
-            if (!best4Types) {
-              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
-
-              if (bestPokemons) {
-                const formatedPokemon = await preformatPokemon(bestPokemons);
-                teamPokemons.push(formatedPokemon);
-              }
-            }
-
-            break;
           }
 
-          case 2: {
-            let i = 0;
-
-            best4Types = best4types(best2Types, isResist);
-            let isGood = false;
-            while (best4Types && !isGood) {
-              const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
-              if (bestPokemons) {
-                const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
-                const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
-                teamPokemons.push(formatedPokemon1);
-                teamPokemons.push(formatedPokemon2);
-                best4Types = best4Types.slice(1);
-                const notAllResist = Object.entries(totalResistance(teamPokemons))
-                  .filter((e) => e[1] < 0);
-
-                if (notAllResist.length > 2 && i < 5) {
-                  i += 1;
-
-                  teamPokemons.pop();
-                  teamPokemons.pop();
-                } else {
-                  isGood = true;
-                }
-              }
-            }
-
-            if (!best4Types) {
-              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
-
-              if (bestPokemons) {
-                const formatedPokemon = await preformatPokemon(bestPokemons);
-                teamPokemons.push(formatedPokemon);
-              }
-            }
-
-            break;
-          }
-          case 3: {
-            let i = 0;
-
-            best4Types = best4types(best2Types, isResist);
-            let isGood = false;
-            while (best4Types && !isGood) {
-              const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
-              if (bestPokemons) {
-                const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
-                const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
-                teamPokemons.push(formatedPokemon1);
-                teamPokemons.push(formatedPokemon2);
-                best4Types = best4Types.slice(1);
-                const notAllResist = Object.entries(totalResistance(teamPokemons))
-                  .filter((e) => e[1] < 0);
-
-                if (notAllResist.length > 0 && i < 5) {
-                  i += 1;
-                  teamPokemons.pop();
-                  teamPokemons.pop();
-                } else {
-                  isGood = true;
-                }
-              }
-            }
-
-            if (!best4Types) {
-              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
-
-              if (bestPokemons) {
-                const formatedPokemon = await preformatPokemon(bestPokemons);
-                teamPokemons.push(formatedPokemon);
-              }
-            }
-
-            break;
-          }
-
-          case 4: {
-            let i = 0;
-
-            best4Types = best4types(best2Types, isResist);
-            let isGood = false;
-            while (best4Types && !isGood) {
-              const bestPokemons = await best2Pokemons(best4Types, teamPokemonsIds);
-              if (bestPokemons) {
-                const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
-                const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
-                teamPokemons.push(formatedPokemon1);
-                teamPokemons.push(formatedPokemon2);
-                best4Types = best4Types.slice(1);
-                const notAllResist = Object.entries(totalResistance(teamPokemons))
-                  .filter((e) => e[1] < 0);
-
-                if (notAllResist.length > 0 && i < 5) {
-                  i += 1;
-                  teamPokemons.pop();
-                  teamPokemons.pop();
-                } else {
-                  isGood = true;
-                }
-              }
-            }
-
-            if (!best4Types) {
-              const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
-
-              if (bestPokemons) {
-                const formatedPokemon = await preformatPokemon(bestPokemons);
-                teamPokemons.push(formatedPokemon);
-              }
-            }
-
-            break;
-          }
-
-          case 5: {
-            const bestPokemons = await bestPokemon(best2Types, teamPokemonsIds);
+          if (!best4Types) {
+            const bestPokemons = await bestPokemon(best2Types, poketeam);
 
             if (bestPokemons) {
-              const formatedPokemon = await preformatPokemon(bestPokemons);
+              const formatedPokemon = await getPokemon(bestPokemons.id, pokeCache);
               teamPokemons.push(formatedPokemon);
             }
-            break;
+          }
+        }
+
+        if (teamPokemons.length === 2) {
+          let i = 0;
+
+          best4Types = best4types(best2Types, isResist);
+          let isGood = false;
+          while (best4Types && !isGood) {
+            const bestPokemons = await best2Pokemons(best4Types, poketeam);
+            if (bestPokemons) {
+              const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
+              const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
+              teamPokemons.push(formatedPokemon1);
+              teamPokemons.push(formatedPokemon2);
+              best4Types = best4Types.slice(1);
+              const notAllResist = Object.entries(totalResistance(teamPokemons))
+                .filter((e) => e[1] < 0);
+
+              if (notAllResist.length > 2 && i < 5) {
+                i += 1;
+
+                teamPokemons.pop();
+                teamPokemons.pop();
+              } else {
+                isGood = true;
+              }
+            }
           }
 
-          default:
-            break;
+          if (!best4Types) {
+            const bestPokemons = await bestPokemon(best2Types, poketeam);
+
+            if (bestPokemons) {
+              const formatedPokemon = await getPokemon(bestPokemons.id, pokeCache);
+              teamPokemons.push(formatedPokemon);
+            }
+          }
+        }
+        if (teamPokemons.length > 2) {
+          const ids = teamPokemons.map((p) => p.id);
+          const result = await getTheBestRandomTeam(ids);
+          console.log('bingo');
+          return result;
         }
 
         if (teamPokemons.length < 6) {

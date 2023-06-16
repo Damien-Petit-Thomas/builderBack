@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production') {
     period: '1d',
     count: 5,
   });
-} else if (!['test'].includes(process.env.NODE_ENV)) {
+} else if (['test'].includes(process.env.NODE_ENV)) {
   streams.push({
     level: 'debug',
     stream: process.stdout,
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const logger = bunyan.createLogger({
-  name: 'poke-api',
+  name: 'O-builder',
   streams,
 });
 

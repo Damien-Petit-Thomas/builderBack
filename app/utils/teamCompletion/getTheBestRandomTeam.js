@@ -1,11 +1,12 @@
+/* eslint-disable max-len */
 /* eslint-disable no-await-in-loop */
-const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
-const { poke } = require('../../../models');
-const { totalResistance } = require('../../../utils/teamCompletion/getTeamWeakness');
-const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
-const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-const inCache = require('../../../utils/cache/inCache');
-const { ApiError } = require('../../../helpers/errorHandler');
+
+const { poke } = require('../../models');
+const { totalResistance } = require('./getTeamWeakness');
+const { cacheOrFormatPokemon: getPokemon } = require('../pokemon.utils/cacheOrFormatPokemon');
+const pokeCache = require('../cache/pokemon.cache').getInstance();
+
+const { ApiError } = require('../../helpers/errorHandler');
 
 async function getTheBestRandomTeam(poketeam) {
   try {
@@ -75,12 +76,17 @@ async function getTheBestRandomTeam(poketeam) {
       isNeutral = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] >= 0));
       isResistant = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] > 0));
       isTooWeak = new Set(Object.keys(totalResWeak).filter((key) => totalResWeak[key] < -1));
-      if (bestTeam.length === 0 || isTooWeak.size < bestTeam[0].isTooWeak.size) {
+      if (bestTeam.length === 0
+          || isTooWeak.size < bestTeam[0].isTooWeak.size
+          || (isTooWeak.size === bestTeam[0].isTooWeak.size && isNeutral.size > bestTeam[0].isNeutral.size)) {
+        // console.log(isTooWeak.size, bestTeam[0].isTooWeak.size);
+
         bestTeam.push(
           {
             ...teamFormat,
 
             isTooWeak,
+            isNeutral,
           },
         );
       }
@@ -89,7 +95,9 @@ async function getTheBestRandomTeam(poketeam) {
       if (iterations === maxIterations) {
       // Return bestTeam if the condition is not met within the maximum iterations
         console.log('Maximum iterations reached');
+
         delete bestTeam[0].isTooWeak;
+        delete bestTeam[0].isNeutral;
         return [...Object.values(bestTeam[0])];
       }
     }
