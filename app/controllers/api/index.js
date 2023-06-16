@@ -8,7 +8,6 @@ const cacheController = require('./cache');
 const userController = require('./user');
 const generationController = require('./generation');
 const abilityController = require('./ability');
-const completionRandomController = require('./pokemon/random');
 
 const apiController = {
 
@@ -22,7 +21,7 @@ const apiController = {
 };
 
 module.exports = {
-  completionRandomController,
+
   abilityController,
   completionController,
   generationController,

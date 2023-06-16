@@ -11,7 +11,6 @@ const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggesti
 const { bestTwoTypes, best4types } = require('../../../utils/teamCompletion/bestTwoTypes');
 const { bestPokemon, best2Pokemons } = require('../../../utils/teamCompletion/getBestPokemons');
 const { ApiError } = require('../../../helpers/errorHandler');
-const inCache = require('../../../utils/cache/inCache');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
 
