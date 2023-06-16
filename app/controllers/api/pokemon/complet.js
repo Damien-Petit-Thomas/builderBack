@@ -34,21 +34,13 @@ module.exports = {
         poketeam.push(firstPokemon.id);
       }
 
-      // if (poketeam) {
-      //   console.log('on passe par ici');
-      //   console.log(len);
-      //   const response = await getTheBestRandomTeam(poketeam);
-      //   return res.status(200).json(response);
-      // }
-
-      // Retrieve Pokemons from the database or cache and format them
       const promises = poketeam.map(async (id) => {
         const result = await getPokemon(id, pokeCache);
 
         return result;
       });
 
-      const teamPokemons = (await Promise.all(promises)).flat();
+      let teamPokemons = (await Promise.all(promises)).flat();
 
       const completeTeam = async () => {
         let best4Types;
@@ -147,14 +139,16 @@ module.exports = {
         }
         if (teamPokemons.length > 2) {
           const ids = teamPokemons.map((p) => p.id);
-          const result = await getTheBestRandomTeam(ids);
-          console.log('bingo');
-          return result;
+          teamPokemons = await getTheBestRandomTeam(ids);
+
+          return teamPokemons;
         }
 
         if (teamPokemons.length < 6) {
-          await completeTeam();
+          return completeTeam();
         }
+
+        return teamPokemons;
       };
 
       await completeTeam();
