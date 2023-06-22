@@ -1,6 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable camelcase */
 const bcrypt = require('bcrypt');
-
+const sanitizeHtml = require('sanitize-html');
 const { cacheOrFormatPokemon: getPokemon } = require('../../utils/pokemon.utils/cacheOrFormatPokemon');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
@@ -14,7 +15,9 @@ const pokeCache = require('../../utils/cache/pokemon.cache').getInstance();
 
 module.exports = {
   async register(req, res) {
-    const { email, password, username } = req.body;
+    const email = sanitizeHtml(req.body.email);
+    const password = sanitizeHtml(req.body.password);
+    const username = sanitizeHtml(req.body.username);
 
     try {
       if (await user.getOneByEmail(email)) {
@@ -39,7 +42,8 @@ module.exports = {
 
   async login(req, res) {
     try {
-      const { email, password } = req.body;
+      const email = sanitizeHtml(req.body.email);
+      const password = sanitizeHtml(req.body.password);
       const userFound = await user.getOneByEmail(email);
 
       if (!userFound) {

@@ -3,7 +3,7 @@
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS "gen" (
-id smallint PRIMARY KEY
+id smallint PRIMARY KEY 
 );
 
 COMMIT;

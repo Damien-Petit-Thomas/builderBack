@@ -4,7 +4,6 @@ const { getTheBestRandomTeam } = require('../../../utils/teamCompletion/getTheBe
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const {
   getNumberOfResistanceByType,
-  // getNumberOfWeaknessByType,
   totalResistance,
 } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');

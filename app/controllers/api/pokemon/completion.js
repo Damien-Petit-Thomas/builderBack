@@ -1,4 +1,14 @@
-/* eslint-disable no-await-in-loop */
+/* eslint-disable max-len */
+//! this file is not used anymore
+
+// it has been replaced by [[app/controllers/api/pokemon/complet.js]]
+
+// it contains the old version of the getTeamCompletion function
+// however this old version is working well we decided to change
+// it to a new one which use 2 differents approach to get the best team :
+// -the first one is based on this old version who analyse the team and  suggest the best pokemon to add to the team
+// -the second one is based on creating random team and keep the best one
+
 const { poke, type } = require('../../../models');
 
 const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
@@ -13,7 +23,6 @@ const { bestPokemon, best2Pokemons } = require('../../../utils/teamCompletion/ge
 const { ApiError } = require('../../../helpers/errorHandler');
 const inCache = require('../../../utils/cache/inCache');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 
 module.exports = {
 
