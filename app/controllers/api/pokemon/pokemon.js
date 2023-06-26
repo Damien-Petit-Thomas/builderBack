@@ -16,7 +16,7 @@ module.exports = {
     const cache = inCache(id, pokeCache);
 
     if (cache) return res.json(cache);
-
+    console.log('not in cache');
     try {
       const pokemon = await poke.findByPk(id);
       if (!pokemon) throw new ApiError(` pokemon ${id} not found `, { statusCode: 500 });
@@ -47,7 +47,7 @@ module.exports = {
     try {
       const cache = inCache('all', pokeCache);
       if (cache) return res.json(cache);
-
+      console.log('not in cache');
       const pokemons = await poke.findAll();
       if (!pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
       const response = await formatPoke(pokemons);

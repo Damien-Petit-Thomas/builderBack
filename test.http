@@ -17,7 +17,7 @@ cc##############################################################################
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon/771
+GET {{api}}/pokemon
 
 
 
@@ -34,6 +34,9 @@ GET {{local}}/pokemon/resist/type/8
 GET  {{local}}/pokemon/resist-immune/type/2
 ### GET all pokemon
 GET {{local}}/pokemon/full-random
+
+###GET pokemon by 1
+GET {{api}}/pokemon/type/1
 
 ###GET pokemon by 2 types
 GET {{api}}/pokemon/type/9/17
@@ -73,7 +76,7 @@ Content-Type: application/json
 
 [
 
-1 , 2 , 3 , 4 ,5
+1 , 2 , 3 , 4 ,8
 
 ]
 
@@ -92,7 +95,7 @@ Content-Type: application/json
 ################################## type router #############################
 
 ### GET all types (with damage relations)
-GET {{local}}/type/2
+GET {{api}}/type
 
 
 ### GET all type with immunity from one type
@@ -145,7 +148,7 @@ GET {{local}}/seeding/pokemon_has_ability
 ####################################cache router #############################
 
 ### cache all pokemon
-GET {{local}}/cache/all
+GET {{api}}/cache/all
 
 ###########################generation router #################################
 
