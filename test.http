@@ -17,7 +17,7 @@ cc##############################################################################
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon/15
+GET {{local}}/pokemon
 
 
 
@@ -36,7 +36,7 @@ GET  {{local}}/pokemon/resist-immune/type/2
 GET {{local}}/pokemon/full-random
 
 ###GET pokemon by 1
-GET {{api}}/pokemon/type/3
+GET {{local}}/pokemon/type/5
 
 ###GET pokemon by 2 types
 GET {{api}}/pokemon/type/9/17
@@ -62,7 +62,7 @@ GET {{local}}/pokemon/gen/
 GET {{api}}/pokemon/full-random
 
 ###POST a team to get a complete team with 6 pokemon
-POST {{local}}/pokemon/complet-team
+POST {{api}}/pokemon/complet-team
 Content-Type: application/json
 
 
@@ -76,7 +76,7 @@ Content-Type: application/json
 
 [
 
-1 , 2 , 3 , 4 ,8
+1 
 
 ]
 
