@@ -9,8 +9,8 @@ const { ApiError } = require('../../../helpers/errorHandler');
 const logger = require('../../../helpers/logger');
 const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
 
-const redis = require('../../../utils/cache/redisCache');
-// const pokeCache = CachePokemon.getInstance();
+// const redis = require('../../../utils/cache/redisCache');
+
 module.exports = {
 
   async getOne(req, res) {
@@ -34,16 +34,16 @@ module.exports = {
 
   async getAll(_, res) {
     try {
-      const coucou = await redis.get('all');
-      if (coucou) return res.json(coucou);
-      // const cache = inCache('all', pokeCache);
-      // if (cache) return res.json(cache);
+      // const coucou = await redis.get('all');
+      // if (coucou) return res.json(coucou);
+      const cache = inCache('all', pokeCache);
+      if (cache) return res.json(cache);
       console.log('not in cache');
       const pokemons = await poke.findAll();
       if (!pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
       const response = await formatPoke(pokemons);
-      redis.set('all', response);
-      // pokeCache.set('all', response, pokeCache.TTL);
+      // redis.set('all', response);
+      pokeCache.set('all', response, pokeCache.TTL);
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
@@ -53,17 +53,17 @@ module.exports = {
   async getPokemonByTypeId(req, res) {
     try {
       const { id } = req.params;
-      const redisCache = await redis.get(`pokeType/${id}`);
-      if (redisCache) return res.json(JSON.parse(redisCache));
-      // const cache = inCache(`pokeType/${id}`, pokeCache);
-      // if (cache) return res.json(cache);
+      // const redisCache = await redis.get(`pokeType/${id}`);
+      // if (redisCache) return res.json(JSON.parse(redisCache));
+      const cache = inCache(`pokeType/${id}`, pokeCache);
+      if (cache) return res.json(cache);
 
       const pokemons = await poke.findAllByTypeId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
 
       const response = await formatPoke(pokemons);
-      redis.set(`pokeType/${id}`, JSON.stringify(response));
-      // pokeCache.set(`pokeType/${id}`, response, pokeCache.TTL);
+      // redis.set(`pokeType/${id}`, JSON.stringify(response));
+      pokeCache.set(`pokeType/${id}`, response, pokeCache.TTL);
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);
