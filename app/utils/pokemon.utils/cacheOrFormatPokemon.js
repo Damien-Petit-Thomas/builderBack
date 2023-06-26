@@ -2,19 +2,25 @@ const inCache = require('../cache/inCache');
 const { ApiError } = require('../../helpers/errorHandler');
 const { poke } = require('../../models');
 const formatPoke = require('./dataMapToFormat');
+const redis = require('../cache/redisCache');
 
 module.exports = {
   async cacheOrFormatPokemon(id, cacheInstance) {
-    const cache = inCache(id, cacheInstance);
-
+    const cache = await redis.get(id);
+    // const cache = inCache(id, cacheInstance);
+    console.log('cache', cache);
     if (cache) return cache;
 
     try {
+      console.log('not in cache');
       const pokemon = await poke.findByPk(id);
       if (!pokemon) {
         throw new ApiError(`Pokemon with id ${id} not found`, { statusCode: 500 });
       }
       const response = await formatPoke([pokemon]);
+
+      redis.set(`${pokemon.id}`, response);
+
       return response[0];
     } catch (err) {
       throw new ApiError(err.message, err.infos);

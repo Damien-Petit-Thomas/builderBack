@@ -23,6 +23,6 @@ module.exports = function buildPokemonObjectFromPokeDb(pokemonData, typesData) {
 
   };
 
-  pokeCache.set(pokemon.id, pokemon, pokeCache.TTL);
+  // pokeCache.set(pokemon.id, pokemon, pokeCache.TTL);
   return pokemon;
 };

@@ -17,7 +17,7 @@ cc##############################################################################
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon
+GET {{local}}/pokemon/15
 
 
 
