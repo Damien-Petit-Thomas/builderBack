@@ -35,14 +35,14 @@ module.exports = {
   async getAll(_, res) {
     try {
       const coucou = await redis.get('all');
-      if (coucou) return res.json(JSON.parse(coucou));
+      if (coucou) return res.json(coucou);
       // const cache = inCache('all', pokeCache);
       // if (cache) return res.json(cache);
       console.log('not in cache');
       const pokemons = await poke.findAll();
       if (!pokemons.length === 0) throw new ApiError('no pokemon found', { statusCode: 404 });
       const response = await formatPoke(pokemons);
-      redis.set('all', JSON.stringify(response));
+      redis.set('all', response);
       // pokeCache.set('all', response, pokeCache.TTL);
       return res.status(200).json(response);
     } catch (err) {

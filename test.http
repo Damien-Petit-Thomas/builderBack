@@ -17,7 +17,7 @@ cc##############################################################################
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon
+GET {{local}}/pokemon
 
 
 
@@ -36,7 +36,7 @@ GET  {{local}}/pokemon/resist-immune/type/2
 GET {{local}}/pokemon/full-random
 
 ###GET pokemon by 1
-GET {{api}}/pokemon/type/1
+GET {{api}}/pokemon/type/3
 
 ###GET pokemon by 2 types
 GET {{api}}/pokemon/type/9/17
