@@ -61,14 +61,15 @@ module.exports = {
   async getPokemonByTypeId(req, res) {
     try {
       const { id } = req.params;
-      const cache = inCache(`pokeType${id}`, pokeCache);
+      const cache = inCache(`pokeType/${id}`, pokeCache);
       if (cache) return res.json(cache);
 
       const pokemons = await poke.findAllByTypeId(id);
       if (!pokemons) throw new ApiError('a problem occured while fetching pokemons', { statusCode: 404 });
 
       const response = await formatPoke(pokemons);
-      pokeCache.set(`pokeType${id}`, response, pokeCache.TTL);
+      console.log('not in cache');
+      pokeCache.set(`pokeType/${id}`, response, pokeCache.TTL);
       return res.status(200).json(response);
     } catch (err) {
       throw new ApiError(err.message, err.infos);

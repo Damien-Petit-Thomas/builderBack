@@ -1,7 +1,7 @@
 
 BEGIN;
 
-DROP FUNCTION filterTypes(int[], int[]);
+
 
 
 CREATE OR REPLACE FUNCTION filterTypes(

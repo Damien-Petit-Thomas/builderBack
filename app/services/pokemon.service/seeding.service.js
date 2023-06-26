@@ -3,7 +3,7 @@
 
 //* this service is used to seed the database with formatted data from the pokeApi  *//
 
-const { poke, type, ability } = require('../../models');
+const { poke, type, aby } = require('../../models');
 const { pokeApi } = require('./index');
 const buildPokemonObjectFromPokeApi = require('../../utils/pokemon.utils/buildPokemonFromPokeApi');
 const { getModifyingAbility } = require('../../utils/pokemon.utils/getModifyingAbility');
@@ -96,7 +96,7 @@ module.exports = {
         damagefrom: damageFrom,
       };
 
-      return ability.insertAbility(abiInDb);
+      return aby.insertAbility(abiInDb);
     });
 
     await Promise.all(promises);

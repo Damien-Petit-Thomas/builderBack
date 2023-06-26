@@ -13,6 +13,7 @@ module.exports = {
       const types = await type.findAll();
       if (!types) throw new ApiError('an error occured while fetching data', { statusCode: 500 });
       if (types.length === 0) throw new ApiError('No types found', { statusCode: 404 });
+      console.log('not in cache');
       typeCache.set('allType', types, typeCache.TTL);
       return res.json(types);
     } catch (err) {

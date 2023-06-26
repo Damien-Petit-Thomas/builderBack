@@ -32,6 +32,7 @@ module.exports = {
         username,
       });
       logger.log('info', `User ${newUser.id} created`);
+
       return res.status(201).json({ message: 'User created' });
     } catch (err) {
       logger.log('error', err);
@@ -52,6 +53,7 @@ module.exports = {
 
       const token = await login.authentify(userFound, password);
       const userName = userFound.username;
+
       return res.status(200).json({ token, userName });
     } catch (err) {
       throw new ApiError(err.message, err.infos);

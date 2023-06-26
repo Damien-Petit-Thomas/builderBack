@@ -80,7 +80,7 @@ async function getTheBestRandomTeam(poketeam) {
           || isTooWeak.size < bestTeam[0].isTooWeak.size
           || (isTooWeak.size === bestTeam[0].isTooWeak.size && isNeutral.size > bestTeam[0].isNeutral.size)) {
         // console.log(isTooWeak.size, bestTeam[0].isTooWeak.size);
-
+        bestTeam.pop();
         bestTeam.push(
           {
             ...teamFormat,
@@ -98,6 +98,7 @@ async function getTheBestRandomTeam(poketeam) {
 
         delete bestTeam[0].isTooWeak;
         delete bestTeam[0].isNeutral;
+
         return [...Object.values(bestTeam[0])];
       }
     }
