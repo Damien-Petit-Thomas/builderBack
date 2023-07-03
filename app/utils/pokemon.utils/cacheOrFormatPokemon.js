@@ -11,18 +11,14 @@ module.exports = {
 
     if (cache) return cache;
 
-    try {
-      const pokemon = await poke.findByPk(id);
-      if (!pokemon) {
-        throw new ApiError(`Pokemon with id ${id} not found`, { statusCode: 500 });
-      }
-      const response = await formatPoke([pokemon]);
-
-      cache.set(`${pokemon.id}`, response);
-
-      return response[0];
-    } catch (err) {
-      throw new ApiError(err.message, err.infos);
+    const pokemon = await poke.findByPk(id);
+    if (!pokemon) {
+      throw new ApiError(`Pokemon with id ${id} not found`, { statusCode: 500 });
     }
+    const response = await formatPoke([pokemon]);
+
+    cache.set(`${pokemon.id}`, response);
+
+    return response[0];
   },
 };

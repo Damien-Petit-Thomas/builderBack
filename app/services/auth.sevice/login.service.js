@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const sanitizeHtml = require('sanitize-html');
 const logger = require('../../helpers/logger');
 const { ApiError } = require('../../helpers/errorHandler');
 const blackList = require('../../utils/cache/blackList.cache').getInstance();
@@ -32,45 +33,34 @@ module.exports = {
  */
 
   async getUser(req, res, next) {
-    try {
-      const token = req.headers.authorization?.replace('Bearer ', '');
-      if (!token) {
-        return res.status(401).json({ error: 'Authentification failed : no token provided' });
-      }
+    const sanitizeToken = sanitizeHtml(req.headers.authorization?.replace('Bearer ', ''));
 
-      const user = await jwt.verify(token, process.env.JWT_SECRET);
-
-      if (!user) {
-        return res.status(401).json({ error: 'No user found' });
-      }
-      const cache = inCache(token, blackList);
-      if (cache) {
-        return res.status(401).json({ error: 'Authentification failed : token blacklisted' });
-      }
-
-      req.usere = user;
-
-      return next();
-    } catch (err) {
-      if (err instanceof jwt.JsonWebTokenError) {
-        return res.status(401).json(err);
-      }
-      logger.log(err, req.headers.authorization);
-      throw new ApiError(err.message, err.infos);
+    if (!sanitizeToken) {
+      return res.status(401).json({ error: 'Authentification failed : no token provided' });
     }
+
+    const user = jwt.verify(sanitizeToken, process.env.JWT_SECRET);
+
+    if (!user) {
+      return res.status(401).json({ error: 'No user found' });
+    }
+    const cache = inCache(sanitizeToken, blackList);
+    if (cache) {
+      return res.status(401).json({ error: 'Authentification failed : token blacklisted' });
+    }
+
+    req.usere = user;
+
+    return next();
   },
 
   async logout(token) {
-    try {
-      const expiration = await jwt.decode(token).exp;
-      const now = Math.floor(Date.now() / 1000);
-      const timeLeft = expiration - now;
-      blackList.set(token, token, timeLeft);
+    const expiration = await jwt.decode(token).exp;
+    const now = Math.floor(Date.now() / 1000);
+    const timeLeft = expiration - now;
+    blackList.set(token, token, timeLeft);
 
-      return true;
-    } catch (err) {
-      throw new ApiError(err.message, err.infos);
-    }
+    return true;
   },
 
 };

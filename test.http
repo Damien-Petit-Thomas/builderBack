@@ -17,7 +17,7 @@ cc##############################################################################
 
 
 ### GET one pokemon by id
-GET {{local}}/pokemon
+GET {{local}}/pokemon/1500
 
 
 
@@ -26,7 +26,7 @@ GET {{local}}/pokemon
 GET {{api}}/pokemon/elec
 
 ### get all pokemon imunise to a type
-GET {{local}}/pokemon/immune/type/5
+GET {{local}}/pokemon/immune/type/2
 ###get akk resistants pokemons 
 GET {{local}}/pokemon/resist/type/8
 
@@ -164,14 +164,14 @@ GET {{local}}/seeding/generation_id
 ################################      USER ROUTER ################################
 
 #### add pokemon in favorite 
-POST {{local}}/user/pokemon/1
+POST {{local}}/user/pokemon/150
 content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
+Authorization: Bearer controllerHandler
 
 ### delete pokemon in favorite 
 DELETE {{local}}/user/pokemon/24
 content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2MzEyNTc4LCJleHAiOjE2ODYzMTYxNzh9.s7U5LvuIdTy4Qt7FbxcFLc1u7k52fJoXqyAZnpC3eOY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg4MzY5MDk5LCJleHAiOjE2ODgzNzI2OTl9.aXQjb7XJRE8B30h069iP7R4U7DcV-SYp5G6ll_JE0bI
 
 
 
@@ -218,7 +218,7 @@ Content-Type: application/json
 ### logout user
 GET {{local}}/user/logout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg2NTUzODc0LCJleHAiOjE2ODY1NTc0NzR9.V9JMk8DhzDjZulasQywX1fNKBk4_mVFv2hKree5d1cA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg4MzY5MDk5LCJleHAiOjE2ODgzNzI2OTl9.aXQjb7XJRE8B30h069iP7R4U7DcV-SYp5G6ll_JE0bI
 
 
 ### home page

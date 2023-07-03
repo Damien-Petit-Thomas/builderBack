@@ -15,19 +15,15 @@ module.exports = {
 
   async seedAllPokemon() {
     for (let i = 1; i <= 9999; i += 1) {
-      try {
-        const isPokemonInDb = await poke.findByPk(i);
-        if (!isPokemonInDb) {
-          // we create a formatted pokemon object from the pokeApi before inserting it in the db
-          const { formatedPokemon } = await buildPokemonObjectFromPokeApi(i);
+      const isPokemonInDb = await poke.findByPk(i);
+      if (!isPokemonInDb) {
+        // we create a formatted pokemon object from the pokeApi before inserting it in the db
+        const { formatedPokemon } = await buildPokemonObjectFromPokeApi(i);
 
-          const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
-          logger.log(`pokemon ${pokeSavedInDb.name} saved in db`);
-        } else {
-          logger.log(`pokemon ${isPokemonInDb.name} already in db`);
-        }
-      } catch (err) {
-        throw new ApiError(err.message, err.infos);
+        const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
+        logger.log(`pokemon ${pokeSavedInDb.name} saved in db`);
+      } else {
+        logger.log(`pokemon ${isPokemonInDb.name} already in db`);
       }
     }
   },
@@ -46,15 +42,12 @@ module.exports = {
     // in this purpose we initialize an empty object that will contain the damageFrom array for each type
     const damageType = {};
     const promises = frenchType.map(async (typeData, index) => {
-      try { // we check if the type is already in the db
-        const isTypeInDbByName = await type.findOneByName(typeData.name);
-        if (isTypeInDbByName) {
-          logger.log(`type ${frenchType.name} already in db`);
-        } // if not we associate the damageFrom array to the type name
-        damageType[typeData.name] = damages[index];
-      } catch (err) {
-        throw new ApiError('une erreur est survenue lors de la récupération des types', { statusCode: 500 });
-      }
+      // we check if the type is already in the db
+      const isTypeInDbByName = await type.findOneByName(typeData.name);
+      if (isTypeInDbByName) {
+        logger.log(`type ${frenchType.name} already in db`);
+      } // if not we associate the damageFrom array to the type name
+      damageType[typeData.name] = damages[index];
     });
 
     await Promise.all(promises);
@@ -120,7 +113,7 @@ module.exports = {
       damagefrom: damageFrom,
     };
 
-    ability.insertAbility(abiInDb);
+    aby.insertAbility(abiInDb);
     return abiInDb;
   },
 

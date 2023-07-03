@@ -8,5 +8,7 @@ const router = express.Router();
 router
   .route('/')
   .get(controllerHandler(controller.getAllAbilities));
-
+router.use(() => {
+  throw new Error('Route not found');
+});
 module.exports = router;

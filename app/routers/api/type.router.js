@@ -26,4 +26,7 @@ router
 router
   .route('/resist/types')
   .post(controllerHandler(controller.getResistanceToTypeList));
+router.use(() => {
+  throw new Error('Route not found');
+});
 module.exports = router;

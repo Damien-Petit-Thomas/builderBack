@@ -18,7 +18,7 @@ router
   .route('/login')
   .post(validate('body', loginShema), controllerHandler(controller.login));
 
-router.use(login.getUser);
+router.use(controllerHandler(login.getUser));
 router
   .route('/logout')
   .get(controllerHandler(controller.logout));

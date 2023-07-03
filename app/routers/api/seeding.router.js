@@ -30,4 +30,7 @@ router
 router
   .route('/pokemon_has_ability')
   .get(controllerHandler(controller.seedPokemonHasAbility));
+router.use(() => {
+  throw new Error('Route not found');
+});
 module.exports = router;

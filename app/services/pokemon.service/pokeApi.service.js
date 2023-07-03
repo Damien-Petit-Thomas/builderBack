@@ -80,82 +80,64 @@ module.exports = class PokemonService extends CoreService {
   }
 
   async getAllAbilitiesData() {
-    try {
-      const abilities = await this.getAllAbilities();
-      const result = await abilities.reduce(
-        async (accPromise, ability) => {
-          const id = ability.url.split('/')[6];
-          if (id >= 10000) {
-            return accPromise;
-          }
-          try {
-            const acc = await accPromise;
-            const abilityData = await this.getAbilityData(id);
+    const abilities = await this.getAllAbilities();
+    const result = await abilities.reduce(
+      async (accPromise, ability) => {
+        const id = ability.url.split('/')[6];
+        if (id >= 10000) {
+          return accPromise;
+        }
 
-            const abi = {
-              id: abilityData.id,
-              name: abilityData.name,
-              frenchName: abilityData.frenchName,
-              description: abilityData.description,
-              pokemons: abilityData.pokemons,
-            };
+        const acc = await accPromise;
+        const abilityData = await this.getAbilityData(id);
 
-            acc.push(abi);
+        const abi = {
+          id: abilityData.id,
+          name: abilityData.name,
+          frenchName: abilityData.frenchName,
+          description: abilityData.description,
+          pokemons: abilityData.pokemons,
+        };
 
-            return acc;
-          } catch (err) {
-            logger.error(err);
-            throw new ApiError(err.message, err.info);
-          }
-        },
-        Promise.resolve([]),
-      );
+        acc.push(abi);
 
-      return result;
-    } catch (err) {
-      logger.error(err);
-      throw new ApiError(err.message, err.info);
-    }
+        return acc;
+      },
+      Promise.resolve([]),
+    );
+
+    return result;
   }
 
   //* methode to get  damages, french name and english name of all types  *//
   // indeed, all this data is in the same endpoint
 
   async getAllTypesData() {
-    try {
-      const types = await this.getAllTypes();
+    const types = await this.getAllTypes();
 
-      const initialData = { damages: [], frenchType: [], englishName: [] };
-      const result = await types.reduce(
-        async (accPromise, type) => {
-          //! Important: This condition is used to skip types with an ID > 10000,
-          // which helps to prevent bugs: as of the time of writing, there are 18 types
-          // with IDs < 10000. Calling getTypeData(19) would result in a 404 error.
+    const initialData = { damages: [], frenchType: [], englishName: [] };
+    const result = await types.reduce(
+      async (accPromise, type) => {
+        //! Important: This condition is used to skip types with an ID > 10000,
+        // which helps to prevent bugs: as of the time of writing, there are 18 types
+        // with IDs < 10000. Calling getTypeData(19) would result in a 404 error.
 
-          try {
-            const id = type.url.split('/')[6];
-            if (id > 10000) {
-              return accPromise;
-            }
-            const acc = await accPromise;
-            const typeData = await this.getTypeData(id);
+        const id = type.url.split('/')[6];
+        if (id > 10000) {
+          return accPromise;
+        }
+        const acc = await accPromise;
+        const typeData = await this.getTypeData(id);
 
-            acc.damages.push(typeData.damage_relations);
-            acc.frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));
-            acc.englishName.push(type.name);
+        acc.damages.push(typeData.damage_relations);
+        acc.frenchType.push(typeData.names.find((name) => name.language.name === 'fr'));
+        acc.englishName.push(type.name);
 
-            return acc;
-          } catch (error) {
-            throw new Error('Error in type iteration', { statusCode: 500 });
-          }
-        },
-        Promise.resolve(initialData),
-      );
+        return acc;
+      },
+      Promise.resolve(initialData),
+    );
 
-      return result;
-    } catch (err) {
-      logger.error(err);
-      throw new ApiError(err.message, err.info);
-    }
+    return result;
   }
 };
