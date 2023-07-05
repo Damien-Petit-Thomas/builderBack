@@ -1,4 +1,3 @@
-const logger = require('../../helpers/logger');
 const { type } = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 const typeCache = require('../../utils/cache/type.cache').getInstance();

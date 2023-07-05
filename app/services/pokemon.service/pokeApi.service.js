@@ -1,7 +1,5 @@
 //* this service is used to get data from the pokeApi  *//
 const CoreService = require('./core.service');
-const logger = require('../../helpers/logger');
-const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = class PokemonService extends CoreService {
   //* method to get the pokemon stats types id ...   *//

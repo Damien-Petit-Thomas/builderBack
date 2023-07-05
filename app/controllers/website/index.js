@@ -5,4 +5,9 @@ const websiteController = {
   },
 };
 
-module.exports = { websiteController };
+const adminController = require('./admin');
+
+module.exports = {
+  websiteController,
+  adminController,
+};

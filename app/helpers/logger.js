@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
     period: '1d',
     count: 5,
   });
-} else if (process.env.NODE_ENV === 'test') {
+} else if (process.env.NODE_ENV !== 'test') {
   streams.push({
     level: 'debug',
     stream: process.stdout,

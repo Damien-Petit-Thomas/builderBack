@@ -17,4 +17,9 @@ module.exports = class CoreService {
       throw err;
     }
   }
+
+  async post(endpoint, data) {
+    await this.axios.post(`${this.baseUrl}/${endpoint}`, data)
+      .then((response) => response.data);
+  }
 };

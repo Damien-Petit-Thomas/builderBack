@@ -9,7 +9,6 @@ const buildPokemonObjectFromPokeApi = require('../../utils/pokemon.utils/buildPo
 const { getModifyingAbility } = require('../../utils/pokemon.utils/getModifyingAbility');
 const { getDamage } = require('../../utils/pokemon.utils/getDamage');
 const logger = require('../../helpers/logger');
-const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = {
 

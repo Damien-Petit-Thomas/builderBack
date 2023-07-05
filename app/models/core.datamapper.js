@@ -94,4 +94,12 @@ module.exports = class CoreDatamapper {
     const result = await this.client.query(`DELETE FROM "${this.tablename}" WHERE id = $1`, [id]);
     return !!result.rowCount;
   }
+
+  getOneByEmail = async (email) => {
+    const response = await this.client.query(
+      `SELECT * FROM "${this.tablename}" WHERE email = $1`,
+      [email],
+    );
+    return response.rows[0];
+  };
 };

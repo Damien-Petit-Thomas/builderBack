@@ -22,3 +22,4 @@ insert_abi 2023-06-06T14:05:44Z Damien <damien.petit.thomas@gmail.com> # insert 
 filterV2 2023-06-12T11:39:01Z Damien <damien.petit.thomas@gmail.com> # add exclude
 fk_gen 2023-06-19T12:42:36Z Damien <damien.petit.thomas@gmail.com> # add foreign key
 fk_team_has_pokemon 2023-06-19T12:57:19Z Damien <damien.petit.thomas@gmail.com> # add foreign key
+admin 2023-07-04T11:22:25Z Damien <damien.petit.thomas@gmail.com> # add table admin
