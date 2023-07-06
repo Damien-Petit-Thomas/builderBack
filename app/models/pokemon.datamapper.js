@@ -59,12 +59,10 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
    */
 
   async findAllByTypesIds(id1, id2) {
-    const pokemons = await this.client.query(
-      'SELECT * FROM pokemon WHERE (type1 = $1 AND type2 = $2) OR (type1 = $2 AND type2 = $1) ORDER BY id ASC',
-
-      [id1, id2],
-    );
-    return pokemons.rows;
+    const query = 'SELECT * FROM pokemon WHERE (type1 = $1 AND type2 = $2) OR (type1 = $2 AND type2 = $1) ORDER BY id ASC';
+    const values = [id1, id2];
+    const response = await this.client.query(query, values);
+    return response.rows;
   }
 
   /**
@@ -126,5 +124,18 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
       'SELECT * FROM random_team()',
     );
     return randomIds.rows;
+  }
+
+  /**
+ * retrieve one row in the table of the model instance by name (case  and accent insensitive)
+ * @param {string} inputData
+ * @returns {Promise<object>} - The row in the table with the name given in parameter
+ */
+
+  async findOneByName(inputData) {
+    const query = 'SELECT * FROM pokemon WHERE UNACCENT(name) IlIKE UNACCENT($1)';
+    const values = [`%${inputData}%`];
+    const result = await this.client.query(query, values);
+    return result.rows;
   }
 };

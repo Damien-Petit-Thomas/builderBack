@@ -11,7 +11,6 @@ CREATE TABLE "user" (
     "email" email NOT NULL UNIQUE,
     "password"  TEXT NOT NULL,
     "username" varchar(50) NOT NULL,
-    "role" varchar(50) NOT NULL DEFAULT 'user',
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ
 );

@@ -58,7 +58,7 @@ module.exports = {
     const sortedPairs = pairs.sort((a, b) => b.matching_ids.length - a.matching_ids.length);
 
     const maxi = sortedPairs.filter((item) => item.matching_ids.length === 18);
-
+    console.log(sortedPairs);
     if (maxi.length > 0) {
       const group = [];
       const combinations = new Set();

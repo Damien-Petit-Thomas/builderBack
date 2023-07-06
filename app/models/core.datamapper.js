@@ -27,21 +27,6 @@ module.exports = class CoreDatamapper {
   }
 
   /**
- * retrieve one row in the table of the model instance by name (case  and accent insensitive)
- * @param {string} inputData
- * @returns {Promise<object>} - The row in the table with the name given in parameter
- */
-
-  async findOneByName(inputData) {
-    const result = await this.client.query(`SELECT * FROM "${this.tablename}" WHERE UNACCENT(name) IlIKE UNACCENT($1)`, [`%${inputData}%`]);
-    if (!result.rows[0]) {
-      return null;
-    }
-
-    return result.rows;
-  }
-
-  /**
 *create a row in the table of the model instance
 *@param {object} inputData
 *@returns {Promise<object>} - The row created in the table
@@ -78,15 +63,9 @@ module.exports = class CoreDatamapper {
   */
 
   async findByPk(id) {
-    const sqlQuery = {
-      text: `SELECT * FROM "${this.tablename}" WHERE id = $1`,
-      values: [id],
-    };
-    const result = await this.client.query(sqlQuery);
-    if (!result.rows[0]) {
-      return null;
-    }
-
+    const query = `SELECT * FROM "${this.tablename}" WHERE id = $1`;
+    const values = [id];
+    const result = await this.client.query(query, values);
     return result.rows[0];
   }
 

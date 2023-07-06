@@ -44,21 +44,21 @@ module.exports = {
       let best4Types;
       const numberOfresistance = getNumberOfResistanceByType(teamPokemons);
 
-      const totalResWeak = totalResistance(teamPokemons);
+      const toralRes = totalResistance(teamPokemons);
 
-      const isResist = Object.keys(totalResWeak)
-        .filter((key) => totalResWeak[key] > 0)
+      const isResist = Object.keys(toralRes)
+        .filter((key) => toralRes[key] > 0)
         .map((key) => Number(key));
 
-      const team = getTeamSuggestion(totalResWeak, numberOfresistance, teamPokemons.length);
-      const resistTypeList = team.noResist.map((w) => w[0]);
+      const team = getTeamSuggestion(toralRes, numberOfresistance, teamPokemons.length);
+      const noResisTypeList = team.noResist.map((w) => w[0]);
       const weakTypeListSorted = team.weak.sort((a, b) => a[1] - b[1]);
       const weakTypeList = weakTypeListSorted.map((w) => w[0]);
-      let resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
+      let resistantTypes = await type.findResistanceToTypeList(noResisTypeList, weakTypeList);
 
-      while (resistantTypes.length < 1 && weakTypeList.length > 0) {
+      while (resistantTypes.length < 1) {
         weakTypeList.pop();
-        resistantTypes = await type.findResistanceToTypeList(resistTypeList, weakTypeList);
+        resistantTypes = await type.findResistanceToTypeList(noResisTypeList, weakTypeList);
       }
 
       const best2Types = bestTwoTypes(resistantTypes);

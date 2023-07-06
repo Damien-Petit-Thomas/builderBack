@@ -1,3 +1,4 @@
+const sanitize = require('sanitize-html');
 const formatPoke = require('../../../utils/pokemon.utils/dataMapToFormat');
 const {
   poke, pokeHasAbi, aby,
@@ -6,7 +7,7 @@ const {
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
 const inCache = require('../../../utils/cache/inCache');
 const { ApiError } = require('../../../helpers/errorHandler');
-const logger = require('../../../helpers/logger');
+
 const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
 
 // const redis = require('../../../utils/cache/redisCache');
@@ -20,11 +21,9 @@ module.exports = {
   },
 
   async getByName(req, res) {
-    const { name } = req.params;
-
-    const pokemons = await poke.findOneByName(name);
-
-    if (!pokemons) throw new ApiError(` pokemon ${name} not found `, { statusCode: 500 });
+    const data = sanitize(req.params.data);
+    const pokemons = await poke.findOneByName(data);
+    if (!pokemons) throw new ApiError(` pokemon ${data} not found `, { statusCode: 500 });
     const response = await formatPoke(pokemons);
     return res.status(200).json(response);
   },

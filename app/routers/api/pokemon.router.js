@@ -11,7 +11,6 @@ const router = express.Router();
 
 router
   .route('/')
-
   .get(controllerHandler(controller.getAll));
 router
   .route('/:id(\\d+)')
@@ -19,6 +18,9 @@ router
 router
   .route('/type/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByTypeId));
+router
+  .route('/:data([a-zA-Z]+)')
+  .get(controllerHandler(controller.getByName));
 router
   .route('/type/:id1(\\d+)/:id2(\\d+)')
   .get(controllerHandler(controller.getPokemonByTypesIds));
@@ -46,9 +48,6 @@ router
 // router
 //   .route('/resist/imune/type/:id(\\d+)/type/:id2(\\d+)')
 //   .get(controllerHandler(controller.getNoDamageFromAndHalfDamageFromToTypes));
-router
-  .route('/:name([a-zA-Z]+)')
-  .get(controllerHandler(controller.getByName));
 router
   .route('/full-random')
   .get(controllerHandler(controller.getFullRandomTeam));

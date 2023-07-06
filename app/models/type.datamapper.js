@@ -67,11 +67,12 @@ module.exports = class TypeDatamapper extends CoreDatamapper {
     return typ.rows;
   }
 
-  async findResistanceToTypeList(resistTypeList, weakTypeList) {
+  async findResistanceToTypeList(resistTypeList) {
     const typ = await this.client.query(
-      'SELECT * FROM filterTypes($1 , $2) ;',
-      [resistTypeList, weakTypeList],
+      'SELECT * FROM filterTypes($1 ) ;',
+      [resistTypeList],
     );
+
     return typ.rows;
   }
 };

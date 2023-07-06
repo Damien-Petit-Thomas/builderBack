@@ -50,17 +50,17 @@ a
 
 |route | controller | method | description |
 |------|------------|--------|-------------|
-|/api/pokemon|api/pokemonController|GET|get all pokemon|
-|/api/pokemon/:id|api/pokemonController|GET|get a pokemon by id|
-|/api/pokemon/type/:id|api/pokemonController|GET|get all pokemon of a type|
-|/api/pokemon/gen/:id|api/pokemonController|GET|get all pokemon of a generation|
-|/api/pokemon/:name|api/pokemonController|GET|get a pokemon by name|
-|api/pokemon/type/:id/:id2|api/pokemonController|GET|get all pokemon with 2 types|
-|api/pokemon/imnune/type/:id|api/pokemonController|GET|get all pokemon immune to a type|
-|api/pokemon/resist/type/:id|api/pokemonController|GET|get all pokemon resistant to a type|
-|api/pokemon/resist-immune/type/:id|api/pokemonController|GET|get all pokemon resistant or immune to a type|
-|api/pokemon/full-random|api/pokemonController|GET|get a random team of 6 pokemon|
-|api/pokemon/complet-team| api/pokemonController|POST|get a completion for a team of 6 pokemon|
+|/api/pokemon|api/pokemon/pokemon|GET|get all pokemon|
+|/api/pokemon/:id|api/pokemon/pokemon|GET|get a pokemon by id|
+|/api/pokemon/type/:id|api/pokemon/pokempon|GET|get all pokemon of a type|
+|/api/pokemon/gen/:id|api/pokemon/pokempon|GET|get all pokemon of a generation|
+|/api/pokemon/:name|api/pokemon/pokempon|GET|get a pokemon by name|
+|api/pokemon/type/:id/:id2|api/pokemon/pokempon|GET|get all pokemon with 2 types|
+|api/pokemon/imnune/type/:id|api/pokemon/pokempon|GET|get all pokemon immune to a type|
+|api/pokemon/resist/type/:id|api/pokemon/pokempon|GET|get all pokemon resistant to a type|
+|api/pokemon/resist-immune/type/:id|api/pokemon/pokempon|GET|get all pokemon resistant or immune to a type|
+|api/pokemon/full-random|api/pokemon/pokempon|GET|get a random team of 6 pokemon|
+|api/pokemon/complet-team| api/pokemon/pokempon|POST|get a completion for a team of 6 pokemon|
 |api/seeding/all|api/seedingController|GET|seed all pokemon|
 |api/seeding/:id|api/seedingController|GET|seed a pokemon by id|
 |api/seeding/generations|api/seedingController|GET|seed all generations|
@@ -71,7 +71,7 @@ a
 |api/type/resist/:id|api/typeController|GET|get all types resistant to a type|
 |api/type/resist-immune/:id|api/typeController|GET|get all types resistant or immune to a type|
 |api/type/resist/types|pi/typeController|POST|get all types resistant to a list of types|
-|api/user/signuo|api/userController|POST|create a new user|
+|api/user/signup|api/userController|POST|create a new user|
 |api/user/login|api/userController|POST|login a user|
 |/|apiController|GET|home page|
 |/api/cache/all|api/cacheController|GET|set individual cache for all pokemon|

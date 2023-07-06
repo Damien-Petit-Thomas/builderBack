@@ -27,6 +27,7 @@ module.exports = {
   },
 
   async best2Pokemons(best4Types, teamPokemonsIds) {
+    console.log(best4Types);
     for (let i = 0; i < best4Types.length; i += 1) {
       const poke1 = best4Types[i].group1;
       const poke2 = best4Types[i].group2;

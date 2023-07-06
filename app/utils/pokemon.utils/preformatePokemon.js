@@ -14,6 +14,7 @@ module.exports = async (pokemon) => {
     const typesData = await Promise.all(pokemonTypes.map(async (id) => {
       const cache = inCache(id, typeCache);
       if (cache) return cache;
+      console.log('not in cache');
       const typeData = await type.findByPk(id);
       typeCache.set(id, typeData, typeCache.TTL);
       return typeData;

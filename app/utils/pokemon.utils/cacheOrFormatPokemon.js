@@ -17,8 +17,6 @@ module.exports = {
     }
     const response = await formatPoke([pokemon]);
 
-    cache.set(`${pokemon.id}`, response);
-
     return response[0];
   },
 };
