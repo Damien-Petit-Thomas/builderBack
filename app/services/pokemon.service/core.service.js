@@ -1,21 +1,16 @@
 //* to simplify the code and avoid repeating we create a core service  *//
 // we create a GET method that will be used by all other methods
+const { ApiError } = require('../../helpers/errorHandler');
 
 module.exports = class CoreService {
-  constructor(axios, logger) {
+  constructor(axios) {
     this.axios = axios;
-    this.logger = logger;
     this.baseUrl = 'https://pokeapi.co/api/v2';
   }
 
   async get(endpoint) {
-    try {
-      const response = await this.axios.get(`${this.baseUrl}/${endpoint}`);
-      return response.data;
-    } catch (err) {
-      this.logger.error(err);
-      throw err;
-    }
+    const response = await this.axios.get(`${this.baseUrl}/${endpoint}`);
+    return response.data;
   }
 
   async post(endpoint, data) {

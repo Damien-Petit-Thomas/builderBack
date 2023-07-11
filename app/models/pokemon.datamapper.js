@@ -125,17 +125,4 @@ module.exports = class PokemonDatamapper extends CoreDatamapper {
     );
     return randomIds.rows;
   }
-
-  /**
- * retrieve one row in the table of the model instance by name (case  and accent insensitive)
- * @param {string} inputData
- * @returns {Promise<object>} - The row in the table with the name given in parameter
- */
-
-  async findOneByName(inputData) {
-    const query = 'SELECT * FROM pokemon WHERE UNACCENT(name) IlIKE UNACCENT($1)';
-    const values = [`%${inputData}%`];
-    const result = await this.client.query(query, values);
-    return result.rows;
-  }
 };

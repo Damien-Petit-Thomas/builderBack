@@ -1,7 +1,7 @@
 //* this service is used to get data from the pokeApi  *//
 const CoreService = require('./core.service');
 
-module.exports = class PokemonService extends CoreService {
+module.exports = class PokeApiService extends CoreService {
   //* method to get the pokemon stats types id ...   *//
 // endpoint : https://pokeapi.co/api/v2/pokemon/{id || name}/
 
@@ -30,7 +30,7 @@ module.exports = class PokemonService extends CoreService {
   // the gen is retrieved from the generation url in the response
   // endpoint : https://pokeapi.co/api/v2/pokemon-species/{id}/
 
-  async getFrenchName(id) {
+  async getFrenchNameAndGen(id) {
     const response = await this.get(`/pokemon-species/${id}`);
     const frenchName = response.names.find((name) => name.language.name === 'fr').name;
     const gen = response.generation.url.split('/')[6];
@@ -62,6 +62,8 @@ module.exports = class PokemonService extends CoreService {
 
     return response.results;
   }
+  //* method to get the ability data by ability name or id  *//
+  // endpoint : https://pokeapi.co/api/v2/ability/1/
 
   async getAbilityData(abilityNameORId) {
     const response = await this.get(`/ability/${abilityNameORId}`);

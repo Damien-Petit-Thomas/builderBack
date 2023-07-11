@@ -1,17 +1,16 @@
 /* eslint-disable no-await-in-loop */
 const { poke, type } = require('../../../models');
 const { getTheBestRandomTeam } = require('../../../utils/teamCompletion/getTheBestRandomTeam');
-const preformatPokemon = require('../../../utils/pokemon.utils/preformatePokemon');
 const {
   getNumberOfResistanceByType,
   totalResistance,
 } = require('../../../utils/teamCompletion/getTeamWeakness');
 const getTeamSuggestion = require('../../../utils/teamCompletion/getTeamSuggestion');
-const { bestTwoTypes, best4types } = require('../../../utils/teamCompletion/bestTwoTypes');
+const { bestTwoTypes, best4types, combinationsOf2 } = require('../../../utils/teamCompletion/bestTwoTypes');
 const { bestPokemon, best2Pokemons } = require('../../../utils/teamCompletion/getBestPokemons');
 const { ApiError } = require('../../../helpers/errorHandler');
 const pokeCache = require('../../../utils/cache/pokemon.cache').getInstance();
-const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrFormatPokemon');
+const { cacheOrFormatPokemon: getPokemon } = require('../../../utils/pokemon.utils/cacheOrGetPokemonAndFormat');
 
 module.exports = {
   async getTeamCompletion(req, res) {
@@ -39,6 +38,7 @@ module.exports = {
     });
 
     let teamPokemons = (await Promise.all(promises)).flat();
+    console.log('teamPokemons', teamPokemons);
 
     const completeTeam = async () => {
       let best4Types;
@@ -54,10 +54,12 @@ module.exports = {
       const noResisTypeList = team.noResist.map((w) => w[0]);
       const weakTypeListSorted = team.weak.sort((a, b) => a[1] - b[1]);
       const weakTypeList = weakTypeListSorted.map((w) => w[0]);
+
       let resistantTypes = await type.findResistanceToTypeList(noResisTypeList, weakTypeList);
 
       while (resistantTypes.length < 1) {
         weakTypeList.pop();
+
         resistantTypes = await type.findResistanceToTypeList(noResisTypeList, weakTypeList);
       }
 
@@ -66,7 +68,8 @@ module.exports = {
       if (teamPokemons.length === 1) {
         let i = 0;
 
-        best4Types = best4types(best2Types, isResist);
+        best4Types = combinationsOf2(best4types(best2Types, isResist));
+
         let isGood = false;
         while (best4Types && !isGood) {
           const bestPokemons = await best2Pokemons(best4Types, poketeam);
@@ -102,15 +105,20 @@ module.exports = {
       if (teamPokemons.length === 2) {
         let i = 0;
 
-        best4Types = best4types(best2Types, isResist);
+        best4Types = combinationsOf2(best4types(best2Types, isResist));
+
         let isGood = false;
         while (best4Types && !isGood) {
           const bestPokemons = await best2Pokemons(best4Types, poketeam);
+
           if (bestPokemons) {
-            const formatedPokemon1 = await preformatPokemon(bestPokemons[0]);
-            const formatedPokemon2 = await preformatPokemon(bestPokemons[1]);
+            const formatedPokemon1 = await getPokemon(bestPokemons[0].id, pokeCache);
+            if (bestPokemons[1]) {
+              const formatedPokemon2 = await getPokemon(bestPokemons[1].id, pokeCache);
+              teamPokemons.push(formatedPokemon2);
+            }
+
             teamPokemons.push(formatedPokemon1);
-            teamPokemons.push(formatedPokemon2);
             best4Types = best4Types.slice(1);
             const notAllResist = Object.entries(totalResistance(teamPokemons))
               .filter((e) => e[1] < 0);

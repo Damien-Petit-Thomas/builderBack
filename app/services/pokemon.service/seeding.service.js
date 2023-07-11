@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable no-await-in-loop */
 
 //* this service is used to seed the database with formatted data from the pokeApi  *//
 
@@ -11,20 +10,26 @@ const { getDamage } = require('../../utils/pokemon.utils/getDamage');
 const logger = require('../../helpers/logger');
 
 module.exports = {
-
   async seedAllPokemon() {
-    for (let i = 1; i <= 9999; i += 1) {
-      const isPokemonInDb = await poke.findByPk(i);
-      if (!isPokemonInDb) {
-        // we create a formatted pokemon object from the pokeApi before inserting it in the db
-        const { formatedPokemon } = await buildPokemonObjectFromPokeApi(i);
+    const ids = [];
+    const pokemons = await poke.findAll();
+    pokemons.forEach((pokemon) => ids.push(pokemon.id));
 
-        const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
-        logger.log(`pokemon ${pokeSavedInDb.name} saved in db`);
+    const promises = [];
+
+    for (let i = 1; i <= 9999; i += 1) {
+      const isPokemonInDb = ids.includes(i);
+      if (!isPokemonInDb) {
+        promises.push((async () => {
+          const { formatedPokemon } = await buildPokemonObjectFromPokeApi(i);
+          const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
+          logger.log(`pokemon ${pokeSavedInDb.ID} saved in db`);
+        })());
       } else {
-        logger.log(`pokemon ${isPokemonInDb.name} already in db`);
+        logger.log(`pokemon ${isPokemonInDb.ID} already in db`);
       }
     }
+    await Promise.all(promises);
   },
 
   async seedAllType() {

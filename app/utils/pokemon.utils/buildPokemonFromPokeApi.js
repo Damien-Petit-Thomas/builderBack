@@ -34,9 +34,10 @@ module.exports = async function buildPokemonFromPokeApi(id) {
   // const halfDamageFrom = damage[1] ? damage[0].half_damage_from.map((type) => type.name).concat(damage[1].half_damage_from.map((type) => type.name)) : damage[0].half_damage_from.map((type) => type.name);
   // const doubleDamageFrom = damage[1] ? damage[0].double_damage_from.map((type) => type.name).concat(damage[1].double_damage_from.map((type) => type.name)) : damage[0].double_damage_from.map((type) => type.name);
   // on calcule les dégats totaux occasionnés par les types adverses
-  const totalDamageFrom = getDamage(noDamageFrom, halfDamageFrom, doubleDamageFrom);
+
+  const totalDamageFrom = await getDamage(noDamageFrom, halfDamageFrom, doubleDamageFrom);
   // we retrieve the french name and the gen of the pokemon
-  const { frenchName, gen } = await pokeApi.getFrenchName(id);
+  const { frenchName, gen } = await pokeApi.getFrenchNameAndGen(id);
   // we build 2 objects, one for the front end and one for the db se
   const pokemon = {
     id,

@@ -9,7 +9,7 @@ module.exports = {
     const email = sanitizeHtml(req.body.email);
     const password = sanitizeHtml(req.body.password);
     const userFound = await admi.getOneByEmail(email);
-    console.log(email, password, userFound);
+
     if (!userFound) {
       throw new ApiError(`User with email ${email} not found`, { statusCode: 404 });
     }

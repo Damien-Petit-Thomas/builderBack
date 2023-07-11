@@ -36,9 +36,7 @@ router
   .route('/pokemon/:id(\\d+)')
   .post(controllerHandler(controller.addPokemonInFavorite))
   .delete(controllerHandler(controller.deletePokemonFromFavorite));
-// router
-//   .route('/user/teams/:id/pokemons')
-//   .get(controllerHandler(controller.getMyTeamPokemons));
+
 router
   .route('/favorites')
   .get(controllerHandler(controller.getUserFavorites));

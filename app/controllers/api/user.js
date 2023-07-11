@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 const bcrypt = require('bcrypt');
 const sanitizeHtml = require('sanitize-html');
-const { cacheOrFormatPokemon: getPokemon } = require('../../utils/pokemon.utils/cacheOrFormatPokemon');
+const { cacheOrFormatPokemon: getPokemon } = require('../../utils/pokemon.utils/cacheOrGetPokemonAndFormat');
 const login = require('../../services/auth.sevice/login.service');
 const logger = require('../../helpers/logger');
 const {

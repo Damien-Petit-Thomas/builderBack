@@ -3,7 +3,7 @@
 
 const { poke } = require('../../models');
 const { totalResistance } = require('./getTeamWeakness');
-const { cacheOrFormatPokemon: getPokemon } = require('../pokemon.utils/cacheOrFormatPokemon');
+const { cacheOrFormatPokemon: getPokemon } = require('../pokemon.utils/cacheOrGetPokemonAndFormat');
 const pokeCache = require('../cache/pokemon.cache').getInstance();
 
 const { ApiError } = require('../../helpers/errorHandler');

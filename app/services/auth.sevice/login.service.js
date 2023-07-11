@@ -38,19 +38,17 @@ module.exports = {
     if (!sanitizeToken) {
       return res.status(401).json({ error: 'Authentification failed : no token provided' });
     }
+    const cache = inCache(sanitizeToken, blackList);
+    if (cache) {
+      return res.status(401).json({ error: 'Authentification failed : token blacklisted' });
+    }
 
     const user = jwt.verify(sanitizeToken, process.env.JWT_SECRET);
 
     if (!user) {
       return res.status(401).json({ error: 'No user found' });
     }
-    const cache = inCache(sanitizeToken, blackList);
-    if (cache) {
-      return res.status(401).json({ error: 'Authentification failed : token blacklisted' });
-    }
-
     req.usere = user;
-
     return next();
   },
 

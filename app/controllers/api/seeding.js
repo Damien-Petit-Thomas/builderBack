@@ -9,6 +9,7 @@ const seed = require('../../services/pokemon.service/seeding.service');
 const { ApiError } = require('../../helpers/errorHandler');
 const { pokeApi } = require('../../services/pokemon.service');
 const inCache = require('../../utils/cache/inCache');
+const formatPoke = require('../../utils/pokemon.utils/getCacheOrFormat');
 
 require('dotenv').config();
 
@@ -21,13 +22,17 @@ module.exports = {
 
     const pokemoon = await poke.findByPk(id);
     if (pokemoon) {
-      return res.json(pokemoon);
+      const response = await formatPoke([pokemoon]);
+      return res.json(response[0]);
     }
 
     const { formatedPokemon, pokemon } = await buildPokemonFromPokeApi(id);
+    pokeCache.set(pokemon.id, pokemon, pokeCache.TTL);
     if (!formatedPokemon) throw new ApiError('No pokemon found to seed', { statusCode: 404 });
     const pokeSavedInDb = await poke.insertPokemon(formatedPokemon);
-    cache.set(pokeSavedInDb.id, pokemon, cache.TTL);
+    if (!pokeSavedInDb) {
+      throw new ApiError('An error occurred while saving the pokemon in the database', { statusCode: 500 });
+    }
     return res.json(pokemon);
   },
 
@@ -85,9 +90,7 @@ module.exports = {
   },
 
   async seedGenerations(_, res) {
-    let numberOfGenerations;
-
-    numberOfGenerations = await pokeApi.getAllGenerationsCount();
+    const numberOfGenerations = await pokeApi.getAllGenerationsCount();
     const start = await gen.count();
     const generations = await gen.insertGen(start + 1, numberOfGenerations);
     if (!generations) throw new ApiError('No generations found to seed', { statusCode: 404 });

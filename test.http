@@ -7,6 +7,29 @@ cc##############################################################################
 @local= http://localhost:{{$dotenv PORT}}/api
 
 
+################################## seeding router #############################
+
+### seed all generations
+GET {{local}}/seeding/generations
+
+### seed all types
+GET {{local}}/seeding/types
+
+### seed one pokemon
+GET {{local}}/seeding/10002
+
+### seed all pokemon
+GET {{local}}/seeding/all
+
+### seed pokemon abilities
+GET {{local}}/seeding/abilities
+
+### seed pokemon abilities 1 
+GET {{local}}/seeding/ability/25
+
+
+### seed /pokemon_has_ability
+GET {{local}}/seeding/pokemon_has_ability
 ################################################################################
 # Routes
 ##
@@ -23,7 +46,7 @@ GET {{local}}/pokemon/1500
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
-GET {{local}}/pokemon/pik
+GET {{local}}/pokemon/elek
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/2
@@ -39,7 +62,7 @@ GET {{local}}/pokemon/full-random
 GET {{local}}/pokemon/type/5
 
 ###GET pokemon by 2 types
-GET {{api}}/pokemon/type/9/17
+GET {{api}}/pokemon/type/8
 
 ### GET all pokemon of one type
 GET {{local}}/pokemon/gen/5
@@ -76,8 +99,7 @@ Content-Type: application/json
 
 [
 
-1 
-
+1, 567
 ]
 
 ### cache all pokemon
@@ -118,32 +140,6 @@ Content-Type: application/json
 
 
 
-################################## seeding router #############################
-
-### seed all generations
-GET {{local}}/seeding/generations
-
-### seed all types
-GET {{local}}/seeding/types
-
-### seed one pokemon
-GET {{local}}/seeding/106
-
-### seed all pokemon
-GET {{local}}/seeding/all
-
-
-
-
-### seed pokemon abilities
-GET {{local}}/seeding/abilities
-
-### seed pokemon abilities 1 
-GET {{local}}/seeding/ability/25
-
-
-### seed /pokemon_has_ability
-GET {{local}}/seeding/pokemon_has_ability
 
 ####################################cache router #############################
 

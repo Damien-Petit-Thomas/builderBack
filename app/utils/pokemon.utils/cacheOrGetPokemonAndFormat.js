@@ -1,7 +1,7 @@
 const inCache = require('../cache/inCache');
 const { ApiError } = require('../../helpers/errorHandler');
 const { poke } = require('../../models');
-const formatPoke = require('./dataMapToFormat');
+const formatPoke = require('./getCacheOrFormat');
 // const redis = require('../cache/redisCache');
 
 module.exports = {

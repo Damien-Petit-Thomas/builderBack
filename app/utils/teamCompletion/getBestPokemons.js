@@ -25,19 +25,25 @@ module.exports = {
 
     return [];
   },
-
   async best2Pokemons(best4Types, teamPokemonsIds) {
-    console.log(best4Types);
     for (let i = 0; i < best4Types.length; i += 1) {
-      const poke1 = best4Types[i].group1;
-      const poke2 = best4Types[i].group2;
+      const poke1 = best4Types[i].pair1;
+      const poke2 = best4Types[i].pair2;
 
       const pokemon1 = await poke.findBestPokemonByTypesIds(poke1[0], poke1[1]);
-      const pokemon2 = await poke.findBestPokemonByTypesIds(poke2[0], poke2[1]);
-      if (pokemon1 && pokemon2 && !teamPokemonsIds.includes(pokemon1.id, pokemon2.id)) {
-        return [pokemon1, pokemon2];
+
+      if (pokemon1 && poke2) {
+        const pokemon2 = await poke.findBestPokemonByTypesIds(poke2[0], poke2[1]);
+
+        if (pokemon2 && !teamPokemonsIds.includes(pokemon1.id)
+                     && !teamPokemonsIds.includes(pokemon2.id)) {
+          return [pokemon1, pokemon2];
+        }
+      } else if (pokemon1 && !teamPokemonsIds.includes(pokemon1.id)) {
+        return [pokemon1];
       }
     }
     return [];
   },
+
 };
