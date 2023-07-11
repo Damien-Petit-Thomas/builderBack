@@ -98,7 +98,7 @@ module.exports = {
   },
 
   async createTeam(req, res) {
-    const { teamName } = req.body;
+    const teamName = sanitizeHtml(req.body.teamName);
     const { usere } = req;
 
     const inputData = {
