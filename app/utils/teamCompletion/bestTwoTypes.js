@@ -92,7 +92,7 @@ module.exports = {
         }
       }
     }
-    console.log('group', group);
+
     return group;
   },
 };

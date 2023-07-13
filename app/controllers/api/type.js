@@ -1,3 +1,4 @@
+const sanitize = require('sanitize-html');
 const { type } = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 const typeCache = require('../../utils/cache/type.cache').getInstance();
@@ -47,7 +48,7 @@ module.exports = {
     return res.json(weak);
   },
   async getResistanceToTypeList(req, res) {
-    const types = req.body;
+    const types = sanitize(req.body.types);
 
     const result = await type.findResistanceToTypeList(types);
     if (!result) throw new ApiError('an error occured while fetching data', { statusCode: 500 });

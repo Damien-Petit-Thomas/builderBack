@@ -51,7 +51,7 @@ module.exports = {
   },
 
   async logout(req, res) {
-    const token = req.headers.authorization?.replace('Bearer ', '');
+    const token = sanitizeHtml(req.headers.authorization?.replace('Bearer ', ''));
     const result = await login.logout(token);
     if (!result) {
       throw new ApiError('Logout failed', { statusCode: 500 });

@@ -39,6 +39,7 @@ module.exports = {
       const damage = noDamageFrom * halfDomageFrom * DoubleDomageFrom;
       totalDamageFrom.push({ ...type, damage });
     });
+    console.log(totalDamageFrom);
     return totalDamageFrom;
   },
 };

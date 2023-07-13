@@ -19,7 +19,7 @@ router
   .route('/type/:id(\\d+)')
   .get(controllerHandler(controller.getPokemonByTypeId));
 router
-  .route('/:data([a-zA-Z]+)')
+  .route('/:name([a-zA-Z]+)')
   .get(controllerHandler(controller.getByName));
 router
   .route('/type/:id1(\\d+)/:id2(\\d+)')

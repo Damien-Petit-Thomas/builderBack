@@ -5,7 +5,7 @@ const ApiError = require('../errors/apiError');
  * Middleware that respond to a next method with an error as argument
  * @param {object} err Error class
  * @param {object} res Express response object
- */
+*/
 
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {

@@ -17,7 +17,7 @@ module.exports = {
 
     const promises = [];
 
-    for (let i = 1; i <= 9999; i += 1) {
+    for (let i = 1; i <= 1010; i += 1) {
       const isPokemonInDb = ids.includes(i);
       if (!isPokemonInDb) {
         promises.push((async () => {
