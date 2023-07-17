@@ -1,4 +1,4 @@
-cc################################################################################
+################################################################################
 # Fichier de test des routes HTTP de l'API
 # Nécessite l'extension REST Client pour VSCode
 # https://marketplace.visualstudio.com/items?itemName=humao.rest-client
@@ -7,42 +7,15 @@ cc##############################################################################
 @local= http://localhost:{{$dotenv PORT}}/api
 
 
-################################## seeding router #############################
-
-### seed all generations
-GET {{local}}/seeding/generations
-
-### seed all types
-GET {{local}}/seeding/types
-
-### seed one pokemon
-GET {{local}}/seeding/10002
-
-### seed all pokemon
-GET {{local}}/seeding/1
-
-### seed pokemon abilities
-GET {{local}}/seeding/abilities
-
-### seed pokemon abilities 1 
-GET {{local}}/seeding/ability/25
 
 
-### seed /pokemon_has_ability
-GET {{local}}/seeding/pokemon_has_ability
-################################################################################
-# Routes
-##
 ################################### pokemon router ############################
 
 
-### GET one pokemon by id
 
 
 ### GET one pokemon by id
 GET {{api}}/pokemon
-
-
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
@@ -50,12 +23,14 @@ GET {{local}}/pokemon/elek
 
 ### get all pokemon imunise to a type
 GET {{local}}/pokemon/immune/type/2
-###get akk resistants pokemons 
+
+###get all resistants pokemons 
 GET {{local}}/pokemon/resist/type/8
 
 ###GET resistant and imune pokemon from a type
 GET  {{local}}/pokemon/resist-immune/type/2
 ### GET all pokemon
+
 GET {{local}}/pokemon/full-random
 
 ###GET pokemon by 1
@@ -84,7 +59,8 @@ GET {{local}}/pokemon/gen/
 ### GET a random team of 6 pokemon
 GET {{api}}/pokemon/full-random
 
-###POST a team to get a complete team with 6 pokemon
+
+###POST a partial team to get a complete team with 6 pokemon
 POST {{api}}/pokemon/complet-team
 Content-Type: application/json
 
@@ -93,28 +69,11 @@ Content-Type: application/json
     
 ]
 
-###POST a team to get a complete team with 6 pokemon
-POST {{local}}/pokemon/complet-team
-Content-Type: application/json
 
-[
-
-1
-]
 ### cache all pokemon
 GET {{local}}/cache/all
 
-###POST a team to get a complete team with 6 pokemon
-POST {{local}}/pokemon/complet-team/random
-Content-Type: application/json
 
-[
-    1000
-]
-
-
-POST
-{{local}}/user/
 
 ################################## type router #############################
 
@@ -132,16 +91,12 @@ GET {{local}}/type/resist/1
 ### GET all types with resistance or immunity from one type
 GET {{local}}/type/resist-imune/2
 
-####POSt get a list of types with resistance or immunity from a list of types
+####POST get an an ardered list of types by their number of resistance or immunity from a list of types
 POST {{api}}/type/resist/types
 Content-Type: application/json
 
     [6,5,7,12,15]
     
-
-
-
-
 
 ####################################cache router #############################
 
@@ -166,7 +121,7 @@ POST {{local}}/user/pokemon/150
 content-Type: application/json
 Authorization: Bearer controllerHandler
 
-### delete pokemon in favorite 
+### delete pokemon from favorite 
 DELETE {{local}}/user/pokemon/24
 content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuYW1lIjoiZGFtaWVuIiwiZW1haWwiOiJkYW1pZW4xMDBAZ21haWwuY29tIiwiaWF0IjoxNjg4MzY5MDk5LCJleHAiOjE2ODgzNzI2OTl9.aXQjb7XJRE8B30h069iP7R4U7DcV-SYp5G6ll_JE0bI
@@ -184,15 +139,6 @@ Content-Type: application/json
     "email": "damien10@gmail.com"
 }
 
-### create user
-POST {{local}}/user/signup
-Content-Type: application/json
-
-{
-    "username": "damien",   
-    "password": "Damien!1",
-    "email": "damien100@gmail.com"
-}
 
 ### login user
 POST {{local}}/user/login
@@ -204,14 +150,7 @@ Content-Type: application/json
 }
 
 
-### login user
-POST {{local}}/user/login
-Content-Type: application/json
 
-{
-    "email" : "damien100@gmail.com",
-    "password" : "Damien!1"
-}
 
 ### logout user
 GET {{local}}/user/logout
@@ -282,5 +221,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzUsInVzZXJuY
 GET {{local}}/ability
 
 
-
-12, 13, 5, 14, 8 

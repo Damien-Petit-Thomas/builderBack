@@ -1,0 +1,35 @@
+################################################################################
+# Fichier de ss HTTP de l'API
+# Nécessite l'extension REST Client pour VSCode
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+################################################################################
+@api = https://obuilder.herokuapp.com/api
+@local= http://localhost:{{$dotenv PORT}}/api
+
+
+################################## seeding router #############################
+
+### seed all generations
+GET {{local}}/seeding/generations
+
+### seed all types
+GET {{local}}/seeding/types
+
+### seed one pokemon
+GET {{local}}/seeding/10002
+
+### seed all pokemon
+GET {{local}}/seeding/1
+
+### seed pokemon abilities
+GET {{local}}/seeding/abilities
+
+### seed pokemon abilities 1 
+GET {{local}}/seeding/ability/25
+
+
+### seed /pokemon_has_ability
+GET {{local}}/seeding/pokemon_has_ability
+
+###get gen_id 
+GET {{local}}/seeding/generation_id
