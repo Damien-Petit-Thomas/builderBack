@@ -60,7 +60,7 @@
 
 /**
  * POST /api/type/resist/types
- * @summary GET all types with resistance or imunity from a list of type
+ * @summary GET an order list of types by the number of resistance or imunity from a list of type
  * @tags TYPE
  * @param {[number]} request.body.required - list of type id
  * @return {[Type]} 200 - success response - appllication/json
