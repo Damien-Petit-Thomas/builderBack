@@ -17,7 +17,7 @@ function getTeamSuggestion(totalResWeak, numberOfresistance, len) {
   const tooWeak = total.filter((damage) => damage[1] < 0);
   const weakest = total.sort((a, b) => a[1] - b[1]);
   const limit = total.filter((damage) => damage[1] <= 0);
-  console.log('limit', limit);
+
   const isOneResistance = nbResist.filter((damage) => damage[1] === 1);
   const isAtLeastOneResistance = nbResist.filter((damage) => damage[1] >= 1);
   const isTwoResistance = nbResist.filter((damage) => damage[1] === 2);

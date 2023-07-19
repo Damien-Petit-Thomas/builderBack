@@ -16,10 +16,10 @@ GET {{local}}/seeding/generations
 GET {{local}}/seeding/types
 
 ### seed one pokemon
-GET {{local}}/seeding/10002
+GET {{local}}/seeding/6
 
 ### seed all pokemon
-GET {{local}}/seeding/1
+GET {{local}}/seeding/300
 
 ### seed pokemon abilities
 GET {{local}}/seeding/abilities

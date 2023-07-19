@@ -15,7 +15,7 @@
 
 
 ### GET one pokemon by id
-GET {{api}}/pokemon
+GET {{local}}/pokemon/5
 
 
 ### GET one pokemon by name (not case sensitive nor accent sensitive)
