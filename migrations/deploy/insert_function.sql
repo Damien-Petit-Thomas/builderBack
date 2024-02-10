@@ -21,7 +21,7 @@ INSERT INTO "pokemon" (
   speed
 ) VALUES (
   ($1->>'id')::smallint,
-  ($1->>'name')::varchar(50)),
+  ($1->>'name')::varchar(50),
   ($1->>'sprite')::varchar(250),
   ($1->>'type1')::smallint,
   COALESCE(($1->>'type2')::smallint, NULL),

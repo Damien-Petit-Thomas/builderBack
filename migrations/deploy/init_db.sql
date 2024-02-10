@@ -21,7 +21,8 @@ CREATE TABLE if NOT EXISTS "pokemon" (
   defense smallint NOT NULL,
   sp_att smallint NOT NULL,
   sp_def smallint NOT NULL,
-  speed smallint NOT NULL
+  speed smallint NOT NULL,
+  gen_id smallint NOT NULL
 );
 
 COMMIT;

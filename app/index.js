@@ -6,7 +6,7 @@ const router = require('./routers');
 
 const app = express();
 
-require('./helpers/apiDocs')(app);
+// require('./helpers/apiDocs')(app);
 
 const bodyParser = multer();
 

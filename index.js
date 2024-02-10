@@ -16,7 +16,7 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-const port = process.env.PORT ?? 3000;
+const port = process.env.PORT ?? 3100;
 
 const server = http.createServer(app);
 

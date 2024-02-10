@@ -16,28 +16,17 @@ By combining dynamic seeding, optimized database storage, cache server implement
 
 ## Installation
 
-To install this app, clone the repository and run npm install to install the dependencies.
-Create a PostgreSQL database and execute the queries provided in the db.sql file to create the necessary tables.
-To populate your database, create a .env file and add the following variables:
-
-
-```
+Torun localy , clone the repository and run npm install to install the dependencies.
+install sqitch 
+Then, create a .env file and add the following variables:
 DATABASE_URL=your db url
-```
-Then, you can use the test.http file. In the seeding section, run the following requests:
-```
-### seed all generations
-GET {{local}}/seeding/generations
-
-GET {{local}}/seeding/types
-### seed all types
+PORT=your port
+create a postgres database 
+initialize sqitch with the created database
+then run `sqitch deploy` to deploy the database
 
 
-
-## seed all pokemon
-GET {{local}}/seeding/all
-```
-Make sure to define the local variable in the test.http file.
+to populate the database with pokemon data, you can use the seeding.http file in the root directory. First, you need to seed the generations and types.
 
 ## Usage
 
